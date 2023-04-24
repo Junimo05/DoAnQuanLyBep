@@ -78,5 +78,45 @@ public class NguyenLieuDAO {
         return false;
     }
     
-    
+    public boolean CapNhatNguyenLieu(NguyenLieu nl) {
+        String sql = "UPDATE tbl_NguyenLieu SET \"Tên Nguyên Liệu\"=?, \"Đơn Giá\"=?, \"Số Lượng\"=?, \"Ngày Nhập\"=? WHERE ID=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // Thiết lập giá trị cho các tham số của câu lệnh SQL
+            ps.setString(1, nl.getTenNL());
+            ps.setInt(2, nl.getGiaNL());
+            ps.setInt(3, nl.getSoluongNL());
+            ps.setDate(4, nl.getNgay());
+            ps.setInt(5, nl.getMaNL());
+
+            // Thực hiện câu lệnh SQL
+            int rows = ps.executeUpdate();
+
+            // Nếu có ít nhất một hàng được cập nhật thành công, trả về true
+            return (rows > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean xoaNguyenLieu(int maNL) {
+        String sql = "DELETE FROM tbl_NguyenLieu WHERE ID = ?";
+        try {
+          
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, maNL);
+
+            // Execute the delete statement and get the number of affected rows
+            int rowAffected = ps.executeUpdate();
+
+            // Set the result to true if the number of affected rows is greater than 0
+            if (rowAffected > 0) {
+              return true;
+            }
+          } catch (Exception ex) {
+            ex.printStackTrace();
+          } 
+          return false;
+      }
 }

@@ -15,6 +15,12 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 /**
  *
  * @author anhtu
@@ -107,41 +113,35 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(SoLuong_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_SoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                                    .addComponent(txt_DonGia)
-                                    .addComponent(txt_TenNguyenLieu)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Ma_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-                                    .addComponent(NguyenLieu_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(DonGia_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(NgayNhap_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(txt_NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(txt_MaNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addContainerGap())
+                        .addComponent(SoLuong_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_SoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addComponent(txt_DonGia)
+                            .addComponent(txt_TenNguyenLieu)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Ma_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+                            .addComponent(NguyenLieu_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DonGia_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NgayNhap_lbl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(bttCapNhat)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bttXoaNhap))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txt_NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(bttNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bttXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(31, 31, 31))))
+                                .addComponent(txt_MaNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(bttNhap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bttXoaNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bttCapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bttXoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,11 +169,11 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bttCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bttXoaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bttCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bttXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79))
         );
 
@@ -184,11 +184,63 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
             new String [] {
                 "Mã", "Nguyên Liệu", "Đơn Giá", "Số Lượng", "Ngày Nhập"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbl_NguyenLieu.setColumnSelectionAllowed(true);
         tbl_NguyenLieu.getTableHeader().setReorderingAllowed(false);
+        tbl_NguyenLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_NguyenLieuMouseClicked(evt);
+            }
+        });
+        ListSelectionModel selectionModel = tbl_NguyenLieu.getSelectionModel();
+
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel.isSelectionEmpty()) {
+                    bttCapNhat.setEnabled(true);
+                    bttXoa.setEnabled(true);
+                    if(e.getValueIsAdjusting()){
+                        txt_MaNguyenLieu.setEnabled(false);
+                        int selectedRow = tbl_NguyenLieu.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lay du lieu
+                            Object ma = tbl_NguyenLieu.getValueAt(selectedRow, 0);
+                            Object ten = tbl_NguyenLieu.getValueAt(selectedRow, 1);
+                            Object dongia = tbl_NguyenLieu.getValueAt(selectedRow, 2);
+                            Object soluong = tbl_NguyenLieu.getValueAt(selectedRow, 3);
+                            Object ngaynhap = tbl_NguyenLieu.getValueAt(selectedRow, 4);
+                            //Gan du lieu
+                            txt_MaNguyenLieu.setText(ma.toString());
+                            txt_TenNguyenLieu.setText(ten.toString());
+                            txt_DonGia.setText(dongia.toString());
+                            txt_SoLuong.setText(soluong.toString());
+                            txt_NgayNhap.setDate((Date)ngaynhap);
+                        }
+                    }
+                }else {
+                    bttCapNhat.setEnabled(false);
+                    bttXoa.setEnabled(false);
+                    txt_MaNguyenLieu.setEnabled(true);
+                }
+            }
+        });
         NL_Table.setViewportView(tbl_NguyenLieu);
-        tbl_NguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tbl_NguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tbl_NguyenLieu.getColumnModel().getColumnCount() > 0) {
+            tbl_NguyenLieu.getColumnModel().getColumn(0).setResizable(false);
+            tbl_NguyenLieu.getColumnModel().getColumn(1).setResizable(false);
+            tbl_NguyenLieu.getColumnModel().getColumn(2).setResizable(false);
+            tbl_NguyenLieu.getColumnModel().getColumn(3).setResizable(false);
+            tbl_NguyenLieu.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -333,7 +385,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
           JOptionPane.showMessageDialog(rootPane, "Thêm Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         DefaultTableModel model = (DefaultTableModel) tbl_NguyenLieu.getModel();
-        load();
+        loadTable();
     }
     
     //Data is valid ?
@@ -385,9 +437,23 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
     
     //
     public void bttXoaClick(){
-        
+        String maNLStr = txt_MaNguyenLieu.getText();
+        int maNL = Integer.parseInt(maNLStr);
+        if(new NguyenLieuDAO().xoaNguyenLieu(maNL)) {
+            JOptionPane.showMessageDialog(rootPane, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            
+            //Update
+            DefaultTableModel model = (DefaultTableModel) tbl_NguyenLieu.getModel();
+            int selectedIndex = tbl_NguyenLieu.getSelectedRow();
+            if(selectedIndex >= 0){
+                model.removeRow(selectedIndex);
+                loadTable();
+                bttXoaNhapClick();
+            }
+        } else {
+          JOptionPane.showMessageDialog(rootPane, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    //*
     
     public void bttXoaNhapClick(){
         txt_MaNguyenLieu.setText("");
@@ -399,13 +465,52 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
     }
     
     public void bttCapNhatClick(){
+        nl = new NguyenLieu();
+        String maNLStr = txt_MaNguyenLieu.getText();
+        String tenNL = txt_TenNguyenLieu.getText();
+        String giaNLStr = txt_DonGia.getText();
+        String soluongNLStr = txt_SoLuong.getText();
+        Date selectedDate = txt_NgayNhap.getDate();
         
+        java.sql.Date ngayNhap = null; 
+        if (selectedDate != null) {
+            // Chuyển đổi Date thành java.sql.Date
+            ngayNhap = new java.sql.Date(selectedDate.getTime());
+        }
+        
+        // Validate input values
+        String errorMessage = validateInputValues(maNLStr, tenNL, giaNLStr, soluongNLStr, ngayNhap);
+        if (errorMessage != null) {
+          JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
+          return;
+        }
+        
+        int maNL = Integer.parseInt(maNLStr);
+        int giaNL = Integer.parseInt(giaNLStr);
+        int soluongNL = Integer.parseInt(soluongNLStr);
+
+        nl.setMaNL(maNL);
+        nl.setTenNL(tenNL);
+        nl.setGiaNL(giaNL);
+        nl.setSoluongNL(soluongNL);
+        nl.setNgay(ngayNhap);
+        
+        if(new NguyenLieuDAO().CapNhatNguyenLieu(nl)) {
+          JOptionPane.showMessageDialog(rootPane, "Cập Nhật Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+          JOptionPane.showMessageDialog(rootPane, "Cập Nhật Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        DefaultTableModel model = (DefaultTableModel) tbl_NguyenLieu.getModel();
+        loadTable();
     }
     
-    private void reload(){
-        
-    }
     private void load(){
+        bttCapNhat.setEnabled(false);
+        bttXoa.setEnabled(false);
+        loadTable();
+    }
+    
+    private void loadTable(){
         list = new NguyenLieuDAO().getListNL();
         DefaultTableModel model = (DefaultTableModel) tbl_NguyenLieu.getModel();
         model.setRowCount(0);
@@ -416,6 +521,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
                 tmp.getMaNL(), tmp.getTenNL(), tmp.getGiaNL(), tmp.getSoluongNL(), tmp.getNgay()
             });
         }
+        
     }
     
     private void btt_QLSuatAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_QLSuatAnMouseClicked
@@ -440,6 +546,32 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         tbl_NguyenLieu.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));// Lọc các hàng trên bảng theo chuỗi tìm kiếm, không phân biệt hoa thường
     }//GEN-LAST:event_txt_SearchKeyReleased
+    
+    //
+    Set<Integer> selectedRows = new HashSet<>();
+    Set<Integer> selectedCols = new HashSet<>();
+    private void tbl_NguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_NguyenLieuMouseClicked
+        int row = tbl_NguyenLieu.rowAtPoint(evt.getPoint());
+        int col = tbl_NguyenLieu.columnAtPoint(evt.getPoint());
+        
+        // Check if the cell is valid and left mouse button is clicked
+        if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+            // If cell is already selected and isSelected is true, then deselect it
+            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+                tbl_NguyenLieu.removeRowSelectionInterval(row, row);
+                tbl_NguyenLieu.removeColumnSelectionInterval(col, col);
+                selectedRows.remove(row);
+                selectedCols.remove(col);
+                bttXoaNhapClick();
+            } else {
+                // Otherwise, select the cell
+                tbl_NguyenLieu.addRowSelectionInterval(row, row);
+                tbl_NguyenLieu.addColumnSelectionInterval(col, col);
+                selectedRows.add(row);
+                selectedCols.add(col);
+            }
+        }
+    }//GEN-LAST:event_tbl_NguyenLieuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

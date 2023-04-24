@@ -12,7 +12,7 @@ public class NguyenLieu{
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL, Date ngay, int soluongNL, int giaNL) {
+    public NguyenLieu(int maNL, String tenNL, int soluongNL, int giaNL, Date ngay) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;

@@ -104,55 +104,46 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="SoLuong_lbl" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txt_SoLuong" pref="164" max="32767" attributes="0"/>
-                                      <Component id="txt_DonGia" max="32767" attributes="0"/>
-                                      <Component id="txt_TenNguyenLieu" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="Ma_lbl" pref="82" max="32767" attributes="0"/>
-                                      <Component id="NguyenLieu_lbl" max="32767" attributes="0"/>
-                                      <Component id="DonGia_lbl" max="32767" attributes="0"/>
-                                      <Component id="NgayNhap_lbl" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="txt_NgayNhap" min="-2" pref="164" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="txt_MaNguyenLieu" min="-2" pref="164" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
+                          <Component id="SoLuong_lbl" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txt_SoLuong" pref="164" max="32767" attributes="0"/>
+                              <Component id="txt_DonGia" max="32767" attributes="0"/>
+                              <Component id="txt_TenNguyenLieu" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="Ma_lbl" pref="82" max="32767" attributes="0"/>
+                              <Component id="NguyenLieu_lbl" max="32767" attributes="0"/>
+                              <Component id="DonGia_lbl" max="32767" attributes="0"/>
+                              <Component id="NgayNhap_lbl" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="bttCapNhat" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="bttXoaNhap" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="txt_NgayNhap" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="bttNhap" min="-2" pref="80" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="bttXoa" min="-2" pref="83" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="txt_MaNguyenLieu" min="-2" pref="164" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="31" pref="31" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="bttNhap" max="32767" attributes="0"/>
+                              <Component id="bttXoaNhap" pref="108" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="bttCapNhat" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="bttXoa" alignment="1" min="-2" pref="108" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -187,12 +178,12 @@
                   <EmptySpace pref="64" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="bttNhap" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="bttXoa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="bttCapNhat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="bttXoaNhap" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="bttCapNhat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="bttXoa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
               </Group>
@@ -265,36 +256,36 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
-                <Column editable="true" title="M&#xe3;" type="java.lang.Object"/>
-                <Column editable="true" title="Nguy&#xea;n Li&#x1ec7;u" type="java.lang.Object"/>
-                <Column editable="true" title="&#x110;&#x1a1;n Gi&#xe1;" type="java.lang.Object"/>
-                <Column editable="true" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
-                <Column editable="true" title="Ng&#xe0;y Nh&#x1ead;p" type="java.lang.Object"/>
+                <Column editable="false" title="M&#xe3;" type="java.lang.Object"/>
+                <Column editable="false" title="Nguy&#xea;n Li&#x1ec7;u" type="java.lang.Object"/>
+                <Column editable="false" title="&#x110;&#x1a1;n Gi&#xe1;" type="java.lang.Object"/>
+                <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
+                <Column editable="false" title="Ng&#xe0;y Nh&#x1ead;p" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-              <TableColumnModel selectionModel="3">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+              <TableColumnModel selectionModel="1">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -306,6 +297,12 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_NguyenLieuMouseClicked"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="ListSelectionModel selectionModel = tbl_NguyenLieu.getSelectionModel();&#xa;&#xa;selectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!selectionModel.isSelectionEmpty()) {&#xa;        bttCapNhat.setEnabled(true);&#xa;        bttXoa.setEnabled(true);&#xa;        if(e.getValueIsAdjusting()){&#xa;            txt_MaNguyenLieu.setEnabled(false);&#xa;            int selectedRow = tbl_NguyenLieu.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //lay du lieu&#xa;                Object ma = tbl_NguyenLieu.getValueAt(selectedRow, 0);&#xa;                Object ten = tbl_NguyenLieu.getValueAt(selectedRow, 1);&#xa;                Object dongia = tbl_NguyenLieu.getValueAt(selectedRow, 2);&#xa;                Object soluong = tbl_NguyenLieu.getValueAt(selectedRow, 3);&#xa;                Object ngaynhap = tbl_NguyenLieu.getValueAt(selectedRow, 4);&#xa;                //Gan du lieu&#xa;                txt_MaNguyenLieu.setText(ma.toString());&#xa;                txt_TenNguyenLieu.setText(ten.toString());&#xa;                txt_DonGia.setText(dongia.toString());&#xa;                txt_SoLuong.setText(soluong.toString());&#xa;                txt_NgayNhap.setDate((Date)ngaynhap);&#xa;            }&#xa;        }&#xa;       }else {&#xa;            bttCapNhat.setEnabled(false);&#xa;            bttXoa.setEnabled(false);&#xa;            txt_MaNguyenLieu.setEnabled(true);&#xa;       }&#xa;   }&#xa;});"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
