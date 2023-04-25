@@ -33,7 +33,7 @@ public class NguyenLieuDAO {
         try{
            conn = ds.getConnection();
         }catch(Exception e){
-            e.printStackTrace();
+           e.printStackTrace();
         }
     }
     
