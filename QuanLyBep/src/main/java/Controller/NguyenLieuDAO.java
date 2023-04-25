@@ -98,7 +98,7 @@ public class NguyenLieuDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
+        }   
     }
     public boolean xoaNguyenLieu(int maNL) {
         String sql = "DELETE FROM tbl_NguyenLieu WHERE ID = ?";

@@ -4,10 +4,120 @@
  */
 package Controller;
 
+
+import Model.NhanVien;
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 /**
  *
  * @author anhtu
  */
 public class NhanVienDAO {
+    private Connection conn;
+    
+    public NhanVienDAO(){
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setUser("sa");
+        ds.setPassword("05052003");
+        ds.setServerName("NAT-Junimo\\NAT05");
+        ds.setPortNumber(1433);
+        ds.setDatabaseName("TestConnect");
+        ds.setEncrypt("false");
+        try{
+           conn = ds.getConnection();
+        }catch(Exception e){
+           e.printStackTrace();
+        }
+    }
+    
+    public ArrayList<NhanVien> getListNV(){
+        ArrayList<NhanVien> list = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_NhanVien";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                NhanVien NV = new NhanVien();
+                NV.setMaNV(rs.getString("Mã Nhân Viên"));
+                NV.setTenNV(rs.getString("Tên Nhân Viên"));
+                NV.setGioiTinh(rs.getBoolean("Giới Tính"));
+                NV.setTuoi(rs.getInt("Tuổi"));
+                NV.setsodienThoai(rs.getString("Số Điện Thoại"));
+                
+                list.add(NV);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    public boolean ThemNhanVien(NhanVien NV){
+        String sql = "INSERT INTO tbl_NhanVien(\"Mã Nhân Viên\", \"Tên Nhân Viên\", \"Giới Tính\", \"Tuổi\", \"Số Điện Thoại\") "
+                + "VALUES(?,?,?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,  NV.getMaNV());
+            ps.setString(2, NV.getTenNV());
+            ps.setBoolean(3, NV.getGioiTinh());
+            ps.setInt(4, NV.getTuoi());
+            ps.setString(5, NV.getsodienThoai());
+            
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean CapNhatNhanVien(NhanVien nv) {
+        String sql = "UPDATE tbl_NhanVien SET \"Tên Nhân Viên\"=?, \"Giới Tính\"=?, \"Tuổi\"=?, \"Số Điện Thoại\"=? "
+                + "WHERE \"Mã Nhân Viên\"=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // Thiết lập giá trị cho các tham số của câu lệnh SQL
+            ps.setString(1, nv.getTenNV());
+            ps.setBoolean(2, nv.getGioiTinh());
+            ps.setInt(3, nv.getTuoi());
+            ps.setString(4, nv.getsodienThoai());
+            ps.setString(5, nv.getMaNV());
+
+            // Thực hiện câu lệnh SQL
+            int rows = ps.executeUpdate();
+
+            // Nếu có ít nhất một hàng được cập nhật thành công, trả về true
+            return (rows > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean xoaNhanVien(String maNV) {
+        String sql = "DELETE FROM tbl_NhanVien WHERE \"Mã Nhân Viên\" = ?";
+        try {
+          
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, maNV);
+
+            // Execute the delete statement and get the number of affected rows
+            int rowAffected = ps.executeUpdate();
+
+            // Set the result to true if the number of affected rows is greater than 0
+            if (rowAffected > 0) {
+              return true;
+            }
+          } catch (Exception ex) {
+            ex.printStackTrace();
+          } 
+          return false;
+    }
+    
     
 }

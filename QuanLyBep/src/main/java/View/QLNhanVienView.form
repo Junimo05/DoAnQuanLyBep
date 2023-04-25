@@ -31,11 +31,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="dialoglbl_Luong" min="-2" pref="61" max="-2" attributes="0"/>
-                                  <Component id="dialoglbl_NgayCham" min="-2" pref="74" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="dialoglbl_NgayCham" min="-2" pref="74" max="-2" attributes="0"/>
+                              <EmptySpace min="15" pref="37" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -45,6 +42,10 @@
                                       <Component id="dialogbtt_Sua" min="-2" pref="80" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="dialoglbl_SoGioLam" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="dialoglbl_Luong" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -90,9 +91,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="dialogbtt_TimKiem" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="dialogbtt_Sua" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="dialogbtt_Sua" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="46" max="32767" attributes="0"/>
                   </Group>
@@ -118,7 +117,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="dialoglbl_Luong">
               <Properties>
-                <Property name="text" type="java.lang.String" value="L&#x1b0;&#x1a1;ng"/>
+                <Property name="text" type="java.lang.String" value="L&#x1b0;&#x1a1;ng Theo Gi&#x1edd;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="dialoglbl_NgayCham">
@@ -144,13 +143,13 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable2">
+            <Component class="javax.swing.JTable" name="tbl_ChamCong">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
                     <Column editable="false" title="M&#xe3; Nh&#xe2;n Vi&#xea;n" type="java.lang.Object"/>
                     <Column editable="false" title="S&#x1ed1; Gi&#x1edd; L&#xe0;m" type="java.lang.Object"/>
-                    <Column editable="false" title="L&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
+                    <Column editable="false" title="L&#x1b0;&#x1a1;ng Theo Gi&#x1edd;" type="java.lang.Object"/>
                     <Column editable="false" title="Ng&#xe0;y ch&#x1ea5;m" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -255,7 +254,7 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="602" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="596" max="32767" attributes="0"/>
                   <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -315,25 +314,16 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="btt_ThemNhanVien" min="-2" pref="75" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="btt_XoaNhanVien" min="-2" pref="83" max="-2" attributes="0"/>
-                                  <EmptySpace pref="32" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="btt_TimKiem" alignment="1" min="-2" pref="165" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btt_Sua" min="-2" pref="76" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btt_XoaNhapNhanVien" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btt_ThemNhanVien" max="32767" attributes="0"/>
+                              <Component id="btt_XoaNhapNhanVien" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btt_CapNhatNhanVien" min="-2" pref="83" max="-2" attributes="0"/>
+                              <Component id="btt_XoaNhanVien" min="-2" pref="83" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -371,16 +361,14 @@
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btt_ThemNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btt_XoaNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btt_CapNhatNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btt_Sua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btt_XoaNhapNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btt_XoaNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btt_TimKiem" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="120" max="32767" attributes="0"/>
+                  <EmptySpace pref="155" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -434,9 +422,9 @@
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="btt_Sua">
+        <Component class="javax.swing.JButton" name="btt_CapNhatNhanVien">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
+            <Property name="text" type="java.lang.String" value="C&#x1ead;p Nh&#x1ead;t"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="txt_GioiTinh">
@@ -451,11 +439,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JButton" name="btt_TimKiem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -508,6 +491,12 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_NhanVienMouseClicked"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="ListSelectionModel selectionModel = tbl_NhanVien.getSelectionModel();&#xa;&#xa;selectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!selectionModel.isSelectionEmpty()) {&#xa;        btt_CapNhatNhanVien.setEnabled(true);&#xa;        btt_XoaNhanVien.setEnabled(true);&#xa;        if(e.getValueIsAdjusting()){&#xa;            txt_MaNhanVien.setEnabled(false);&#xa;            int selectedRow = tbl_NhanVien.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //lay du lieu&#xa;                Object ma = tbl_NhanVien.getValueAt(selectedRow, 0);&#xa;                Object ten = tbl_NhanVien.getValueAt(selectedRow, 1);&#xa;                Object gioitinh = tbl_NhanVien.getValueAt(selectedRow, 2);&#xa;                Object tuoi = tbl_NhanVien.getValueAt(selectedRow, 3);&#xa;                Object sodt = tbl_NhanVien.getValueAt(selectedRow, 4);&#xa;                //Gan du lieu&#xa;                txt_MaNhanVien.setText(ma.toString());&#xa;                txt_HoVaTen.setText(ten.toString());&#xa;                txt_GioiTinh.setSelectedItem(gioitinh);&#xa;                txt_Tuoi.setText(tuoi.toString());&#xa;                txt_SoDienThoai.setText(sodt.toString());            }&#xa;        }&#xa;       }else {&#xa;            btt_CapNhatNhanVien.setEnabled(false);&#xa;            btt_XoaNhanVien.setEnabled(false);&#xa;            txt_MaNhanVien.setEnabled(true);&#xa;       }&#xa;   }&#xa;});"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

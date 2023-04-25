@@ -391,17 +391,19 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
     //Data is valid ?
     private String validateInputValues(String maNLStr, String tenNL, String giaNLStr, String soluongNLStr, Date ngayNhap) {
         if (!isNumeric(maNLStr)) {
-          return "Mã NL phải là số";
+          return "Mã Nguyên Liệu phải là số";
         }
 
         int maNL = Integer.parseInt(maNLStr);
 
         if (maNL <= 0) {
-          return "Mã NL phải lớn hơn 0";
+          return "Mã Nguyên Liệu phải lớn hơn 0";
         }
-
+        if(maNLStr.isEmpty()){
+            return "Mã Nguyên Liệu không được để trống";
+        }
         if (tenNL.isEmpty()) {
-          return "Tên NL không được để trống";
+          return "Tên Nguyên Liệu không được để trống";
         }
 
         if (!isNumeric(giaNLStr)) {
@@ -456,6 +458,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
     }
     
     public void bttXoaNhapClick(){
+        txt_MaNguyenLieu.setEnabled(true);
         txt_MaNguyenLieu.setText("");
         txt_TenNguyenLieu.setText("");
         txt_DonGia.setText("");
@@ -497,11 +500,12 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         
         if(new NguyenLieuDAO().CapNhatNguyenLieu(nl)) {
           JOptionPane.showMessageDialog(rootPane, "Cập Nhật Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+          loadTable();
+          bttXoaNhapClick();
         } else {
           JOptionPane.showMessageDialog(rootPane, "Cập Nhật Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        DefaultTableModel model = (DefaultTableModel) tbl_NguyenLieu.getModel();
-        loadTable();
+        
     }
     
     private void load(){
