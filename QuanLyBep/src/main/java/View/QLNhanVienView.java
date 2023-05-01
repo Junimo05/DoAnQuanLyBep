@@ -5,10 +5,12 @@
 package View;
 
 import Controller.NhanVienDAO;
+import Model.ChamCong;
 import Model.NhanVien;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -36,6 +38,9 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         btt_XoaNhanVien.addActionListener(this);
         btt_XoaNhapNhanVien.addActionListener(this);
         btt_CapNhatNhanVien.addActionListener(this);
+        dialogbtt_Sua.addActionListener(this);
+        dialogbtt_Xoa.addActionListener(this);
+        dialogbtt_XoaNhap.addActionListener(this);
         load();
     }
 
@@ -59,9 +64,12 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         dialoglbl_NgayCham = new javax.swing.JLabel();
         dialogtxt_NgayCham = new com.toedter.calendar.JDateChooser();
         dialogbtt_Sua = new javax.swing.JButton();
-        dialogbtt_TimKiem = new javax.swing.JButton();
+        dialogbtt_Xoa = new javax.swing.JButton();
+        dialogbtt_XoaNhap = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_ChamCong = new javax.swing.JTable();
+        dialogtxt_Search = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lbl_MaNhanVien = new javax.swing.JLabel();
         txt_MaNhanVien = new javax.swing.JTextField();
@@ -99,39 +107,43 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
 
         dialogbtt_Sua.setText("Sửa");
 
-        dialogbtt_TimKiem.setText("Tìm Kiếm");
+        dialogbtt_Xoa.setText("Xóa");
+
+        dialogbtt_XoaNhap.setText("Xóa Nhập");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(dialoglbl_NgayCham, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 37, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dialoglbl_MaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 25, Short.MAX_VALUE)
-                                .addComponent(dialogbtt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(dialoglbl_SoGioLam, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(dialoglbl_Luong)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(dialoglbl_NgayCham, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dialoglbl_Luong))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dialogtxt_MaNhanVien)
-                    .addComponent(dialogtxt_SoGioLam)
-                    .addComponent(dialogtxt_Luong)
-                    .addComponent(dialogtxt_NgayCham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dialogtxt_MaNhanVien)
+                            .addComponent(dialogtxt_SoGioLam)
+                            .addComponent(dialogtxt_Luong)
+                            .addComponent(dialogtxt_NgayCham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(dialogbtt_TimKiem)
-                        .addGap(0, 23, Short.MAX_VALUE)))
+                        .addGap(22, 22, 22)
+                        .addComponent(dialogbtt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(dialogbtt_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 74, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(dialogbtt_XoaNhap)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,24 +166,26 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
                     .addComponent(dialogtxt_NgayCham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dialogbtt_TimKiem)
-                    .addComponent(dialogbtt_Sua))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(dialogbtt_Sua)
+                    .addComponent(dialogbtt_Xoa))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dialogbtt_XoaNhap)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tbl_ChamCong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã Nhân Viên", "Số Giờ Làm", "Lương Theo Giờ", "Ngày chấm"
+                "STT", "Mã Nhân Viên", "Số Giờ Làm", "Lương Theo Giờ", "Ngày chấm"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -180,6 +194,11 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         });
         tbl_ChamCong.setColumnSelectionAllowed(true);
         tbl_ChamCong.getTableHeader().setReorderingAllowed(false);
+        tbl_ChamCong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_ChamCongMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_ChamCong);
         tbl_ChamCong.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_ChamCong.getColumnModel().getColumnCount() > 0) {
@@ -187,22 +206,83 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             tbl_ChamCong.getColumnModel().getColumn(1).setResizable(false);
             tbl_ChamCong.getColumnModel().getColumn(2).setResizable(false);
             tbl_ChamCong.getColumnModel().getColumn(3).setResizable(false);
+            tbl_ChamCong.getColumnModel().getColumn(4).setResizable(false);
         }
+        ListSelectionModel selectionModel2 = tbl_ChamCong.getSelectionModel();
+
+        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel2.isSelectionEmpty()) {
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Xoa.setEnabled(true);
+                    dialogtxt_MaNhanVien.setEnabled(false);
+                    dialogtxt_NgayCham.setEnabled(false);
+                    if (e.getValueIsAdjusting()) {
+                        int selectedRow = tbl_ChamCong.getSelectedRow();
+                        if (selectedRow != -1) {
+                            // Lấy dữ liệu từ bảng chấm công
+                            Object maNV = tbl_ChamCong.getValueAt(selectedRow, 1);
+                            Object soGioLam = tbl_ChamCong.getValueAt(selectedRow, 2);
+                            Object luongTheoGio = tbl_ChamCong.getValueAt(selectedRow, 3);
+                            Object ngayCham = tbl_ChamCong.getValueAt(selectedRow, 4);
+
+                            // Hiển thị dữ liệu lên các trường nhập liệu
+                            dialogtxt_MaNhanVien.setText(maNV.toString());
+                            dialogtxt_Luong.setText(luongTheoGio.toString());
+                            dialogtxt_SoGioLam.setText(soGioLam.toString());
+                            dialogtxt_NgayCham.setDate((Date) ngayCham);
+                        }
+                    }
+                } else {
+                    dialogbtt_Sua.setEnabled(false);
+                    dialogbtt_Xoa.setEnabled(false);
+                    dialogtxt_MaNhanVien.setEnabled(true);
+                    dialogtxt_NgayCham.setEnabled(true);
+                }
+            }
+        });
+
+        dialogtxt_Search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        dialogtxt_Search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                dialogtxt_SearchKeyReleased(evt);
+            }
+        });
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
+        jLabel3.setToolTipText("");
+        jLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabel3.setEnabled(false);
 
         javax.swing.GroupLayout dialog_ChamCongLayout = new javax.swing.GroupLayout(dialog_ChamCong.getContentPane());
         dialog_ChamCong.getContentPane().setLayout(dialog_ChamCongLayout);
         dialog_ChamCongLayout.setHorizontalGroup(
             dialog_ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialog_ChamCongLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(dialog_ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                    .addGroup(dialog_ChamCongLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dialogtxt_Search))))
         );
         dialog_ChamCongLayout.setVerticalGroup(
             dialog_ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialog_ChamCongLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(dialog_ChamCongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dialogtxt_Search, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
         );
+
+        dialog_ChamCong.pack();
+        dialog_ChamCong.setLocationRelativeTo(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -469,6 +549,12 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             bttXoaNhapNVClicked();
         }else if(e.getSource().equals(btt_CapNhatNhanVien)){
             bttCapNhatClicked();
+        }else if(e.getSource().equals(dialogbtt_Sua)){
+            dialogbtt_SuaClicked();
+        }else if(e.getSource().equals(dialogbtt_Xoa)){
+            dialogbtt_XoaClicked();
+        }else if(e.getSource().equals(dialogbtt_XoaNhap)){
+            dialogbtt_XoaNhapClicked();
         }
     }
     
@@ -500,7 +586,7 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         
         if(new NhanVienDAO().ThemNhanVien(nv)) { // Thêm nhân viên thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm nhân viên thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadTable();            
+            loadTableNV();            
         } else { // Thêm nhân viên không thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm nhân viên không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -554,7 +640,7 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             int selectedIndex = tbl_NhanVien.getSelectedRow();
             if(selectedIndex >= 0){
                 model.removeRow(selectedIndex);
-                loadTable();
+                loadTableNV();
                 bttXoaNhapNVClicked();
             }
         } else {
@@ -596,7 +682,7 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
 
         if(new NhanVienDAO().CapNhatNhanVien(nv)) { // Cập nhật nhân viên thành công
             JOptionPane.showMessageDialog(rootPane, "Cập nhật nhân viên thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadTable();
+            loadTableNV();
             bttXoaNhapNVClicked();
         } else { // Cập nhật nhân viên không thành công
             JOptionPane.showMessageDialog(rootPane, "Cập nhật nhân viên không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -608,10 +694,10 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
     private void load(){
         btt_CapNhatNhanVien.setEnabled(false);
         btt_XoaNhanVien.setEnabled(false);
-        loadTable();
+        loadTableNV();
     }
     
-    private void loadTable(){
+    private void loadTableNV(){
         list = new NhanVienDAO().getListNV();
         DefaultTableModel model = (DefaultTableModel) tbl_NhanVien.getModel();
         model.setRowCount(0);
@@ -627,6 +713,23 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             });
         }
         
+    }
+    
+    private void loadTableChamCong(String ma){
+        dialogbtt_Sua.setEnabled(false);
+        dialogbtt_Xoa.setEnabled(false);
+        ArrayList<ChamCong> list = new NhanVienDAO().getListChamCong(ma);
+        DefaultTableModel model = (DefaultTableModel) tbl_ChamCong.getModel();
+        model.setRowCount(0);
+        int n = list.size()-1;
+        int count = 1;
+        for(int i = 0 ; i <= n; i++){
+            ChamCong tmp = list.get(i);
+            model.addRow(new Object[]{
+                count, tmp.getmaNV(), tmp.getgioLam(), tmp.getLuongTheoGio(), tmp.getngayLam()
+            });
+            count++;
+        }
     }
     
     private void btt_QLSuatAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_QLSuatAnMouseClicked
@@ -652,6 +755,8 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));// Lọc các hàng trên bảng theo chuỗi tìm kiếm, không phân biệt hoa thường
     }//GEN-LAST:event_txt_SearchKeyReleased
     
+    
+    
     Set<Integer> selectedRows = new HashSet<>();
     Set<Integer> selectedCols = new HashSet<>();
     private void tbl_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_NhanVienMouseClicked
@@ -659,7 +764,11 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         int col = tbl_NhanVien.columnAtPoint(evt.getPoint());
         
         // Check if the cell is valid and left mouse button is clicked
-        if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+        if(evt.getClickCount() == 2){
+            dialog_ChamCong.setVisible(true);
+            String ma = tbl_NhanVien.getValueAt(row, 0).toString();
+            loadTableChamCong(ma);  
+        }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
             if (selectedRows.contains(row) && selectedCols.contains(col)) {
                 tbl_NhanVien.removeRowSelectionInterval(row, row);
@@ -675,10 +784,136 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
                 selectedCols.add(col);
             }
         }
-
     }//GEN-LAST:event_tbl_NhanVienMouseClicked
+    
+    private void dialogtxt_SearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dialogtxt_SearchKeyReleased
+        String keyword = dialogtxt_Search.getText().toLowerCase(); // Lấy giá trị đã nhập và chuyển đổi sang chữ thường
+        DefaultTableModel tableModel = (DefaultTableModel) tbl_ChamCong.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel); // Tạo đối tượng RowSorter để sắp xếp và lọc dữ liệu trên bảng
+        tbl_ChamCong.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));// Lọc các hàng trên bảng theo chuỗi tìm kiếm, không phân biệt hoa thường
+    }//GEN-LAST:event_dialogtxt_SearchKeyReleased
 
+    private void tbl_ChamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChamCongMouseClicked
+        int row = tbl_ChamCong.rowAtPoint(evt.getPoint());
+        int col = tbl_ChamCong.columnAtPoint(evt.getPoint());
+        
+        if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+            // If cell is already selected and isSelected is true, then deselect it
+            if (selectedRows2.contains(row) && selectedCols2.contains(col)) {
+                tbl_ChamCong.removeRowSelectionInterval(row, row);
+                tbl_ChamCong.removeColumnSelectionInterval(col, col);
+                selectedRows2.remove(row);
+                selectedCols2.remove(col);
+                bttXoaNhapNVClicked();
+            } else {
+                // Otherwise, select the cell
+                tbl_ChamCong.addRowSelectionInterval(row, row);
+                tbl_ChamCong.addColumnSelectionInterval(col, col);
+                selectedRows2.add(row);
+                selectedCols2.add(col);
+            }
+        }
+    }//GEN-LAST:event_tbl_ChamCongMouseClicked
+    
+    Set<Integer> selectedRows2 = new HashSet<>();
+    Set<Integer> selectedCols2 = new HashSet<>();    
+    private String validateInputValues(String maNVStr, String soGioLamStr, String luongTheoGioStr, java.sql.Date ngayCham) {
+        if (maNVStr.isEmpty() || soGioLamStr.isEmpty() || luongTheoGioStr.isEmpty() || ngayCham == null) {
+            return "Vui lòng điền đầy đủ thông tin";
+        }
 
+        try {
+            Integer.parseInt(maNVStr);
+        } catch (NumberFormatException e) {
+            return "Mã nhân viên phải là một số nguyên";
+        }
+
+        try {
+            Integer.parseInt(soGioLamStr);
+        } catch (NumberFormatException e) {
+            return "Số giờ làm phải là một số nguyên";
+        }
+
+        try {
+            Double.parseDouble(luongTheoGioStr);
+        } catch (NumberFormatException e) {
+            return "Lương theo giờ phải là một số";
+        }
+
+        return null; // Trả về null nếu không có lỗi
+    }
+    
+    private void dialogbtt_SuaClicked() {
+        ChamCong cc = new ChamCong();
+        String maNVStr = dialogtxt_MaNhanVien.getText();
+        String soGioLamStr = dialogtxt_SoGioLam.getText();
+        String luongTheoGioStr = dialogtxt_Luong.getText();
+        Date selectedDate = dialogtxt_NgayCham.getDate();
+
+        java.sql.Date ngayCham = null; 
+        if (selectedDate != null) {
+            // Chuyển đổi Date thành java.sql.Date
+            ngayCham = new java.sql.Date(selectedDate.getTime());
+        }
+
+        // Validate input values
+        String errorMessage = validateInputValues(maNVStr, soGioLamStr, luongTheoGioStr, ngayCham);
+        if (errorMessage != null) {
+          JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
+          return;
+        }
+
+        int maNV = Integer.parseInt(maNVStr);
+        int soGioLam = Integer.parseInt(soGioLamStr);
+        double luongTheoGio = Double.parseDouble(luongTheoGioStr);
+
+        cc.setmaNV(maNVStr);
+        cc.setgioLam(soGioLam);
+        cc.setLuongTheoGio(luongTheoGio);
+        cc.setngayLam(ngayCham);
+
+        if(new NhanVienDAO().capNhatChamCong(cc)) {
+          JOptionPane.showMessageDialog(rootPane, "Cập Nhật Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+          loadTableChamCong(maNVStr);
+          dialogbtt_XoaNhapClicked();
+        } else {
+          JOptionPane.showMessageDialog(rootPane, "Cập Nhật Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void dialogbtt_XoaClicked() {
+        String maNV = dialogtxt_MaNhanVien.getText();
+        Date selectedDate = dialogtxt_NgayCham.getDate();
+        java.sql.Date ngayCham = null; 
+        if (selectedDate != null) {
+            // Chuyển đổi Date thành java.sql.Date
+            ngayCham = new java.sql.Date(selectedDate.getTime());
+        }
+        if(new NhanVienDAO().xoaChamCong(maNV,ngayCham)) {
+            JOptionPane.showMessageDialog(rootPane, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            
+            //Update
+            DefaultTableModel model = (DefaultTableModel) tbl_ChamCong.getModel();
+            int selectedIndex = tbl_ChamCong.getSelectedRow();
+            if(selectedIndex >= 0){
+                model.removeRow(selectedIndex);
+                loadTableChamCong(maNV);
+                dialogbtt_XoaNhapClicked();
+            }
+        } else {
+          JOptionPane.showMessageDialog(rootPane, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void dialogbtt_XoaNhapClicked(){
+        dialogtxt_MaNhanVien.setEnabled(true);
+        dialogtxt_NgayCham.setEnabled(true);
+        dialogtxt_MaNhanVien.setText("");
+        dialogtxt_SoGioLam.setText("");
+        dialogtxt_Luong.setText("");
+        dialogtxt_NgayCham.setDate(null);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btt_CapNhatNhanVien;
     private javax.swing.JMenu btt_QLMonAn;
@@ -690,7 +925,8 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
     private javax.swing.JButton btt_XoaNhapNhanVien;
     private javax.swing.JDialog dialog_ChamCong;
     private javax.swing.JButton dialogbtt_Sua;
-    private javax.swing.JButton dialogbtt_TimKiem;
+    private javax.swing.JButton dialogbtt_Xoa;
+    private javax.swing.JButton dialogbtt_XoaNhap;
     private javax.swing.JLabel dialoglbl_Luong;
     private javax.swing.JLabel dialoglbl_MaNhanVien;
     private javax.swing.JLabel dialoglbl_NgayCham;
@@ -698,8 +934,10 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
     private javax.swing.JTextField dialogtxt_Luong;
     private javax.swing.JTextField dialogtxt_MaNhanVien;
     private com.toedter.calendar.JDateChooser dialogtxt_NgayCham;
+    private javax.swing.JTextField dialogtxt_Search;
     private javax.swing.JTextField dialogtxt_SoGioLam;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -722,5 +960,4 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
     private javax.swing.JTextField txt_Tuoi;
     // End of variables declaration//GEN-END:variables
 
-    
 }

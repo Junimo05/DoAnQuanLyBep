@@ -5,6 +5,7 @@
 package Controller;
 
 
+import Model.ChamCong;
 import Model.NhanVien;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
@@ -119,5 +120,65 @@ public class NhanVienDAO {
           return false;
     }
     
+    public ArrayList<ChamCong> getListChamCong(String MaNV){
+        ArrayList<ChamCong> list = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_ChamCong WHERE \"Mã Nhân Viên\" = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, MaNV);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ChamCong tmp = new ChamCong();
+                tmp.setmaNV(rs.getString("Mã Nhân Viên"));
+                tmp.setgioLam(rs.getInt("Số Giờ Làm"));
+                tmp.setLuongTheoGio(rs.getFloat("Lương Theo Giờ"));
+                tmp.setngayLam(rs.getDate("Ngày Chấm"));
+                
+                list.add(tmp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     
+    public boolean capNhatChamCong(ChamCong cc) {
+        String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=? AND \"Ngày Chấm\"=?";
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, cc.getgioLam());
+            ps.setDouble(2, cc.getLuongTheoGio());
+            ps.setString(3, cc.getmaNV());
+            ps.setDate(4, cc.getngayLam());
+            
+            int rows = ps.executeUpdate();
+
+            return (rows > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean xoaChamCong(String maNV, Date ngayCham) {
+    String sql = "DELETE FROM tbl_ChamCong WHERE \"Mã Nhân Viên\" = ? AND \"Ngày Chấm\" = ?";
+    try {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, maNV);
+        ps.setDate(2, new java.sql.Date(ngayCham.getTime()));
+
+        // Execute the delete statement and get the number of affected rows
+        int rowAffected = ps.executeUpdate();
+
+        // Set the result to true if the number of affected rows is greater than 0
+        if (rowAffected > 0) {
+            return true;
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    } 
+    return false;
+}
 }

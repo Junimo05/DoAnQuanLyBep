@@ -576,7 +576,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
             }
         }
     }//GEN-LAST:event_tbl_NguyenLieuMouseClicked
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DonGia_lbl;

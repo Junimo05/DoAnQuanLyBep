@@ -3,21 +3,40 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Container class="javax.swing.JDialog" name="dialog_ChamCong">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="dialog_ChamCong.pack();&#xa;dialog_ChamCong.setLocationRelativeTo(null);"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="481" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane2" alignment="0" pref="481" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel3" min="-2" pref="22" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="dialogtxt_Search" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel2" max="32767" attributes="0"/>
-              <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="dialogtxt_Search" alignment="1" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" pref="186" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -28,40 +47,42 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="dialoglbl_NgayCham" min="-2" pref="74" max="-2" attributes="0"/>
-                              <EmptySpace min="15" pref="37" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="dialoglbl_MaNhanVien" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="25" max="32767" attributes="0"/>
-                                      <Component id="dialogbtt_Sua" min="-2" pref="80" max="-2" attributes="0"/>
-                                  </Group>
                                   <Component id="dialoglbl_SoGioLam" alignment="1" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="dialoglbl_Luong" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="dialoglbl_NgayCham" alignment="0" min="-2" pref="74" max="-2" attributes="0"/>
+                                          <Component id="dialoglbl_Luong" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="dialogtxt_MaNhanVien" max="32767" attributes="0"/>
+                                  <Component id="dialogtxt_SoGioLam" max="32767" attributes="0"/>
+                                  <Component id="dialogtxt_Luong" max="32767" attributes="0"/>
+                                  <Component id="dialogtxt_NgayCham" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dialogtxt_MaNhanVien" max="32767" attributes="0"/>
-                          <Component id="dialogtxt_SoGioLam" max="32767" attributes="0"/>
-                          <Component id="dialogtxt_Luong" max="32767" attributes="0"/>
-                          <Component id="dialogtxt_NgayCham" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="dialogbtt_TimKiem" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <Component id="dialogbtt_Sua" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="dialogbtt_Xoa" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="74" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="dialogbtt_XoaNhap" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -90,10 +111,12 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dialogbtt_TimKiem" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="dialogbtt_Sua" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogbtt_Xoa" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="dialogbtt_XoaNhap" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -132,9 +155,14 @@
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="dialogbtt_TimKiem">
+            <Component class="javax.swing.JButton" name="dialogbtt_Xoa">
               <Properties>
-                <Property name="text" type="java.lang.String" value="T&#xec;m Ki&#x1ebf;m"/>
+                <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="dialogbtt_XoaNhap">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="X&#xf3;a Nh&#x1ead;p"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -146,15 +174,21 @@
             <Component class="javax.swing.JTable" name="tbl_ChamCong">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
+                  <Table columnCount="5" rowCount="4">
+                    <Column editable="false" title="STT" type="java.lang.Object"/>
                     <Column editable="false" title="M&#xe3; Nh&#xe2;n Vi&#xea;n" type="java.lang.Object"/>
                     <Column editable="false" title="S&#x1ed1; Gi&#x1edd; L&#xe0;m" type="java.lang.Object"/>
                     <Column editable="false" title="L&#x1b0;&#x1a1;ng Theo Gi&#x1edd;" type="java.lang.Object"/>
                     <Column editable="false" title="Ng&#xe0;y ch&#x1ea5;m" type="java.lang.Object"/>
                   </Table>
                 </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="ListSelectionModel selectionModel2 = tbl_ChamCong.getSelectionModel();&#xa;&#xa;selectionModel2.addListSelectionListener(new ListSelectionListener() {&#xa;    public void valueChanged(ListSelectionEvent e) {&#xa;        if (!selectionModel2.isSelectionEmpty()) {&#xa;            dialogbtt_Sua.setEnabled(true);&#xa;            dialogbtt_Xoa.setEnabled(true);&#xa;            dialogtxt_MaNhanVien.setEnabled(false);&#xa;            dialogtxt_NgayCham.setEnabled(false);&#xa;            if (e.getValueIsAdjusting()) {&#xa;                int selectedRow = tbl_ChamCong.getSelectedRow();&#xa;                if (selectedRow != -1) {&#xa;                    // L&#x1ea5;y d&#x1eef; li&#x1ec7;u t&#x1eeb; b&#x1ea3;ng ch&#x1ea5;m c&#xf4;ng&#xa;                    Object maNV = tbl_ChamCong.getValueAt(selectedRow, 1); &#xa;                    Object soGioLam = tbl_ChamCong.getValueAt(selectedRow, 2); &#xa;                    Object luongTheoGio = tbl_ChamCong.getValueAt(selectedRow, 3); &#xa;                    Object ngayCham = tbl_ChamCong.getValueAt(selectedRow, 4); &#xa;&#xa;                    // Hi&#x1ec3;n th&#x1ecb; d&#x1eef; li&#x1ec7;u l&#xea;n c&#xe1;c tr&#x1b0;&#x1edd;ng nh&#x1ead;p li&#x1ec7;u&#xa;                    dialogtxt_MaNhanVien.setText(maNV.toString());&#xa;                    dialogtxt_Luong.setText(luongTheoGio.toString());&#xa;                    dialogtxt_SoGioLam.setText(soGioLam.toString());&#xa;                    dialogtxt_NgayCham.setDate((Date) ngayCham); &#xa;                }&#xa;            }&#xa;        } else {&#xa;            dialogbtt_Sua.setEnabled(false);&#xa;            dialogbtt_Xoa.setEnabled(false);&#xa;            dialogtxt_MaNhanVien.setEnabled(true);&#xa;            dialogtxt_NgayCham.setEnabled(true);&#xa;        }&#xa;    }&#xa;});">
                   <TableColumnModel selectionModel="1">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
@@ -182,9 +216,38 @@
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_ChamCongMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="dialogtxt_Search">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dialogtxt_SearchKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel3">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/search.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                <BevelBorder/>
+              </Border>
+            </Property>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">

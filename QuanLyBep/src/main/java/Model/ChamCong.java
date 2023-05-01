@@ -1,19 +1,20 @@
 package Model;
 import java.sql.Date;
 public class ChamCong {
-    private Date ngayLam;
+    private String maNV;
     private int soGioLam;
     private double luongTheoGio;
-    private String maNV;
+    private Date ngayLam;
     
     public ChamCong(){
         
     }
-    
-    public ChamCong(int  soGioLam, Date ngayLam, String maNV){
-            this.soGioLam = soGioLam;
-            this.ngayLam = ngayLam;
-            this.maNV = maNV;
+
+    public ChamCong(String maNV, int soGioLam, double luongTheoGio, Date ngayLam) {
+        this.maNV = maNV;
+        this.soGioLam = soGioLam;
+        this.luongTheoGio = luongTheoGio;
+        this.ngayLam = ngayLam;
     }
 
     //Get Set()
