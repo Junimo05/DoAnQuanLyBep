@@ -4,16 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MonAn{
-    private int maMon;
+    private String maMon;
     private String tenMon;
-    private int dongia;
+    private Double dongia;
     private Map<NguyenLieu, Integer> NLYeuCau; 
     
     //Khoi Tao
     public MonAn(){
     }
     
-    public MonAn(int maMon, String tenMon, int dongia) {
+    public MonAn(String maMon, String tenMon, Double dongia) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.dongia = dongia;
@@ -67,11 +67,11 @@ public class MonAn{
         return true;
     }
     //Get Set
-    public int getMaMon() {
+    public String getMaMon() {
         return maMon;
     }
 
-    public void setmaMon(int maMon) {
+    public void setmaMon(String maMon) {
         this.maMon = maMon;
     }
 
@@ -83,11 +83,11 @@ public class MonAn{
         this.tenMon = tenMon;
     }
     
-    public int getdongia(){
+    public Double getdongia(){
     	return dongia;
     }
     
-    public void setgia(int dongia){
+    public void setgia(Double dongia){
     	this.dongia = dongia;
     }
     

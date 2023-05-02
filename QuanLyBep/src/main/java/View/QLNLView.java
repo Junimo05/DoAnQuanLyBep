@@ -369,7 +369,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
 
         // Set input values to NguyenLieu instance
         int maNL = Integer.parseInt(maNLStr);
-        int giaNL = Integer.parseInt(giaNLStr);
+        double giaNL = Double.parseDouble(giaNLStr);
         int soluongNL = Integer.parseInt(soluongNLStr);
 
         nl.setMaNL(maNL);
@@ -489,7 +489,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         }
         
         int maNL = Integer.parseInt(maNLStr);
-        int giaNL = Integer.parseInt(giaNLStr);
+        double giaNL = Double.parseDouble(giaNLStr);
         int soluongNL = Integer.parseInt(soluongNLStr);
 
         nl.setMaNL(maNL);

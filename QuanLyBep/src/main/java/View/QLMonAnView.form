@@ -12,9 +12,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="dialog_Panel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="dialog_ScrollPane" pref="589" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="dialog_ScrollPane" pref="587" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -40,42 +40,40 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lbl_TenNguyenLieu" alignment="0" pref="99" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lbl_TenNguyenLieu" alignment="0" pref="93" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lbl_MaMonAnDialog" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbl_MaNguyenLieu" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbl_ID" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                                   <Component id="lbl_SoLuong" alignment="0" min="-2" pref="75" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btt_SuaDialog" max="32767" attributes="0"/>
-                                  <Component id="btt_NhapDialog" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="dialogbtt_XoaNhap" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dialogbtt_Nhap" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txt_SoLuong" pref="117" max="32767" attributes="0"/>
-                              <Component id="txt_TenNguyenLieu" max="32767" attributes="0"/>
-                              <Component id="txt_ID" max="32767" attributes="0"/>
-                              <Component id="txt_MaNguyenLieu" max="32767" attributes="0"/>
-                              <Component id="txt_MaMonAnDialog" max="32767" attributes="0"/>
+                              <Component id="dialogtxt_SoLuong" pref="117" max="32767" attributes="0"/>
+                              <Component id="dialogtxt_TenNguyenLieu" max="32767" attributes="0"/>
+                              <Component id="dialogtxt_MaNguyenLieu" max="32767" attributes="0"/>
+                              <Component id="dialogtxt_MaMonAn" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btt_XoaNhapDialog" max="32767" attributes="0"/>
-                                  <Component id="btt_XoaDialog" max="32767" attributes="0"/>
+                                  <Component id="dialogbtt_Sua" max="32767" attributes="0"/>
+                                  <Component id="dialogbtt_Xoa" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -85,40 +83,35 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lbl_ID" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_ID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_MaMonAnDialog" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_MaMonAnDialog" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogtxt_MaMonAn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_MaNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_MaNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogtxt_MaNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_TenNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_TenNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogtxt_TenNguyenLieu" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbl_SoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txt_SoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogtxt_SoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btt_NhapDialog" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btt_XoaDialog" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogbtt_Nhap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogbtt_Sua" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btt_SuaDialog" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btt_XoaNhapDialog" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogbtt_XoaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dialogbtt_Xoa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -126,13 +119,6 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lbl_ID">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="ID"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txt_ID">
-            </Component>
             <Component class="javax.swing.JLabel" name="lbl_MaMonAnDialog">
               <Properties>
                 <Property name="text" type="java.lang.String" value="M&#xe3; M&#xf3;n &#x102;n"/>
@@ -153,15 +139,15 @@
                 <Property name="text" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_MaMonAnDialog">
+            <Component class="javax.swing.JTextField" name="dialogtxt_MaMonAn">
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_MaNguyenLieu">
+            <Component class="javax.swing.JTextField" name="dialogtxt_MaNguyenLieu">
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_TenNguyenLieu">
+            <Component class="javax.swing.JTextField" name="dialogtxt_TenNguyenLieu">
             </Component>
-            <Component class="javax.swing.JTextField" name="txt_SoLuong">
+            <Component class="javax.swing.JTextField" name="dialogtxt_SoLuong">
             </Component>
-            <Component class="javax.swing.JButton" name="btt_NhapDialog">
+            <Component class="javax.swing.JButton" name="dialogbtt_Nhap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nh&#x1ead;p"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -169,12 +155,12 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btt_XoaDialog">
+            <Component class="javax.swing.JButton" name="dialogbtt_Xoa">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btt_SuaDialog">
+            <Component class="javax.swing.JButton" name="dialogbtt_Sua">
               <Properties>
                 <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -182,7 +168,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btt_XoaNhapDialog">
+            <Component class="javax.swing.JButton" name="dialogbtt_XoaNhap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="X&#xf3;a Nh&#x1ead;p"/>
               </Properties>
@@ -202,7 +188,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable2">
+            <Component class="javax.swing.JTable" name="tbl_SuaNguyenLieu">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="4">
@@ -545,7 +531,7 @@
                 <Column editable="false" title="&#x110;&#x1a1;n Gi&#xe1; " type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="ListSelectionModel selectionModel = tbl_QLMonAn.getSelectionModel();&#xa;&#xa;selectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!selectionModel.isSelectionEmpty()) {&#xa;        btt_Sua.setEnabled(true);&#xa;        btt_Xoa.setEnabled(true);&#xa;        if(e.getValueIsAdjusting()){&#xa;            txt_MaMonAn.setEnabled(false);&#xa;            int selectedRow = tbl_QLMonAn.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //l&#x1ea5;y d&#x1eef; li&#x1ec7;u&#xa;                Object ma = tbl_QLMonAn.getValueAt(selectedRow, 0);&#xa;                Object ten = tbl_QLMonAn.getValueAt(selectedRow, 1);&#xa;                Object dongia = tbl_QLMonAn.getValueAt(selectedRow, 2);&#xa;&#xa;                //g&#xe1;n d&#x1eef; li&#x1ec7;u&#xa;                txt_MaMonAn.setText(ma.toString());&#xa;                txt_TenMonAn.setText(ten.toString());&#xa;                txt_DonGia.setText(dongia.toString());&#xa;            }&#xa;        }&#xa;       }else {&#xa;            btt_Sua.setEnabled(true);&#xa;            btt_Xoa.setEnabled(true);&#xa;            txt_MaMonAn.setEnabled(true);&#xa;       }&#xa;   }&#xa;});">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
@@ -569,6 +555,9 @@
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_QLMonAnMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

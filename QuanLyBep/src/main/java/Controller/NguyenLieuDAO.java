@@ -48,7 +48,7 @@ public class NguyenLieuDAO {
                 NguyenLieu NL = new NguyenLieu();
                 NL.setMaNL(rs.getInt("ID"));
                 NL.setTenNL(rs.getString("Tên Nguyên Liệu"));
-                NL.setGiaNL(rs.getInt("Đơn Giá"));
+                NL.setGiaNL(rs.getDouble("Đơn Giá"));
                 NL.setSoluongNL(rs.getInt("Số Lượng"));
                 NL.setNgay(rs.getDate("Ngày Nhập"));
                 
@@ -67,7 +67,7 @@ public class NguyenLieuDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,  NL.getMaNL());
             ps.setString(2, NL.getTenNL());
-            ps.setInt(3, NL.getGiaNL());
+            ps.setDouble(3, NL.getGiaNL());
             ps.setInt(4, NL.getSoluongNL());
             ps.setDate(5, new Date(NL.getNgay().getTime()));
             
@@ -85,7 +85,7 @@ public class NguyenLieuDAO {
 
             // Thiết lập giá trị cho các tham số của câu lệnh SQL
             ps.setString(1, nl.getTenNL());
-            ps.setInt(2, nl.getGiaNL());
+            ps.setDouble(2, nl.getGiaNL());
             ps.setInt(3, nl.getSoluongNL());
             ps.setDate(4, nl.getNgay());
             ps.setInt(5, nl.getMaNL());

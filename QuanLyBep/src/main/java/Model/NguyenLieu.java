@@ -6,13 +6,13 @@ public class NguyenLieu{
     private String tenNL;
     private Date ngay; 
     private int soluongNL;
-    private int giaNL;
+    private Double giaNL;
     
     //Khởi Tạo
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL, int soluongNL, int giaNL, Date ngay) {
+    public NguyenLieu(int maNL, String tenNL, int soluongNL, Double giaNL, Date ngay) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;
@@ -63,10 +63,10 @@ public class NguyenLieu{
     public void setSoluongNL(int soluongNL) {
             this.soluongNL = soluongNL;
     }
-    public int getGiaNL() {
+    public Double getGiaNL() {
             return giaNL;
     }
-    public void setGiaNL(int giaNL) {
+    public void setGiaNL(Double giaNL) {
             this.giaNL = giaNL;
     }
     
