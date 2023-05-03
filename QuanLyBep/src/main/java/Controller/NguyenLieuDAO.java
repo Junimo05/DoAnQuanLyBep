@@ -28,7 +28,7 @@ public class NguyenLieuDAO {
         ds.setPassword("05052003");
         ds.setServerName("NAT-Junimo\\NAT05");
         ds.setPortNumber(1433);
-        ds.setDatabaseName("TestConnect");
+        ds.setDatabaseName("QLBA");
         ds.setEncrypt("false");
         try{
            conn = ds.getConnection();
@@ -46,10 +46,10 @@ public class NguyenLieuDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 NguyenLieu NL = new NguyenLieu();
-                NL.setMaNL(rs.getInt("ID"));
+                NL.setMaNL(rs.getInt("Mã Nguyên Liệu"));
                 NL.setTenNL(rs.getString("Tên Nguyên Liệu"));
                 NL.setGiaNL(rs.getDouble("Đơn Giá"));
-                NL.setSoluongNL(rs.getInt("Số Lượng"));
+                NL.setSoluongNL(rs.getInt("Khối Lượng(kg)"));
                 NL.setNgay(rs.getDate("Ngày Nhập"));
                 
                 list.add(NL);
@@ -61,7 +61,7 @@ public class NguyenLieuDAO {
     }
     
     public boolean ThemNguyenLieu(NguyenLieu NL){
-        String sql = "INSERT INTO tbl_NguyenLieu(ID, \"Tên Nguyên Liệu\", \"Đơn Giá\", \"Số Lượng\", \"Ngày Nhập\") "
+        String sql = "INSERT INTO tbl_NguyenLieu(\"Mã Nguyên Liệu\", \"Tên Nguyên Liệu\", \"Đơn Giá\", \"Khối Lượng(kg)\", \"Ngày Nhập\") "
                 + "VALUES(?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -79,7 +79,8 @@ public class NguyenLieuDAO {
     }
     
     public boolean CapNhatNguyenLieu(NguyenLieu nl) {
-        String sql = "UPDATE tbl_NguyenLieu SET \"Tên Nguyên Liệu\"=?, \"Đơn Giá\"=?, \"Số Lượng\"=?, \"Ngày Nhập\"=? WHERE ID=?";
+        String sql = "UPDATE tbl_NguyenLieu SET \"Tên Nguyên Liệu\"=?, \"Đơn Giá\"=?, \"Khối Lượng(kg)\"=?, \"Ngày Nhập\"=? "
+                + "WHERE \"Mã Nguyên Liệu\"=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -101,7 +102,7 @@ public class NguyenLieuDAO {
         }   
     }
     public boolean xoaNguyenLieu(int maNL) {
-        String sql = "DELETE FROM tbl_NguyenLieu WHERE ID = ?";
+        String sql = "DELETE FROM tbl_NguyenLieu WHERE \"Mã Nguyên Liệu\" = ?";
         try {
           
             PreparedStatement ps = conn.prepareStatement(sql);

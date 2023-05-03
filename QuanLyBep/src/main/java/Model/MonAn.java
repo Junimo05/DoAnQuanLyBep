@@ -2,21 +2,24 @@ package Model;
 import Model.NguyenLieu;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MonAn{
     private String maMon;
     private String tenMon;
     private Double dongia;
+    private int soLuong;
     private Map<NguyenLieu, Integer> NLYeuCau; 
     
     //Khoi Tao
     public MonAn(){
     }
     
-    public MonAn(String maMon, String tenMon, Double dongia) {
+    public MonAn(String maMon, String tenMon, int soLuong, Double dongia) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.dongia = dongia;
+        this.soLuong = soLuong;
         this.NLYeuCau = new HashMap<NguyenLieu, Integer>();
     }
     
@@ -24,16 +27,23 @@ public class MonAn{
         this.tenMon = tenMon;
     }
     //Add Del Print
-    public void addUpNL(NguyenLieu name, int tieuThu){
-        if(this.NLYeuCau.containsKey(name)){
-            this.NLYeuCau.remove(name);
+    public void addUpNL(int ma, int tieuThu){
+        for(NguyenLieu key : NLYeuCau.keySet()){
+            if(key.getMaNL() == ma){
+                this.NLYeuCau.remove(key);
+            }
+            this.NLYeuCau.put(key, tieuThu);
+            break;
         }
-        this.NLYeuCau.put(name, tieuThu);
+        
     }
     
-    public void delNL(NguyenLieu name, int tieuThu){
-        if(this.NLYeuCau.containsKey(name)){
-            this.NLYeuCau.remove(name);
+    public void delNL(int ma){
+        for(NguyenLieu key : NLYeuCau.keySet()){
+            if(key.getMaNL() == ma){
+                this.NLYeuCau.remove(key);
+                break;
+            }
         }
     }
     
@@ -67,6 +77,15 @@ public class MonAn{
         return true;
     }
     //Get Set
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+    
     public String getMaMon() {
         return maMon;
     }
@@ -94,13 +113,8 @@ public class MonAn{
     //HashCode equals toString
 
     @Override
-    public String toString() {
-        return "MonAn{" + "tenMon=" + tenMon + ", maSuat=" + maMon + ", dongia=" + dongia + '}';
-    }
-     
-    @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 7;
         return hash;
     }
 
@@ -116,12 +130,9 @@ public class MonAn{
             return false;
         }
         final MonAn other = (MonAn) obj;
-        if (this.maMon != other.maMon) {
-            return false;
-        }
-        return (this.tenMon == null) ? (other.tenMon == null) : this.tenMon.equals(other.tenMon);
+        return Objects.equals(this.maMon, other.maMon);
     }
-    
+   
 }
    
 

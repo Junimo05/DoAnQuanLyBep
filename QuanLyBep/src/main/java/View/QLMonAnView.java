@@ -5,7 +5,9 @@
 package View;
 
 import Controller.MonAnDAO;
+import Controller.NguyenLieuDAO;
 import Model.MonAn;
+import Model.NguyenLieu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ import javax.swing.table.TableRowSorter;
  */
 public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private MonAn monAn;
-    private ArrayList<MonAn> list = new MonAnDAO().getListMA();
+    private ArrayList<MonAn> listMA = new MonAnDAO().getListMA();
+    private ArrayList<NguyenLieu> listNL = new NguyenLieuDAO().getListNL();
     /**
      * Creates new form QLMonAnView
      */
@@ -56,11 +59,9 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         dialog_Panel = new javax.swing.JPanel();
         lbl_MaMonAnDialog = new javax.swing.JLabel();
         lbl_MaNguyenLieu = new javax.swing.JLabel();
-        lbl_TenNguyenLieu = new javax.swing.JLabel();
-        lbl_SoLuong = new javax.swing.JLabel();
+        dialoglbl_SoLuong = new javax.swing.JLabel();
         dialogtxt_MaMonAn = new javax.swing.JTextField();
         dialogtxt_MaNguyenLieu = new javax.swing.JTextField();
-        dialogtxt_TenNguyenLieu = new javax.swing.JTextField();
         dialogtxt_SoLuong = new javax.swing.JTextField();
         dialogbtt_Nhap = new javax.swing.JButton();
         dialogbtt_Xoa = new javax.swing.JButton();
@@ -83,6 +84,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         btt_Xoa = new javax.swing.JButton();
         btt_Sua = new javax.swing.JButton();
         btt_XoaNhap = new javax.swing.JButton();
+        lbl_SoLuong = new javax.swing.JLabel();
+        txt_SoLuong = new javax.swing.JTextField();
         ScrollPane = new javax.swing.JScrollPane();
         tbl_QLMonAn = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -103,9 +106,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         lbl_MaNguyenLieu.setText("Mã Nguyên Liệu");
 
-        lbl_TenNguyenLieu.setText("Tên Nguyên Liệu");
-
-        lbl_SoLuong.setText("Số Lượng");
+        dialoglbl_SoLuong.setText("Số Lượng NL");
 
         dialogbtt_Nhap.setText("Nhập");
         dialogbtt_Nhap.setPreferredSize(new java.awt.Dimension(83, 23));
@@ -121,33 +122,35 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         dialog_Panel.setLayout(dialog_PanelLayout);
         dialog_PanelLayout.setHorizontalGroup(
             dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialog_PanelLayout.createSequentialGroup()
+            .addGroup(dialog_PanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_TenNguyenLieu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialog_PanelLayout.createSequentialGroup()
-                        .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_MaMonAnDialog)
-                            .addComponent(lbl_MaNguyenLieu)
-                            .addComponent(lbl_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(dialog_PanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialog_PanelLayout.createSequentialGroup()
                         .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(dialogbtt_XoaNhap)
-                            .addComponent(dialogbtt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(20, 20, 20)
-                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(dialogtxt_SoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-                        .addComponent(dialogtxt_TenNguyenLieu)
-                        .addComponent(dialogtxt_MaNguyenLieu)
-                        .addComponent(dialogtxt_MaMonAn))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dialog_PanelLayout.createSequentialGroup()
+                                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_MaMonAnDialog)
+                                    .addComponent(lbl_MaNguyenLieu))
+                                .addGap(0, 7, Short.MAX_VALUE))
+                            .addGroup(dialog_PanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(dialogbtt_XoaNhap)
+                                    .addComponent(dialogbtt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(20, 20, 20)
+                        .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(dialogtxt_MaNguyenLieu, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                                .addComponent(dialogtxt_MaMonAn))
+                            .addGroup(dialog_PanelLayout.createSequentialGroup()
+                                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(dialogbtt_Sua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dialogbtt_Xoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(14, 14, 14))))
                     .addGroup(dialog_PanelLayout.createSequentialGroup()
-                        .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(dialogbtt_Sua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dialogbtt_Xoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14)))
+                        .addComponent(dialoglbl_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 38, Short.MAX_VALUE)
+                        .addComponent(dialogtxt_SoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         dialog_PanelLayout.setVerticalGroup(
@@ -163,13 +166,9 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                     .addComponent(dialogtxt_MaNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_TenNguyenLieu)
-                    .addComponent(dialogtxt_TenNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_SoLuong)
+                    .addComponent(dialoglbl_SoLuong)
                     .addComponent(dialogtxt_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(72, 72, 72)
+                .addGap(18, 18, 18)
                 .addGroup(dialog_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dialogbtt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dialogbtt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -184,17 +183,17 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         tbl_SuaNguyenLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Tên Nguyên Liệu", "Số Lượng"
+                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Số Lượng NL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -210,8 +209,37 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             tbl_SuaNguyenLieu.getColumnModel().getColumn(1).setResizable(false);
             tbl_SuaNguyenLieu.getColumnModel().getColumn(2).setResizable(false);
             tbl_SuaNguyenLieu.getColumnModel().getColumn(3).setResizable(false);
-            tbl_SuaNguyenLieu.getColumnModel().getColumn(4).setResizable(false);
         }
+        ListSelectionModel selectionModel2 = tbl_SuaNguyenLieu.getSelectionModel();
+
+        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel2.isSelectionEmpty()) {
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Xoa.setEnabled(true);
+                    if(e.getValueIsAdjusting()){
+                        dialogtxt_MaMonAn.setEnabled(false);
+                        dialogtxt_MaNguyenLieu.setEnabled(false);
+                        int selectedRow = tbl_SuaNguyenLieu.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lấy dữ liệu
+                            Object maMonAn = tbl_SuaNguyenLieu.getValueAt(selectedRow, 1);
+                            Object maNguyenLieu = tbl_SuaNguyenLieu.getValueAt(selectedRow, 2);
+                            Object soLuong = tbl_SuaNguyenLieu.getValueAt(selectedRow, 3);
+                            //gán dữ liệu
+                            dialogtxt_MaMonAn.setText(maMonAn.toString());
+                            dialogtxt_MaNguyenLieu.setText(maNguyenLieu.toString());
+                            dialogtxt_SoLuong.setText(soLuong.toString());
+                        }
+                    }
+                }else {
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogtxt_MaMonAn.setEnabled(true);
+                    dialogtxt_MaNguyenLieu.setEnabled(true);
+                }
+            }
+        });
 
         javax.swing.GroupLayout dialog_SuaNguyenLieuLayout = new javax.swing.GroupLayout(dialog_SuaNguyenLieu.getContentPane());
         dialog_SuaNguyenLieu.getContentPane().setLayout(dialog_SuaNguyenLieuLayout);
@@ -220,7 +248,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             .addGroup(dialog_SuaNguyenLieuLayout.createSequentialGroup()
                 .addComponent(dialog_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                 .addContainerGap())
         );
         dialog_SuaNguyenLieuLayout.setVerticalGroup(
@@ -228,6 +256,9 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             .addComponent(dialog_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
         );
+
+        dialog_SuaNguyenLieu.pack();
+        dialog_SuaNguyenLieu.setLocationRelativeTo(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -264,7 +295,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -283,6 +314,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         btt_XoaNhap.setText("Xóa Nhập");
 
+        lbl_SoLuong.setText("Số Lượng");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -290,6 +323,10 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_SoLuong))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,7 +362,13 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_DonGia)
                     .addComponent(txt_DonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbl_SoLuong)))
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btt_Nhap)
                     .addComponent(btt_Xoa))
@@ -333,22 +376,22 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btt_Sua)
                     .addComponent(btt_XoaNhap))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         tbl_QLMonAn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá "
+                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá ", "Số Lượng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -368,6 +411,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             tbl_QLMonAn.getColumnModel().getColumn(0).setResizable(false);
             tbl_QLMonAn.getColumnModel().getColumn(1).setResizable(false);
             tbl_QLMonAn.getColumnModel().getColumn(2).setResizable(false);
+            tbl_QLMonAn.getColumnModel().getColumn(3).setResizable(false);
         }
         ListSelectionModel selectionModel = tbl_QLMonAn.getSelectionModel();
 
@@ -384,11 +428,12 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                             Object ma = tbl_QLMonAn.getValueAt(selectedRow, 0);
                             Object ten = tbl_QLMonAn.getValueAt(selectedRow, 1);
                             Object dongia = tbl_QLMonAn.getValueAt(selectedRow, 2);
-
+                            Object soLuong = tbl_QLMonAn.getValueAt(selectedRow, 3);
                             //gán dữ liệu
                             txt_MaMonAn.setText(ma.toString());
                             txt_TenMonAn.setText(ten.toString());
                             txt_DonGia.setText(dongia.toString());
+                            txt_SoLuong.setText(soLuong.toString());
                         }
                     }
                 }else {
@@ -523,8 +568,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         String maMonAnStr = txt_MaMonAn.getText();
         String tenMonAn = txt_TenMonAn.getText();
         String donGiaStr = txt_DonGia.getText();
-
-        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr);
+        String soLuongStr = txt_SoLuong.getText();
+        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr, soLuongStr);
         if (errorMessage != null) {
             JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
@@ -539,12 +584,13 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         if (new MonAnDAO().ThemMonAn(monAn)) { // Thêm món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             loadTableMA();
+            dialog_SuaNguyenLieu.setVisible(true);
             btt_XoaNhapClick();
         } else { // Thêm món ăn không thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm món ăn không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         
-        dialog_SuaNguyenLieu.setVisible(true);
+        
     }
     
     public void btt_XoaClick(){
@@ -577,19 +623,21 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         String maMonAnStr = txt_MaMonAn.getText();
         String tenMonAn = txt_TenMonAn.getText();
         String donGiaStr = txt_DonGia.getText();
-
-        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr);
+        String soLuongStr = txt_SoLuong.getText();   
+        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr, soLuongStr);
         if (errorMessage != null) {
             JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         double donGia = Double.parseDouble(donGiaStr);
-
+        int soLuong = Integer.parseInt(soLuongStr);
+        
         monAn.setmaMon(maMonAnStr);
         monAn.setTenMon(tenMonAn);
         monAn.setgia(donGia);
-
+        monAn.setSoLuong(soLuong);
+        
         if(new MonAnDAO().CapNhatMonAn(monAn)) { // Cập nhật món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Cập nhật món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             loadTableMA();
@@ -599,21 +647,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         }
     }
     
-    public void dialogbtt_NhapClick(){
-        
-    }
-    
-    public void dialogbtt_XoaClick(){
-        
-    }
-    
-    public void dialogbtt_XoaNhapClick(){
-        
-    }
-    
-    public void dialogbtt_SuaClick(){
-        
-    }
     private void QLSA_toolBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QLSA_toolBarMouseClicked
         new QLSuatAnView().setVisible(true);
         this.dispose();
@@ -663,16 +696,14 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             }
         }
     }//GEN-LAST:event_tbl_QLMonAnMouseClicked
-    
-  
-       
+
     private void load(){
         btt_Sua.setEnabled(false);
         btt_Xoa.setEnabled(false);
         loadTableMA();
     }
-    public String validateInputValues(String maMonAn, String tenMonAn, String donGia) {
-        if (maMonAn.isEmpty() || tenMonAn.isEmpty() || donGia.isEmpty()) {
+    public String validateInputValues(String maMonAn, String tenMonAn, String donGia, String soLuong) {
+        if (maMonAn.isEmpty() || tenMonAn.isEmpty() || donGia.isEmpty() || soLuong.isEmpty()) {
             return "Vui lòng nhập đầy đủ thông tin!";
         }
 
@@ -681,20 +712,62 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         } catch (NumberFormatException e) {
             return "Đơn giá phải là số thực!";
         }
-
+        
+        try {
+            int sL= Integer.parseInt(soLuong);
+            if (sL <= 0) {
+                return "Số lượng phải là một số nguyên dương";
+            }
+        } catch (NumberFormatException e) {
+            return "Số lượng phải là một số nguyên";
+        }
         return null; // trả về null nếu không có lỗi nào xảy ra
     }
+    
+    public String validateInputValues2(String maMonStr, String maNLStr, String soLuongStr){
+    
+        // Kiểm tra mã món ăn
+        if (maMonStr == null || maMonStr.trim().length() == 0) {
+            return "Mã món ăn không được để trống\n";
+        }
 
+        // Kiểm tra mã nguyên liệu
+        if (maNLStr == null || maNLStr.trim().length() == 0) {
+            return "Mã nguyên liệu không được để trống\n";
+        }
+        int maNL = 0;
+        try {
+            maNL = Integer.parseInt(soLuongStr);
+        } catch (NumberFormatException e) {
+            return "Mã Nguyên Liệu phải là một số nguyên\n";
+        }
+        if (maNL < 1) {
+            return "Mã Nguyên Liệu phải là một số nguyên dương\n";
+        }
+
+        // Kiểm tra số lượng
+        int soLuong = 0;
+        try {
+            soLuong = Integer.parseInt(soLuongStr);
+        } catch (NumberFormatException e) {
+            return "Số lượng phải là một số nguyên\n";
+        }
+        if (soLuong < 1) {
+            return "Số lượng phải là một số nguyên dương\n";
+        }
+
+        return null;
+    }
+    
     private void loadTableMA(){
-        list = new MonAnDAO().getListMA();
+        listMA = new MonAnDAO().getListMA();
         DefaultTableModel model = (DefaultTableModel) tbl_QLMonAn.getModel();
         model.setRowCount(0);
-        int n = list.size()-1;
-        int count = 1;
+        int n = listMA.size()-1;
         for(int i = 0 ; i <= n; i++){
-            MonAn tmp = list.get(i);
+            MonAn tmp = listMA.get(i);
             model.addRow(new Object[]{
-                count, tmp.getMaMon(), tmp.getTenMon(), tmp.getdongia()
+                tmp.getMaMon(), tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong()
             });
         }
     }
@@ -702,10 +775,122 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private void loadTableNgLieu(String ma){
         dialogbtt_Sua.setEnabled(false);
         dialogbtt_Xoa.setEnabled(false);
-        DefaultTableModel model = (DefaultTableModel) tbl_SuaNguyenLieu.getModel();
+        String[] columns = {"STT", "Mã Món Ăn", "Mã Nguyên Liệu", "Số Lượng"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
         model = new MonAnDAO().GetModelNgLieu(model, ma);
         tbl_SuaNguyenLieu.setModel(model);
     }
+    
+    public void dialogbtt_NhapClick(){
+        String maMonStr = dialogtxt_MaMonAn.getText();
+        String maNLStr = dialogtxt_MaNguyenLieu.getText();
+        String soLuongStr = dialogtxt_SoLuong.getText();
+        
+        String errorMessage = validateInputValues2(maMonStr, maNLStr, soLuongStr);
+        if (errorMessage != null) {
+            JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int maNL = Integer.parseInt(maNLStr);
+        int soLuong = Integer.parseInt(soLuongStr);
+        
+        MonAn MA = new MonAn();
+        for(MonAn obj : listMA){
+            String ma = obj.getMaMon();
+            if(ma == maNLStr){
+                obj.addUpNL(maNL, soLuong);
+                break;
+            }
+        }
+        
+        if (new MonAnDAO().ThemNLMA(maMonStr, maNL, soLuong)) { // Thêm món ăn thành công
+            JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            loadTableNgLieu(maNLStr);
+            dialogbtt_XoaNhapClick();
+        } else { // Thêm món ăn không thành công
+            JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void dialogbtt_XoaClick(){
+        String maMonStr = dialogtxt_MaMonAn.getText();
+        String maNLStr = dialogtxt_MaNguyenLieu.getText();
+        
+        String errorMessage = validateInputValues2(maMonStr, maNLStr, "1");
+        if (errorMessage != null) {
+            JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int maNL = Integer.parseInt(maNLStr);
+        
+        MonAn MA = new MonAn();
+        for(MonAn obj : listMA){
+            String ma = obj.getMaMon();
+            if(ma == maNLStr){
+                obj.delNL(maNL);
+                break;
+            }
+        }
+        
+        if(new MonAnDAO().XoaNLMA(maMonStr, maNL)) {
+            JOptionPane.showMessageDialog(rootPane, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            
+            //Update
+            DefaultTableModel model = (DefaultTableModel) tbl_SuaNguyenLieu.getModel();
+            int selectedIndex = tbl_SuaNguyenLieu.getSelectedRow();
+            if(selectedIndex >= 0){
+                model.removeRow(selectedIndex);
+                loadTableNgLieu(maNLStr);
+                dialogbtt_XoaNhapClick();
+            }
+        } else {
+          JOptionPane.showMessageDialog(rootPane, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    public void dialogbtt_XoaNhapClick(){
+        dialogtxt_MaMonAn.setEnabled(true);
+        dialogtxt_MaNguyenLieu.setEnabled(true);
+        dialogtxt_MaMonAn.setText("");
+        dialogtxt_MaNguyenLieu.setText("");
+        dialogtxt_SoLuong.setText("");
+    }
+    
+    public void dialogbtt_SuaClick(){
+        String maMonStr = dialogtxt_MaMonAn.getText();
+        String maNLStr = dialogtxt_MaNguyenLieu.getText();
+        String soLuongStr = dialogtxt_SoLuong.getText();
+        
+        String errorMessage = validateInputValues2(maMonStr, maNLStr, soLuongStr);
+        if (errorMessage != null) {
+            JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        int maNL = Integer.parseInt(maNLStr);
+        int soLuong = Integer.parseInt(soLuongStr);
+        
+        MonAn MA = new MonAn();
+        for(MonAn obj : listMA){
+            String ma = obj.getMaMon();
+            if(ma == maNLStr){
+                obj.addUpNL(maNL, soLuong);
+                break;
+            }
+        }
+        
+        if (new MonAnDAO().CapNhatMANL(maNLStr, maNL, soLuong)) {
+            JOptionPane.showMessageDialog(rootPane, "Cập nhật món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            loadTableNgLieu(maNLStr);
+            dialogbtt_XoaNhapClick();
+        } else { // Thêm món ăn không thành công
+            JOptionPane.showMessageDialog(rootPane, "Cập nhật món ăn không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu QLMA_toolBar;
     private javax.swing.JMenu QLNL_toolBar;
@@ -723,10 +908,10 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton dialogbtt_Sua;
     private javax.swing.JButton dialogbtt_Xoa;
     private javax.swing.JButton dialogbtt_XoaNhap;
+    private javax.swing.JLabel dialoglbl_SoLuong;
     private javax.swing.JTextField dialogtxt_MaMonAn;
     private javax.swing.JTextField dialogtxt_MaNguyenLieu;
     private javax.swing.JTextField dialogtxt_SoLuong;
-    private javax.swing.JTextField dialogtxt_TenNguyenLieu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -742,12 +927,12 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel lbl_MaNguyenLieu;
     private javax.swing.JLabel lbl_SoLuong;
     private javax.swing.JLabel lbl_TenMonAn;
-    private javax.swing.JLabel lbl_TenNguyenLieu;
     private javax.swing.JTable tbl_QLMonAn;
     private javax.swing.JTable tbl_SuaNguyenLieu;
     private javax.swing.JTextField txt_DonGia;
     private javax.swing.JTextField txt_MaMonAn;
     private javax.swing.JTextField txt_Search;
+    private javax.swing.JTextField txt_SoLuong;
     private javax.swing.JTextField txt_TenMonAn;
     // End of variables declaration//GEN-END:variables
     

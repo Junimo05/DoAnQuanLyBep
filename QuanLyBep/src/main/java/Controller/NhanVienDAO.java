@@ -27,7 +27,7 @@ public class NhanVienDAO {
         ds.setPassword("05052003");
         ds.setServerName("NAT-Junimo\\NAT05");
         ds.setPortNumber(1433);
-        ds.setDatabaseName("TestConnect");
+        ds.setDatabaseName("QLBA");
         ds.setEncrypt("false");
         try{
            conn = ds.getConnection();
