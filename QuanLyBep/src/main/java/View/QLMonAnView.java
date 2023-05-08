@@ -248,8 +248,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             .addGroup(dialog_SuaNguyenLieuLayout.createSequentialGroup()
                 .addComponent(dialog_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE))
         );
         dialog_SuaNguyenLieuLayout.setVerticalGroup(
             dialog_SuaNguyenLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +259,13 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         dialog_SuaNguyenLieu.pack();
         dialog_SuaNguyenLieu.setLocationRelativeTo(null);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -324,17 +328,17 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btt_XoaNhap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btt_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbl_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(txt_SoLuong))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btt_Xoa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btt_XoaNhap, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addComponent(btt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btt_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_TenMonAn, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -365,17 +369,15 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_SoLuong)))
+                    .addComponent(lbl_SoLuong, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btt_Nhap)
-                    .addComponent(btt_Xoa))
+                    .addComponent(btt_Sua))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btt_Sua)
-                    .addComponent(btt_XoaNhap))
+                    .addComponent(btt_XoaNhap)
+                    .addComponent(btt_Xoa))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
@@ -691,11 +693,17 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 // Otherwise, select the cell
                 tbl_QLMonAn.addRowSelectionInterval(row, row);
                 tbl_QLMonAn.addColumnSelectionInterval(col, col);
+                btt_Sua.setEnabled(false);
+                btt_Xoa.setEnabled(false);
                 selectedRows.add(row);
                 selectedCols.add(col);
             }
         }
     }//GEN-LAST:event_tbl_QLMonAnMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     private void load(){
         btt_Sua.setEnabled(false);
@@ -806,7 +814,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         
         if (new MonAnDAO().ThemNLMA(maMonStr, maNL, soLuong)) { // Thêm món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadTableNgLieu(maNLStr);
+            loadTableNgLieu(maMonStr);
             dialogbtt_XoaNhapClick();
         } else { // Thêm món ăn không thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -842,7 +850,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             int selectedIndex = tbl_SuaNguyenLieu.getSelectedRow();
             if(selectedIndex >= 0){
                 model.removeRow(selectedIndex);
-                loadTableNgLieu(maNLStr);
+                loadTableNgLieu(maMonStr);
                 dialogbtt_XoaNhapClick();
             }
         } else {

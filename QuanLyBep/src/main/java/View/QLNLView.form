@@ -43,7 +43,7 @@
     </Menu>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Qu&#x1ea3;n L&#xfd; Nh&#xe2;n Vi&#xea;n"/>
   </Properties>
   <SyntheticProperties>
@@ -51,6 +51,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -70,7 +73,7 @@
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="NL_Table" pref="612" max="32767" attributes="0"/>
+                  <Component id="NL_Table" pref="611" max="32767" attributes="0"/>
                   <Component id="jPanel3" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -122,7 +125,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                                   <Component id="txt_NgayNhap" min="-2" pref="164" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -214,7 +217,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="SoLuong_lbl">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
+            <Property name="text" type="java.lang.String" value="Kh&#x1ed1;i L&#x1b0;&#x1ee3;ng"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_SoLuong">
@@ -259,7 +262,7 @@
                 <Column editable="false" title="M&#xe3;" type="java.lang.Object"/>
                 <Column editable="false" title="Nguy&#xea;n Li&#x1ec7;u" type="java.lang.Object"/>
                 <Column editable="false" title="&#x110;&#x1a1;n Gi&#xe1;" type="java.lang.Object"/>
-                <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
+                <Column editable="false" title="Kh&#x1ed1;i L&#x1b0;&#x1ee3;ng (kg)" type="java.lang.Object"/>
                 <Column editable="false" title="Ng&#xe0;y Nh&#x1ead;p" type="java.lang.Object"/>
               </Table>
             </Property>

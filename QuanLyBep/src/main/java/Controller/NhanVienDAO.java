@@ -132,7 +132,7 @@ public class NhanVienDAO {
                 tmp.setmaNV(rs.getString("Mã Nhân Viên"));
                 tmp.setgioLam(rs.getInt("Số Giờ Làm"));
                 tmp.setLuongTheoGio(rs.getFloat("Lương Theo Giờ"));
-                tmp.setngayLam(rs.getDate("Ngày Chấm"));
+                tmp.setngayLam(rs.getDate("Ngày Làm"));
                 
                 list.add(tmp);
             }
@@ -143,7 +143,7 @@ public class NhanVienDAO {
     }
     
     public boolean capNhatChamCong(ChamCong cc) {
-        String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=? AND \"Ngày Chấm\"=?";
+        String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=? AND \"Ngày Làm\"=?";
         
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -163,7 +163,7 @@ public class NhanVienDAO {
     }
     
     public boolean xoaChamCong(String maNV, Date ngayCham) {
-    String sql = "DELETE FROM tbl_ChamCong WHERE \"Mã Nhân Viên\" = ? AND \"Ngày Chấm\" = ?";
+    String sql = "DELETE FROM tbl_ChamCong WHERE \"Mã Nhân Viên\" = ? AND \"Ngày Làm\" = ?";
     try {
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, maNV);

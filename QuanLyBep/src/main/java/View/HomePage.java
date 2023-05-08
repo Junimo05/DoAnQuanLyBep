@@ -7,6 +7,7 @@ import View.QLNLView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Action;
+import javax.swing.JFrame;
 /**
  *
  * @author anhtu
@@ -41,7 +42,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         bttQLNL = new javax.swing.JButton();
         bttQLNV = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Trang Chủ");
 
         jLabel1.setBackground(new java.awt.Color(255, 102, 102));
@@ -123,6 +124,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HomePage().setVisible(true);
+                
             }
         });
     }

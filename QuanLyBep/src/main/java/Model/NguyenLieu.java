@@ -5,35 +5,30 @@ public class NguyenLieu{
     private int maNL;
     private String tenNL;
     private Date ngay; 
-    private int soluongNL;
+    private int khoiLuongNL;
     private Double giaNL;
     
     //Khởi Tạo
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL, int soluongNL, Double giaNL, Date ngay) {
+    public NguyenLieu(int maNL, String tenNL, int khoiLuongNL, Double giaNL, Date ngay) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;
-        this.soluongNL = soluongNL;
+        this.khoiLuongNL = khoiLuongNL;
         this.giaNL = giaNL;
-    }
-
-    public NguyenLieu(String tenNL, int tieuThu) {
-        this.tenNL = tenNL;
-        this.soluongNL = tieuThu;
     }
     
     //Add use check
     public void add(int soLuong){
-        this.soluongNL += soLuong;
+        this.khoiLuongNL += soLuong;
     }
     public void use(int soLuong){
-        this.soluongNL -= soLuong;
+        this.khoiLuongNL -= soLuong;
     }
     public boolean check(int soLuong){
-        if(this.soluongNL >= soLuong){
+        if(this.khoiLuongNL >= soLuong){
             return true;
         }
         return false;
@@ -58,10 +53,10 @@ public class NguyenLieu{
             this.ngay = ngay;
     }
     public int getSoluongNL() {
-            return soluongNL;
+            return khoiLuongNL;
     }
     public void setSoluongNL(int soluongNL) {
-            this.soluongNL = soluongNL;
+            this.khoiLuongNL = soluongNL;
     }
     public Double getGiaNL() {
             return giaNL;
@@ -73,7 +68,7 @@ public class NguyenLieu{
     //HashCode and equals, toString
     @Override
     public String toString() {
-        return "NguyenLieu{" + "maNL=" + maNL + ", tenNL=" + tenNL + ", ngay=" + ngay + ", soluongNL=" + soluongNL + ", giaNL=" + giaNL + '}';
+        return "NguyenLieu{" + "maNL=" + maNL + ", tenNL=" + tenNL + ", ngay=" + ngay + ", soluongNL=" + khoiLuongNL + ", giaNL=" + giaNL + '}';
     }
 
     @Override

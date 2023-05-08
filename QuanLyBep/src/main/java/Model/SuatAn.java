@@ -7,6 +7,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.Map;
 import Model.MonAn;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 /**
  *
@@ -15,10 +17,14 @@ import java.util.HashMap;
 public class SuatAn {
     int MaSuatAn;
     boolean sanSang;
+    int tongTien;
+    Date thoiGian;
     Map<MonAn, Integer> ds;
     
     //Khoi tao
     public SuatAn() {
+        sanSang = false;
+        thoiGian = new Date();
     }
     
     public SuatAn(int MaSuatAn){
@@ -26,14 +32,41 @@ public class SuatAn {
         this.sanSang = false;
         this.ds = new HashMap<MonAn, Integer>();
     }
-    
-    public SuatAn(int MaSuatAn, boolean sanSang, Map<MonAn, Integer> ds) {
+
+    public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<MonAn, Integer> ds) {
         this.MaSuatAn = MaSuatAn;
         this.sanSang = sanSang;
+        this.tongTien = tongTien;
+        this.thoiGian = thoiGian;
         this.ds = ds;
     }
-    
+
     //Get Set
+
+    public boolean getSanSang() {
+        return sanSang;
+    }
+
+    public void setSanSang(boolean sanSang) {
+        this.sanSang = sanSang;
+    }
+
+    public int getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(int tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public Date getThoiGian() {
+        return thoiGian;
+    }
+    
+    public void setThoiGian(Date thoiGian) {    
+        this.thoiGian = thoiGian;
+    }
+
     public int getMaSuatAn() {
         return MaSuatAn;
     }

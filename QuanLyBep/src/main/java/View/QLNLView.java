@@ -82,8 +82,13 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         btt_QLNguyenLieu = new javax.swing.JMenu();
         btt_QLNhanVien = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản Lý Nhân Viên");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -93,7 +98,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
 
         DonGia_lbl.setText("Đơn Giá");
 
-        SoLuong_lbl.setText("Số Lượng");
+        SoLuong_lbl.setText("Khối Lượng");
 
         NgayNhap_lbl.setText("Ngày Nhập");
 
@@ -128,7 +133,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 1, Short.MAX_VALUE)
                                 .addComponent(txt_NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txt_MaNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +187,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
 
             },
             new String [] {
-                "Mã", "Nguyên Liệu", "Đơn Giá", "Số Lượng", "Ngày Nhập"
+                "Mã", "Nguyên Liệu", "Đơn Giá", "Khối Lượng (kg)", "Ngày Nhập"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -315,7 +320,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NL_Table, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                    .addComponent(NL_Table, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -576,6 +581,10 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
             }
         }
     }//GEN-LAST:event_tbl_NguyenLieuMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -284,7 +284,12 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         dialog_ChamCong.pack();
         dialog_ChamCong.setLocationRelativeTo(null);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -586,7 +591,8 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         
         if(new NhanVienDAO().ThemNhanVien(nv)) { // Thêm nhân viên thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm nhân viên thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadTableNV();            
+            loadTableNV();
+            bttXoaNhapNVClicked();
         } else { // Thêm nhân viên không thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm nhân viên không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -815,6 +821,10 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             }
         }
     }//GEN-LAST:event_tbl_ChamCongMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
     
     Set<Integer> selectedRows2 = new HashSet<>();
     Set<Integer> selectedCols2 = new HashSet<>();    
