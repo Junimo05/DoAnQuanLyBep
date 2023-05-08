@@ -4,7 +4,9 @@
  */
 package View;
 
+import Controller.MonAnDAO;
 import Controller.SuatAnDAO;
+import Model.MonAn;
 import Model.SuatAn;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -17,10 +19,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -84,11 +90,11 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 {null, null, null, null}
             },
             new String [] {
-                "Mã Món Ăn", "Tên Món Ăn", "Số Lượng", "Đơn Giá"
+                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá", "Số Lượng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -121,7 +127,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_Search1))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,15 +136,12 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_Search1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         dialogjbl_DsMA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Món Ăn", "Số Lượng", ""
@@ -152,23 +155,25 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 return canEdit [columnIndex];
             }
         });
+        dialogjbl_DsMA.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(dialogjbl_DsMA);
         if (dialogjbl_DsMA.getColumnModel().getColumnCount() > 0) {
             dialogjbl_DsMA.getColumnModel().getColumn(0).setResizable(false);
             dialogjbl_DsMA.getColumnModel().getColumn(1).setResizable(false);
             dialogjbl_DsMA.getColumnModel().getColumn(2).setResizable(false);
         }
+        //
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 38, Short.MAX_VALUE)
+                .addGap(0, 68, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -176,28 +181,24 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout dialog_SuaMonAnLayout = new javax.swing.GroupLayout(dialog_SuaMonAn.getContentPane());
         dialog_SuaMonAn.getContentPane().setLayout(dialog_SuaMonAnLayout);
         dialog_SuaMonAnLayout.setHorizontalGroup(
             dialog_SuaMonAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialog_SuaMonAnLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(511, 511, 511))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dialog_SuaMonAnLayout.setVerticalGroup(
             dialog_SuaMonAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,6 +294,11 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         });
         tbl_SuatAn.setColumnSelectionAllowed(true);
         tbl_SuatAn.getTableHeader().setReorderingAllowed(false);
+        tbl_SuatAn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_SuatAnMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_SuatAn);
         tbl_SuatAn.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_SuatAn.getColumnModel().getColumnCount() > 0) {
@@ -301,6 +307,15 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             tbl_SuatAn.getColumnModel().getColumn(2).setResizable(false);
             tbl_SuatAn.getColumnModel().getColumn(3).setResizable(false);
         }
+        ListSelectionModel selectionModel = tbl_SuatAn.getSelectionModel();
+
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel.isSelectionEmpty()) {
+                    btt_XoaSuatAn.setEnabled(true);
+                }
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -379,7 +394,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         if (e.getSource() == btt_ThemSuatAn) {
             btt_ThemSuatAnClicked();
         } else if (e.getSource() == btt_XoaSuatAn) {
-            btt_XoaMonAnClicked();
+            btt_XoaSuatAnClicked();
         }
     }
 
@@ -389,7 +404,8 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             JOptionPane.showMessageDialog(rootPane, "Thêm suất ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialog_SuaMonAn.setVisible(true);
             loadTableSA();
-        } else { // Thêm nhân viên không thành công
+            loadTableSuaMA(NORMAL);
+        } else {
             JOptionPane.showMessageDialog(rootPane, "Thêm suất ăn không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -414,14 +430,6 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void btt_CapNhatMonAnClicked(){
-        
-    }
-    
-    public void btt_XoaMonAnClicked(){
-        
-    }
-    
     private void load(){
         btt_XoaSuatAn.setEnabled(false);
         loadTableSA();
@@ -440,38 +448,37 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         } 
     }
     
-    private void loadTableSuaMA(){
-        
-    }
-    
-    Set<Integer> selectedRows = new HashSet<>();
-    Set<Integer> selectedCols = new HashSet<>();
-    private void tbl_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {                                          
-        int row = tbl_SuatAn.rowAtPoint(evt.getPoint());
-        int col = tbl_SuatAn.columnAtPoint(evt.getPoint());
-        
-        // Check if the cell is valid and left mouse button is clicked
-        if(evt.getClickCount() == 2){
-            dialog_SuaMonAn.setVisible(true);
-            String ma = tbl_SuatAn.getValueAt(row, 0).toString();
-            
-        }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
-            // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows.contains(row) && selectedCols.contains(col)) {
-                tbl_SuatAn.removeRowSelectionInterval(row, row);
-                tbl_SuatAn.removeColumnSelectionInterval(col, col);
-                selectedRows.remove(row);
-                selectedCols.remove(col);
-            } else {
-                // Otherwise, select the cell
-                tbl_SuatAn.addRowSelectionInterval(row, row);
-                tbl_SuatAn.addColumnSelectionInterval(col, col);
-                selectedRows.add(row);
-                selectedCols.add(col);
-            }
+    private void loadTableSuaMA(int MA){
+        ArrayList<MonAn> list = new SuatAnDAO().getListMA(MA);
+        DefaultTableModel model = (DefaultTableModel) tbl_MonAnSA.getModel();
+        model.setRowCount(0);
+        TableColumn buttonColumn = dialogjbl_DsMA.getColumnModel().getColumn(2);
+        buttonColumn.setCellRenderer(new ButtonRenderer());
+        int n = list.size()-1;
+        for(int i = 0 ; i <= n; i++){
+            MonAn tmp = list.get(i);
+            model.addRow(new Object[]{
+                tmp.getMaMon(), tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong()
+            });
         }
     }
     
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            setText((value == null) ? "" : value.toString());
+
+            return this;
+        }
+    }
+
     public void enableButtMF(){
         btt_ThemSuatAn.setEnabled(true);
         btt_XoaSuatAn.setEnabled(true);
@@ -507,10 +514,43 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         tbl_SuatAn.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
     }//GEN-LAST:event_txt_SearchKeyReleased
-
+    
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
        new HomePage().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+        
+    
+    
+    Set<Integer> selectedRows = new HashSet<>();
+    Set<Integer> selectedCols = new HashSet<>();
+    private void tbl_SuatAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SuatAnMouseClicked
+        int row = tbl_SuatAn.rowAtPoint(evt.getPoint());
+        int col = tbl_SuatAn.columnAtPoint(evt.getPoint());
+        
+        // Check if the cell is valid and left mouse button is clicked
+        if(evt.getClickCount() == 2){
+            dialog_SuaMonAn.setVisible(true);
+            String ma = tbl_SuatAn.getValueAt(row, 0).toString();
+            int MA = Integer.parseInt(ma);
+            loadTableSuaMA(MA);
+        }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+            // If cell is already selected and isSelected is true, then deselect it
+            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+                tbl_SuatAn.removeRowSelectionInterval(row, row);
+                tbl_SuatAn.removeColumnSelectionInterval(col, col);
+                selectedRows.remove(row);
+                selectedCols.remove(col);
+            } else {
+                // Otherwise, select the cell
+                tbl_SuatAn.addRowSelectionInterval(row, row);
+                tbl_SuatAn.addColumnSelectionInterval(col, col);
+                selectedRows.add(row);
+                selectedCols.add(col);
+                btt_XoaSuatAn.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_tbl_SuatAnMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

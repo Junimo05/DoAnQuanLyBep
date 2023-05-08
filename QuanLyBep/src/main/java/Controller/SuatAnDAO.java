@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.MonAn;
 import Model.SuatAn;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
@@ -73,7 +74,7 @@ public class SuatAnDAO {
     }
     
     public boolean xoaSuatAn(int maSA) {
-        String sql = "DELETE FROM tbl_SuatAn WHERE MaSuatAn = ?";
+        String sql = "DELETE FROM tbl_SuatAn WHERE \"Mã Suất Ăn\" = ?";
         try {
           PreparedStatement ps = conn.prepareStatement(sql);
           ps.setInt(1, maSA);
@@ -91,4 +92,26 @@ public class SuatAnDAO {
         return false;
     }
     
+    public ArrayList<MonAn> getListMA(int maSA){
+        ArrayList<MonAn> list = new ArrayList<>();
+        String sql = "SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], MonAn.[Số Lượng] " +
+             "FROM tbl_MonAn AS MonAn INNER JOIN tbl_MonAn_SuatAn AS SuatAn ON MonAn.[Mã Món Ăn] = SuatAn.[Mã Món Ăn] " +
+             "WHERE SuatAn.[Mã Suất Ăn] = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, maSA);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                MonAn MA = new MonAn();
+                MA.setTenMon(rs.getString("Tên Món Ăn"));
+                MA.setmaMon(rs.getString("Mã Món Ăn"));
+                MA.setgia(rs.getDouble("Đơn Giá"));
+                MA.setSoLuong(rs.getInt("Số Lượng"));
+                list.add(MA);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

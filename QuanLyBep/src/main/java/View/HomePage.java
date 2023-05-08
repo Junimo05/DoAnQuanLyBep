@@ -42,7 +42,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         bttQLNL = new javax.swing.JButton();
         bttQLNV = new javax.swing.JButton();
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Trang Chủ");
 
         jLabel1.setBackground(new java.awt.Color(255, 102, 102));
