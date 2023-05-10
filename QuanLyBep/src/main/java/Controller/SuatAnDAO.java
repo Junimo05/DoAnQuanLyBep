@@ -94,7 +94,7 @@ public class SuatAnDAO {
     
     public ArrayList<MonAn> getListMA(int maSA){
         ArrayList<MonAn> list = new ArrayList<>();
-        String sql = "SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], MonAn.[Số Lượng] " +
+        String sql = "SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SuatAn.[Số Lượng] " +
              "FROM tbl_MonAn AS MonAn INNER JOIN tbl_MonAn_SuatAn AS SuatAn ON MonAn.[Mã Món Ăn] = SuatAn.[Mã Món Ăn] " +
              "WHERE SuatAn.[Mã Suất Ăn] = ?";
         try {
@@ -107,6 +107,26 @@ public class SuatAnDAO {
                 MA.setmaMon(rs.getString("Mã Món Ăn"));
                 MA.setgia(rs.getDouble("Đơn Giá"));
                 MA.setSoLuong(rs.getInt("Số Lượng"));
+                list.add(MA);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    
+    
+    
+    public ArrayList<MonAn> getListDSMA(){
+        ArrayList<MonAn> list = new ArrayList<>();
+        String sql = "SELECT \"Tên Món Ăn\", \"Đơn Giá\" FROM tbl_MonAn";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                MonAn MA = new MonAn();
+                MA.setTenMon(rs.getString("Tên Món Ăn"));
+                MA.setgia(rs.getDouble("Đơn Giá"));
                 list.add(MA);
             }
         } catch (Exception e) {

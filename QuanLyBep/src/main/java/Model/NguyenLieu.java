@@ -1,6 +1,5 @@
 package Model;
 import java.sql.Date;
-import java.util.ArrayList;
 public class NguyenLieu{
     private int maNL;
     private String tenNL;

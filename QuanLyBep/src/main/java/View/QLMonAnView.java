@@ -665,11 +665,11 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_QLNV_toolBarMouseClicked
 
     private void txt_SearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_SearchKeyReleased
-        String keyword = txt_Search.getText().toLowerCase(); // Lấy giá trị đã nhập và chuyển đổi sang chữ thường
+        String keyword = txt_Search.getText().toLowerCase(); 
         DefaultTableModel tableModel = (DefaultTableModel) tbl_QLMonAn.getModel();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel); // Tạo đối tượng RowSorter để sắp xếp và lọc dữ liệu trên bảng
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel); 
         tbl_QLMonAn.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));// Lọc các hàng trên bảng theo chuỗi tìm kiếm, không phân biệt hoa thường
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
     }//GEN-LAST:event_txt_SearchKeyReleased
 
     Set<Integer> selectedRows = new HashSet<>();

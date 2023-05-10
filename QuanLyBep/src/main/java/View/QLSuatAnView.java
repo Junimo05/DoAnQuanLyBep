@@ -8,25 +8,34 @@ import Controller.MonAnDAO;
 import Controller.SuatAnDAO;
 import Model.MonAn;
 import Model.SuatAn;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.Action;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -36,11 +45,13 @@ import javax.swing.table.TableRowSorter;
 public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private SuatAn suatAn;
     private ArrayList<SuatAn> list = new SuatAnDAO().getListSA();
+    
+    
     /**
      * Creates new form QLSuatAnView
      */
     public QLSuatAnView() {
-        initComponents();
+        initComponents();   
         btt_ThemSuatAn.addActionListener(this);
         btt_XoaSuatAn.addActionListener(this);
         load();
@@ -54,12 +65,19 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_MonAnSA = new javax.swing.JTable();
-        txt_Search1 = new javax.swing.JTextField();
+        dialogtbl_MonAnSA = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        txt_SearchMASA = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        dialogjbl_DsMA = new javax.swing.JTable();
+        scrollPane = new javax.swing.JScrollPane();
+        dialogtbl_DSMA = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        txt_SearchDSMA = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        dialogbtt_Save = new javax.swing.JButton();
+        dialogbtt_Delete = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btt_ThemSuatAn = new javax.swing.JButton();
@@ -82,7 +100,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             }
         });
 
-        tbl_MonAnSA.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 255), 3, true));
+
+        dialogtbl_MonAnSA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -101,80 +121,166 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 return canEdit [columnIndex];
             }
         });
-        tbl_MonAnSA.setColumnSelectionAllowed(true);
-        tbl_MonAnSA.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tbl_MonAnSA);
-        tbl_MonAnSA.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (tbl_MonAnSA.getColumnModel().getColumnCount() > 0) {
-            tbl_MonAnSA.getColumnModel().getColumn(0).setResizable(false);
-            tbl_MonAnSA.getColumnModel().getColumn(1).setResizable(false);
-            tbl_MonAnSA.getColumnModel().getColumn(2).setResizable(false);
-            tbl_MonAnSA.getColumnModel().getColumn(3).setResizable(false);
+        dialogtbl_MonAnSA.setColumnSelectionAllowed(true);
+        dialogtbl_MonAnSA.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(dialogtbl_MonAnSA);
+        dialogtbl_MonAnSA.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (dialogtbl_MonAnSA.getColumnModel().getColumnCount() > 0) {
+            dialogtbl_MonAnSA.getColumnModel().getColumn(0).setResizable(false);
+            dialogtbl_MonAnSA.getColumnModel().getColumn(1).setResizable(false);
+            dialogtbl_MonAnSA.getColumnModel().getColumn(2).setResizable(false);
+            dialogtbl_MonAnSA.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        txt_Search1.setBorder(null);
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
+
+        txt_SearchMASA.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 102), 1, true));
+        txt_SearchMASA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_SearchMASAKeyReleased(evt);
+            }
+        });
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
         jLabel8.setToolTipText("");
         jLabel8.setEnabled(false);
 
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_SearchMASA)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_SearchMASA, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_Search1))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_Search1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
-        dialogjbl_DsMA.setModel(new javax.swing.table.DefaultTableModel(
+        dialogtbl_DSMA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Món Ăn", "Số Lượng", ""
+                "Món Ăn", "Đơn Giá", "Thao Tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        dialogjbl_DsMA.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(dialogjbl_DsMA);
-        if (dialogjbl_DsMA.getColumnModel().getColumnCount() > 0) {
-            dialogjbl_DsMA.getColumnModel().getColumn(0).setResizable(false);
-            dialogjbl_DsMA.getColumnModel().getColumn(1).setResizable(false);
-            dialogjbl_DsMA.getColumnModel().getColumn(2).setResizable(false);
+        dialogtbl_DSMA.setRowHeight(40);
+        dialogtbl_DSMA.getTableHeader().setReorderingAllowed(false);
+        scrollPane.setViewportView(dialogtbl_DSMA);
+        if (dialogtbl_DSMA.getColumnModel().getColumnCount() > 0) {
+            dialogtbl_DSMA.getColumnModel().getColumn(0).setResizable(false);
+            dialogtbl_DSMA.getColumnModel().getColumn(1).setResizable(false);
+            dialogtbl_DSMA.getColumnModel().getColumn(2).setResizable(false);
         }
-        //
+
+        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
+
+        txt_SearchDSMA.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 102), 1, true));
+        txt_SearchDSMA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_SearchDSMAKeyReleased(evt);
+            }
+        });
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
+        jLabel9.setToolTipText("");
+        jLabel9.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_SearchDSMA)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_SearchDSMA, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        dialogbtt_Save.setText("Lưu");
+
+        dialogbtt_Delete.setText("Xóa");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dialogbtt_Save, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dialogbtt_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(dialogbtt_Save, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+            .addComponent(dialogbtt_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+            .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 68, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -182,16 +288,15 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout dialog_SuaMonAnLayout = new javax.swing.GroupLayout(dialog_SuaMonAn.getContentPane());
@@ -388,7 +493,10 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
+    /*
+     * Events Controller
+     */    
     @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == btt_ThemSuatAn) {
@@ -430,11 +538,20 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    
+    
+//Chức năng hỗ trợ
+    
+    private int getMaSA(){
+        String tmp = dialog_SuaMonAn.getTitle();
+        int num = Integer.parseInt(tmp.replaceAll("[^0-9]", ""));
+        return num;
+    }
     private void load(){
         btt_XoaSuatAn.setEnabled(false);
         loadTableSA();
     }
-    
+
     private void loadTableSA(){
         list = new SuatAnDAO().getListSA();
         DefaultTableModel model = (DefaultTableModel) tbl_SuatAn.getModel();
@@ -447,13 +564,12 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             });
         } 
     }
-    
+
     private void loadTableSuaMA(int MA){
+        dialog_SuaMonAn.setTitle("Suất ăn " + MA);
         ArrayList<MonAn> list = new SuatAnDAO().getListMA(MA);
-        DefaultTableModel model = (DefaultTableModel) tbl_MonAnSA.getModel();
+        DefaultTableModel model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
         model.setRowCount(0);
-        TableColumn buttonColumn = dialogjbl_DsMA.getColumnModel().getColumn(2);
-        buttonColumn.setCellRenderer(new ButtonRenderer());
         int n = list.size()-1;
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
@@ -462,32 +578,67 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             });
         }
     }
-    
-    class ButtonRenderer extends JButton implements TableCellRenderer {
 
-        public ButtonRenderer() {
-            setOpaque(true);
+    public void loadTableDSMA(){
+        TableActionEvent ev = new TableActionEvent() {
+            @Override
+            public void Increment(int row) {
+                String name = (String)dialogtbl_DSMA.getValueAt(row, 0);
+                TableModel model = dialogtbl_DSMA.getModel();
+                for (int i = 0; row < model.getRowCount(); i++) {
+                    String tmp = (String) model.getValueAt(row, 0);
+                    int quantity = (int) model.getValueAt(row, 1);
+                    if (tmp.equals(name)) {
+                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
+                        model.setValueAt(quantity + 1, row, 1);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void Decrement(int row) {
+                String name = (String)dialogtbl_DSMA.getValueAt(row, 0);
+                TableModel model = dialogtbl_DSMA.getModel();
+                for (int i = 0; row < model.getRowCount(); i++) {
+                    String tmp = (String) model.getValueAt(row, 0);
+                    int quantity = (int) model.getValueAt(row, 1);
+                    if (tmp.equals(name)) {
+                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
+                        model.setValueAt(quantity - 1, row, 1);
+                        break;
+                    }
+                }
+            }
+        };
+        
+        ArrayList<MonAn> list = new SuatAnDAO().getListDSMA();
+        DefaultTableModel model = (DefaultTableModel) dialogtbl_DSMA.getModel();
+        model.setRowCount(0);
+        int n = list.size()-1;
+        for(int i = 0 ; i <= n; i++){
+            MonAn tmp = list.get(i);
+            model.addRow(new Object[]{
+                tmp.getTenMon(), tmp.getdongia()
+            });
         }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-
-            setText((value == null) ? "" : value.toString());
-
-            return this;
-        }
+        dialogtbl_DSMA.getColumnModel().getColumn(2).setCellRenderer(new TableActionCellRender());
+        dialogtbl_DSMA.getColumnModel().getColumn(2).setCellEditor(new TableActionCellEditor(ev));
     }
 
     public void enableButtMF(){
         btt_ThemSuatAn.setEnabled(true);
         btt_XoaSuatAn.setEnabled(true);
     }
-    
+
     public void disableButtMF(){
         btt_ThemSuatAn.setEnabled(false);
         btt_XoaSuatAn.setEnabled(false);
     }
+//
+    
+//Events Hỗ Trợ
+    
     private void dialog_SuaMonAnWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dialog_SuaMonAnWindowClosing
         enableButtMF();
     }//GEN-LAST:event_dialog_SuaMonAnWindowClosing
@@ -506,7 +657,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         new QLNhanVienView().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btt_QLNhanVienMouseClicked
-
+    
     private void txt_SearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_SearchKeyReleased
         String keyword = txt_Search.getText().toLowerCase(); 
         DefaultTableModel tableModel = (DefaultTableModel) tbl_SuatAn.getModel();
@@ -520,8 +671,6 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
        new HomePage().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
         
-    
-    
     Set<Integer> selectedRows = new HashSet<>();
     Set<Integer> selectedCols = new HashSet<>();
     private void tbl_SuatAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SuatAnMouseClicked
@@ -534,6 +683,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             String ma = tbl_SuatAn.getValueAt(row, 0).toString();
             int MA = Integer.parseInt(ma);
             loadTableSuaMA(MA);
+            loadTableDSMA();
         }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
             if (selectedRows.contains(row) && selectedCols.contains(col)) {
@@ -552,7 +702,167 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }//GEN-LAST:event_tbl_SuatAnMouseClicked
 
+    private void txt_SearchDSMAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_SearchDSMAKeyReleased
+        String keyword = txt_SearchDSMA.getText().toLowerCase(); 
+        DefaultTableModel tableModel = (DefaultTableModel) dialogtbl_DSMA.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel); 
+        dialogtbl_DSMA.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
+    }//GEN-LAST:event_txt_SearchDSMAKeyReleased
 
+    private void txt_SearchMASAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_SearchMASAKeyReleased
+        String keyword = txt_SearchMASA.getText().toLowerCase(); 
+        DefaultTableModel tableModel = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel); 
+        dialogtbl_MonAnSA.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
+    }//GEN-LAST:event_txt_SearchMASAKeyReleased
+    
+    //Table Danh Sach Mon An Dialog
+    
+//Tạo Panel Chứa Button + Events
+    public class PanelAction extends javax.swing.JPanel {
+        public PanelAction() {
+            initComponents2();
+        }
+      
+        public void initEvents(TableActionEvent event, int row){
+            btt_Plus.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    event.Increment(row);
+                }
+            });
+            
+            btt_Minus.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    event.Decrement(row);
+                }
+            });
+        }
+        @SuppressWarnings("unchecked")
+        // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+        private void initComponents2() {
+
+            btt_Plus = new ActionButton();
+            btt_Minus = new ActionButton();
+
+            btt_Plus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
+            btt_Plus.setAlignmentX(0.5F);
+            btt_Plus.setMaximumSize(new java.awt.Dimension(32, 32));
+            btt_Plus.setMinimumSize(new java.awt.Dimension(32, 32));
+            btt_Plus.setPreferredSize(new java.awt.Dimension(32, 32));
+
+            btt_Minus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/minus.png"))); // NOI18N
+            btt_Minus.setMaximumSize(new java.awt.Dimension(32, 32));
+            btt_Minus.setMinimumSize(new java.awt.Dimension(32, 32));
+            btt_Minus.setPreferredSize(new java.awt.Dimension(32, 32));
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btt_Plus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btt_Minus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btt_Minus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btt_Plus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+        }// </editor-fold>                                           
+        private ActionButton btt_Minus;
+        private ActionButton btt_Plus;                 
+    }
+    
+    public class ActionButton extends JButton{
+        private boolean mousePress;
+        public ActionButton(){
+            setContentAreaFilled(false);
+            setBorder(new EmptyBorder(3, 3, 3, 3));
+            addMouseListener(new MouseAdapter(){
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    mousePress = true;
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    mousePress = false;
+                }              
+            });
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D)g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            int width = getWidth();
+            int height = getHeight();
+            int size = Math.min(width, height);
+            int x = (width - size)/2;
+            int y = (height - size)/2;
+            if(mousePress){
+                g2.setColor(new Color(158, 158, 158));
+            }else{
+                 g2.setColor(new Color(199, 199, 199));
+            }
+            g2.fill(new Ellipse2D.Double(x, y, size, size));
+            g2.dispose();
+            super.paintComponent(g);
+        }
+    }
+//   
+    
+//Thiết lập Editor, Renderer, ActionEvents
+    public class TableActionCellEditor extends DefaultCellEditor{
+        
+        private TableActionEvent event;
+        public TableActionCellEditor(TableActionEvent event) {
+            super(new JCheckBox());
+            this.event = event;
+        }
+        
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            PanelAction action = new PanelAction();
+            action.initEvents(event, row);
+            return action;
+        }
+    }
+    public class TableActionCellRender extends DefaultTableCellRenderer{
+        public TableActionCellRender() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            PanelAction action = new PanelAction();
+            if(!isSelected && row % 2 == 0){
+                action.setBackground(Color.WHITE);
+            }else{
+                action.setBackground(com.getBackground());
+            }
+            action.setBackground(com.getBackground());
+            return action;
+        }  
+    }
+    public interface TableActionEvent {
+        public void Increment(int row);
+        public void Decrement(int row);
+    }
+//    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu btt_QLMonAn;
     private javax.swing.JMenu btt_QLNguyenLieu;
@@ -561,9 +871,13 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton btt_ThemSuatAn;
     private javax.swing.JButton btt_XoaSuatAn;
     private javax.swing.JDialog dialog_SuaMonAn;
-    private javax.swing.JTable dialogjbl_DsMA;
+    private javax.swing.JButton dialogbtt_Delete;
+    private javax.swing.JButton dialogbtt_Save;
+    private javax.swing.JTable dialogtbl_DSMA;
+    private javax.swing.JTable dialogtbl_MonAnSA;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -572,13 +886,16 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable tbl_MonAnSA;
+    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable tbl_SuatAn;
     private javax.swing.JTextField txt_Search;
-    private javax.swing.JTextField txt_Search1;
+    private javax.swing.JTextField txt_SearchDSMA;
+    private javax.swing.JTextField txt_SearchMASA;
     // End of variables declaration//GEN-END:variables
 
 }

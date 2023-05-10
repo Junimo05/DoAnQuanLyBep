@@ -5,7 +5,6 @@
 package Controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 //User
 import Model.NguyenLieu;
