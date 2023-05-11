@@ -439,8 +439,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                         }
                     }
                 }else {
-                    btt_Sua.setEnabled(true);
-                    btt_Xoa.setEnabled(true);
+                    btt_Sua.setEnabled(false);
+                    btt_Xoa.setEnabled(false);
                     txt_MaMonAn.setEnabled(true);
                 }
             }
@@ -618,6 +618,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         txt_MaMonAn.setText("");
         txt_TenMonAn.setText("");
         txt_DonGia.setText("");
+        txt_SoLuong.setText("");
     }
     
     public void btt_SuaClick(){
@@ -693,8 +694,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 // Otherwise, select the cell
                 tbl_QLMonAn.addRowSelectionInterval(row, row);
                 tbl_QLMonAn.addColumnSelectionInterval(col, col);
-                btt_Sua.setEnabled(false);
-                btt_Xoa.setEnabled(false);
                 selectedRows.add(row);
                 selectedCols.add(col);
             }

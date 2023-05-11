@@ -31,10 +31,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -45,15 +49,62 @@ import javax.swing.table.TableRowSorter;
 public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private SuatAn suatAn;
     private ArrayList<SuatAn> list = new SuatAnDAO().getListSA();
-    
+    private TableActionEvent evDialog;
     
     /**
      * Creates new form QLSuatAnView
      */
     public QLSuatAnView() {
         initComponents();   
+        //Add Event button
         btt_ThemSuatAn.addActionListener(this);
         btt_XoaSuatAn.addActionListener(this);
+        dialogbtt_Save.addActionListener(this);
+        dialogbtt_Delete.addActionListener(this);
+        dialogbtt_Reset.addActionListener(this);
+        
+        evDialog = new TableActionEvent() {
+            @Override
+            public void Increment(int row) {
+                boolean flag = false;
+                String id = (String)dialogtbl_DSMA.getValueAt(row, 2);
+                DefaultTableModel model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    String tmp = (String) model.getValueAt(i, 3);
+                    int quantity = (int) model.getValueAt(i, 2);
+                    if (tmp.equals(id)) {
+                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
+                        model.setValueAt(quantity + 1, i, 2);
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag){
+                    String tenMon = (String)dialogtbl_DSMA.getValueAt(row, 0);
+                    double donGia = (double)dialogtbl_DSMA.getValueAt(row, 1);
+                    model.addRow(new Object[]{
+                        tenMon, donGia, 1, id
+                    });
+                }
+            }
+
+            @Override
+            public void Decrement(int row) {
+                String id = (String)dialogtbl_DSMA.getValueAt(row, 2);
+                TableModel model = dialogtbl_MonAnSA.getModel();
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    String tmp = (String) model.getValueAt(i, 3);
+                    int quantity = (int) model.getValueAt(i, 2);
+                    if (tmp.equals(id)) {
+                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
+                        if(quantity - 1 < 0) quantity += 1;
+                        model.setValueAt(quantity - 1, i, 2);
+                        break;
+                    }
+                }
+            }
+        };
+        
         load();
     }
     
@@ -61,7 +112,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dialog_SuaMonAn = new javax.swing.JDialog();
+        dialog_MonAnSuatAn = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -76,8 +127,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         txt_SearchDSMA = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        dialogbtt_Save = new javax.swing.JButton();
         dialogbtt_Delete = new javax.swing.JButton();
+        dialogbtt_Reset = new javax.swing.JButton();
+        dialogbtt_Save = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btt_ThemSuatAn = new javax.swing.JButton();
@@ -94,9 +146,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         btt_QLNguyenLieu = new javax.swing.JMenu();
         btt_QLNhanVien = new javax.swing.JMenu();
 
-        dialog_SuaMonAn.addWindowListener(new java.awt.event.WindowAdapter() {
+        dialog_MonAnSuatAn.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
-                dialog_SuaMonAnWindowClosing(evt);
+                dialog_MonAnSuatAnWindowClosing(evt);
             }
         });
 
@@ -110,7 +162,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 {null, null, null, null}
             },
             new String [] {
-                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá", "Số Lượng"
+                "Tên Món Ăn", "Đơn Giá", "Số Lượng", "Mã"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -131,6 +183,49 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             dialogtbl_MonAnSA.getColumnModel().getColumn(2).setResizable(false);
             dialogtbl_MonAnSA.getColumnModel().getColumn(3).setResizable(false);
         }
+        dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMinWidth(0);
+        dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMaxWidth(0);
+
+        ListSelectionModel dialogSelectionModel = dialogtbl_MonAnSA.getSelectionModel();
+
+        dialogSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!dialogSelectionModel.isSelectionEmpty()) {
+                    if(e.getValueIsAdjusting()){
+                        int selectedRow = dialogtbl_MonAnSA.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lấy dữ liệu
+                            Object ten = dialogtbl_MonAnSA.getValueAt(selectedRow, 0);
+                            //gán dữ liệu
+                            txt_SearchDSMA.setText(ten.toString());
+                        }
+                    }
+                }else {
+                    txt_SearchDSMA.setText("");
+                }
+            }
+        });
+
+        TableModel model = dialogtbl_DSMA.getModel();
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        dialogtbl_DSMA.setRowSorter(sorter);
+
+        txt_SearchDSMA.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                sorter.sort();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                sorter.sort();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                sorter.sort();
+            }
+        });
 
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
 
@@ -166,11 +261,14 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMinWidth(0);
+        dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMaxWidth(0);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -184,17 +282,17 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
 
         dialogtbl_DSMA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Món Ăn", "Đơn Giá", "Thao Tác"
+                "Món Ăn", "Đơn Giá", "Mã", "Thao Tác"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -203,11 +301,14 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         });
         dialogtbl_DSMA.setRowHeight(40);
         dialogtbl_DSMA.getTableHeader().setReorderingAllowed(false);
+        dialogtbl_DSMA.getColumnModel().getColumn(2).setMinWidth(0);
+        dialogtbl_DSMA.getColumnModel().getColumn(2).setMaxWidth(0);
         scrollPane.setViewportView(dialogtbl_DSMA);
         if (dialogtbl_DSMA.getColumnModel().getColumnCount() > 0) {
             dialogtbl_DSMA.getColumnModel().getColumn(0).setResizable(false);
             dialogtbl_DSMA.getColumnModel().getColumn(1).setResizable(false);
             dialogtbl_DSMA.getColumnModel().getColumn(2).setResizable(false);
+            dialogtbl_DSMA.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
@@ -244,9 +345,11 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        dialogbtt_Save.setText("Lưu");
+        dialogbtt_Delete.setText("Xóa Món Ăn");
 
-        dialogbtt_Delete.setText("Xóa");
+        dialogbtt_Reset.setText("Hoàn Tác");
+
+        dialogbtt_Save.setText("Lưu Thay Đổi");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -257,21 +360,29 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 .addComponent(dialogbtt_Save, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(dialogbtt_Delete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dialogbtt_Reset, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dialogbtt_Save, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-            .addComponent(dialogbtt_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dialogbtt_Save)
+                        .addComponent(dialogbtt_Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dialogbtt_Reset))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 504, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(scrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +391,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -288,9 +399,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -299,19 +410,19 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout dialog_SuaMonAnLayout = new javax.swing.GroupLayout(dialog_SuaMonAn.getContentPane());
-        dialog_SuaMonAn.getContentPane().setLayout(dialog_SuaMonAnLayout);
-        dialog_SuaMonAnLayout.setHorizontalGroup(
-            dialog_SuaMonAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dialog_MonAnSuatAnLayout = new javax.swing.GroupLayout(dialog_MonAnSuatAn.getContentPane());
+        dialog_MonAnSuatAn.getContentPane().setLayout(dialog_MonAnSuatAnLayout);
+        dialog_MonAnSuatAnLayout.setHorizontalGroup(
+            dialog_MonAnSuatAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        dialog_SuaMonAnLayout.setVerticalGroup(
-            dialog_SuaMonAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dialog_MonAnSuatAnLayout.setVerticalGroup(
+            dialog_MonAnSuatAnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        dialog_SuaMonAn.pack();
-        dialog_SuaMonAn.setLocationRelativeTo(null);
+        dialog_MonAnSuatAn.pack();
+        dialog_MonAnSuatAn.setLocationRelativeTo(null);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản Lý Suất Ăn");
@@ -503,6 +614,12 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             btt_ThemSuatAnClicked();
         } else if (e.getSource() == btt_XoaSuatAn) {
             btt_XoaSuatAnClicked();
+        } else if (e.getSource() == dialogbtt_Save) {
+            dialogbtt_SaveClicked();
+        } else if (e.getSource() == dialogbtt_Delete) {
+            btt_XoaSuatAnClicked();
+        } else if (e.getSource() == dialogbtt_Reset) {
+            btt_XoaSuatAnClicked();
         }
     }
 
@@ -510,7 +627,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         suatAn = new SuatAn();
         if(new SuatAnDAO().ThemSuatAn(suatAn)) {
             JOptionPane.showMessageDialog(rootPane, "Thêm suất ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            dialog_SuaMonAn.setVisible(true);
+            dialog_MonAnSuatAn.setVisible(true);
             loadTableSA();
             loadTableSuaMA(NORMAL);
         } else {
@@ -538,15 +655,44 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    public void dialogbtt_SaveClicked(){
+        TableModel model = dialogtbl_MonAnSA.getModel();
+        int MaSA = getMaSA();
+        boolean flag = true;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String MaMA = (String) model.getValueAt(i, 3);
+            Integer sl = Integer.valueOf(model.getValueAt(i, 2).toString());
+            int soLuong = sl.intValue();
+            if(!new SuatAnDAO().updateOrInsertListMASA(MaSA, MaMA, soLuong)){
+                flag = false;
+            }
+        }
+        
+        if(flag) {
+            JOptionPane.showMessageDialog(rootPane, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            loadTableSuaMA(getMaSA());
+            loadTableDSMA();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
+    public void dialogbtt_DeleteClicked(){
+        
+    }
+    
+    public void dialogbtt_ResetClicked(){
+        
+    }
     
 //Chức năng hỗ trợ
     
     private int getMaSA(){
-        String tmp = dialog_SuaMonAn.getTitle();
+        String tmp = dialog_MonAnSuatAn.getTitle();
         int num = Integer.parseInt(tmp.replaceAll("[^0-9]", ""));
         return num;
     }
+    
     private void load(){
         btt_XoaSuatAn.setEnabled(false);
         loadTableSA();
@@ -566,7 +712,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     }
 
     private void loadTableSuaMA(int MA){
-        dialog_SuaMonAn.setTitle("Suất ăn " + MA);
+        dialog_MonAnSuatAn.setTitle("Suất ăn " + MA);
         ArrayList<MonAn> list = new SuatAnDAO().getListMA(MA);
         DefaultTableModel model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
         model.setRowCount(0);
@@ -574,44 +720,12 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
             model.addRow(new Object[]{
-                tmp.getMaMon(), tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong()
+                tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong(), tmp.getMaMon()
             });
         }
     }
 
     public void loadTableDSMA(){
-        TableActionEvent ev = new TableActionEvent() {
-            @Override
-            public void Increment(int row) {
-                String name = (String)dialogtbl_DSMA.getValueAt(row, 0);
-                TableModel model = dialogtbl_DSMA.getModel();
-                for (int i = 0; row < model.getRowCount(); i++) {
-                    String tmp = (String) model.getValueAt(row, 0);
-                    int quantity = (int) model.getValueAt(row, 1);
-                    if (tmp.equals(name)) {
-                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
-                        model.setValueAt(quantity + 1, row, 1);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void Decrement(int row) {
-                String name = (String)dialogtbl_DSMA.getValueAt(row, 0);
-                TableModel model = dialogtbl_DSMA.getModel();
-                for (int i = 0; row < model.getRowCount(); i++) {
-                    String tmp = (String) model.getValueAt(row, 0);
-                    int quantity = (int) model.getValueAt(row, 1);
-                    if (tmp.equals(name)) {
-                        // Nếu tìm thấy giá trị mong muốn, thực hiện cập nhật
-                        model.setValueAt(quantity - 1, row, 1);
-                        break;
-                    }
-                }
-            }
-        };
-        
         ArrayList<MonAn> list = new SuatAnDAO().getListDSMA();
         DefaultTableModel model = (DefaultTableModel) dialogtbl_DSMA.getModel();
         model.setRowCount(0);
@@ -619,11 +733,11 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
             model.addRow(new Object[]{
-                tmp.getTenMon(), tmp.getdongia()
+                tmp.getTenMon(), tmp.getdongia(), tmp.getMaMon()
             });
         }
-        dialogtbl_DSMA.getColumnModel().getColumn(2).setCellRenderer(new TableActionCellRender());
-        dialogtbl_DSMA.getColumnModel().getColumn(2).setCellEditor(new TableActionCellEditor(ev));
+        dialogtbl_DSMA.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+        dialogtbl_DSMA.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(evDialog));
     }
 
     public void enableButtMF(){
@@ -639,9 +753,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     
 //Events Hỗ Trợ
     
-    private void dialog_SuaMonAnWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dialog_SuaMonAnWindowClosing
+    private void dialog_MonAnSuatAnWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dialog_MonAnSuatAnWindowClosing
         enableButtMF();
-    }//GEN-LAST:event_dialog_SuaMonAnWindowClosing
+    }//GEN-LAST:event_dialog_MonAnSuatAnWindowClosing
 
     private void btt_QLMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_QLMonAnMouseClicked
         new QLMonAnView().setVisible(true);
@@ -679,7 +793,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         
         // Check if the cell is valid and left mouse button is clicked
         if(evt.getClickCount() == 2){
-            dialog_SuaMonAn.setVisible(true);
+            dialog_MonAnSuatAn.setVisible(true);
             String ma = tbl_SuatAn.getValueAt(row, 0).toString();
             int MA = Integer.parseInt(ma);
             loadTableSuaMA(MA);
@@ -863,6 +977,8 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     }
 //    
     
+/*//*/ 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu btt_QLMonAn;
     private javax.swing.JMenu btt_QLNguyenLieu;
@@ -870,8 +986,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JMenu btt_QLSuatAn;
     private javax.swing.JButton btt_ThemSuatAn;
     private javax.swing.JButton btt_XoaSuatAn;
-    private javax.swing.JDialog dialog_SuaMonAn;
+    private javax.swing.JDialog dialog_MonAnSuatAn;
     private javax.swing.JButton dialogbtt_Delete;
+    private javax.swing.JButton dialogbtt_Reset;
     private javax.swing.JButton dialogbtt_Save;
     private javax.swing.JTable dialogtbl_DSMA;
     private javax.swing.JTable dialogtbl_MonAnSA;

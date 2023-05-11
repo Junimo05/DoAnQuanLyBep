@@ -2,12 +2,12 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JDialog" name="dialog_SuaMonAn">
+    <Container class="javax.swing.JDialog" name="dialog_MonAnSuatAn">
       <Events>
-        <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="dialog_SuaMonAnWindowClosing"/>
+        <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="dialog_MonAnSuatAnWindowClosing"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="dialog_SuaMonAn.pack();&#xa;dialog_SuaMonAn.setLocationRelativeTo(null);"/>
+        <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="dialog_MonAnSuatAn.pack();&#xa;dialog_MonAnSuatAn.setLocationRelativeTo(null);"/>
       </AuxValues>
 
       <Layout>
@@ -29,9 +29,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jPanel5" max="32767" attributes="0"/>
+                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jPanel1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -58,7 +58,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" alignment="0" pref="488" max="32767" attributes="0"/>
                       <Component id="jPanel6" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
@@ -75,6 +75,9 @@
               </Layout>
               <SubComponents>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMinWidth(0);&#xa;        dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMaxWidth(0);"/>
+                  </AuxValues>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
@@ -82,13 +85,13 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="4">
-                            <Column editable="false" title="M&#xe3; M&#xf3;n &#x102;n" type="java.lang.Object"/>
                             <Column editable="false" title="T&#xea;n M&#xf3;n &#x102;n" type="java.lang.Object"/>
                             <Column editable="false" title="&#x110;&#x1a1;n Gi&#xe1;" type="java.lang.Object"/>
                             <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object"/>
+                            <Column editable="false" title="M&#xe3;" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMinWidth(0);&#xa;dialogtbl_MonAnSA.getColumnModel().getColumn(3).setMaxWidth(0);&#xa;&#xa;ListSelectionModel dialogSelectionModel = dialogtbl_MonAnSA.getSelectionModel();&#xa;&#xa;dialogSelectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!dialogSelectionModel.isSelectionEmpty()) {&#xa;        if(e.getValueIsAdjusting()){&#xa;            int selectedRow = dialogtbl_MonAnSA.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //l&#x1ea5;y d&#x1eef; li&#x1ec7;u&#xa;                Object ten = dialogtbl_MonAnSA.getValueAt(selectedRow, 0);&#xa;                //g&#xe1;n d&#x1eef; li&#x1ec7;u&#xa;                txt_SearchDSMA.setText(ten.toString());&#xa;            }&#xa;        }&#xa;       }else {&#xa;            txt_SearchDSMA.setText(&quot;&quot;);&#xa;       }&#xa;   }&#xa;});&#xa;&#xa;TableModel model = dialogtbl_DSMA.getModel();    &#xa;TableRowSorter&lt;TableModel&gt; sorter = new TableRowSorter&lt;&gt;(model);&#xa;dialogtbl_DSMA.setRowSorter(sorter);&#xa;&#xa;txt_SearchDSMA.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        sorter.sort();&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        sorter.sort();&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        sorter.sort();&#xa;    }&#xa;});">
                           <TableColumnModel selectionModel="1">
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
@@ -189,19 +192,19 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scrollPane" alignment="1" pref="504" max="32767" attributes="0"/>
-                      <Component id="jPanel8" max="32767" attributes="0"/>
+                      <Component id="scrollPane" alignment="1" max="32767" attributes="0"/>
                       <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jPanel8" alignment="1" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="scrollPane" min="-2" pref="282" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="scrollPane" pref="282" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -214,14 +217,20 @@
                     <Component class="javax.swing.JTable" name="dialogtbl_DSMA">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="3" rowCount="4">
+                          <Table columnCount="4" rowCount="4">
                             <Column editable="false" title="M&#xf3;n &#x102;n" type="java.lang.Object"/>
                             <Column editable="false" title="&#x110;&#x1a1;n Gi&#xe1;" type="java.lang.Object"/>
+                            <Column editable="false" title="M&#xe3;" type="java.lang.Object"/>
                             <Column editable="true" title="Thao T&#xe1;c" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
@@ -244,6 +253,9 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePre" type="java.lang.String" value="dialogtbl_DSMA.getColumnModel().getColumn(2).setMinWidth(0);&#xd;&#xa;dialogtbl_DSMA.getColumnModel().getColumn(2).setMaxWidth(0);"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -320,25 +332,41 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="dialogbtt_Delete" min="-2" pref="140" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="dialogbtt_Reset" min="-2" pref="140" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="dialogbtt_Save" alignment="1" pref="35" max="32767" attributes="0"/>
-                          <Component id="dialogbtt_Delete" alignment="0" pref="35" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                      <Component id="dialogbtt_Save" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="dialogbtt_Delete" alignment="3" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="dialogbtt_Reset" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="dialogbtt_Save">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="dialogbtt_Delete">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+                        <Property name="text" type="java.lang.String" value="X&#xf3;a M&#xf3;n &#x102;n"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="dialogbtt_Reset">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Ho&#xe0;n T&#xe1;c"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="dialogbtt_Save">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="L&#x1b0;u Thay &#x110;&#x1ed5;i"/>
                       </Properties>
                     </Component>
                   </SubComponents>

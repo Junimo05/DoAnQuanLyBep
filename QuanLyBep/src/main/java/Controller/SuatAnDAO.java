@@ -119,7 +119,7 @@ public class SuatAnDAO {
     
     public ArrayList<MonAn> getListDSMA(){
         ArrayList<MonAn> list = new ArrayList<>();
-        String sql = "SELECT \"Tên Món Ăn\", \"Đơn Giá\" FROM tbl_MonAn";
+        String sql = "SELECT \"Tên Món Ăn\", \"Đơn Giá\", \"Mã Món Ăn\" FROM tbl_MonAn";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -127,6 +127,7 @@ public class SuatAnDAO {
                 MonAn MA = new MonAn();
                 MA.setTenMon(rs.getString("Tên Món Ăn"));
                 MA.setgia(rs.getDouble("Đơn Giá"));
+                MA.setmaMon(rs.getString("Mã Món Ăn"));
                 list.add(MA);
             }
         } catch (Exception e) {
@@ -134,4 +135,51 @@ public class SuatAnDAO {
         }
         return list;
     }
+    
+    public void addMASA(){
+        
+    }
+    
+    public boolean updateOrInsertListMASA(int maSA, String maMA, int soLuong) {
+        try {
+            // Kiểm tra xem bản ghi đã tồn tại trong bảng hay chưa
+            String selectQuery = "SELECT * FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
+            PreparedStatement selectPS = conn.prepareStatement(selectQuery);
+            selectPS.setInt(1, maSA);
+            selectPS.setString(2, maMA);
+            ResultSet resultSet = selectPS.executeQuery();
+
+            // Nếu bản ghi đã tồn tại, cập nhật số lượng
+            if (resultSet.next()) {
+                String updateQuery = "UPDATE tbl_MonAn_SuatAn SET \"Số Lượng\" = ? WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
+                PreparedStatement updatePS = conn.prepareStatement(updateQuery);
+                updatePS.setInt(1, soLuong);
+                updatePS.setInt(2, maSA);
+                updatePS.setString(3, maMA);
+                return updatePS.executeUpdate() > 0;
+
+            } else { // Nếu bản ghi chưa tồn tại, thêm mới
+                String insertQuery = "MERGE INTO tbl_MonAn_SuatAn AS target "
+                                    + "USING (VALUES (?, ?, ?)) AS source (\"Mã Suất Ăn\", \"Mã Món Ăn\", \"Số Lượng\") "
+                                    + "ON target.\"Mã Suất Ăn\" = source.\"Mã Suất Ăn\" AND target.\"Mã Món Ăn\" = source.\"Mã Món Ăn\" "
+                                    + "WHEN MATCHED THEN "
+                                    + "UPDATE SET target.\"Số Lượng\" = ? "
+                                    + "WHEN NOT MATCHED THEN "
+                                    + "INSERT (\"Mã Suất Ăn\", \"Mã Món Ăn\", \"Số Lượng\") VALUES (?, ?, ?);";
+                PreparedStatement insertPS = conn.prepareStatement(insertQuery);
+                insertPS.setInt(1, maSA);
+                insertPS.setString(2, maMA);
+                insertPS.setInt(3, soLuong);
+                insertPS.setInt(4, soLuong);
+                insertPS.setInt(5, maSA);
+                insertPS.setString(6, maMA);
+                insertPS.setInt(7, soLuong);
+                return insertPS.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
