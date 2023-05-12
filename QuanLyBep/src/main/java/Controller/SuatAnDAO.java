@@ -74,20 +74,33 @@ public class SuatAnDAO {
     }
     
     public boolean xoaSuatAn(int maSA) {
-        String sql = "DELETE FROM tbl_SuatAn WHERE \"Mã Suất Ăn\" = ?";
         try {
-          PreparedStatement ps = conn.prepareStatement(sql);
-          ps.setInt(1, maSA);
+            // Xóa các dòng trong bảng tbl_MonAn_SuatAn có cùng Mã Suất Ăn với maSA
+            String sql1 = "DELETE FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ?";
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+            ps1.setInt(1, maSA);
+            ps1.executeUpdate();
 
-          // Execute the delete statement and get the number of affected rows
-          int rowAffected = ps.executeUpdate();
+            // Xóa dòng có Mã Suất Ăn là maSA trong bảng tbl_SuatAn
+            String sql2 = "DELETE FROM tbl_SuatAn WHERE \"Mã Suất Ăn\" = ?";
+            PreparedStatement ps2 = conn.prepareStatement(sql2);
+            ps2.setInt(1, maSA);
+            
+//            //Đặt lại identity
+//            String resetSql = "DBCC CHECKIDENT ('tbl_SuatAn', RESEED, ?)";
+//            PreparedStatement resetPs = conn.prepareStatement(resetSql);
+//            resetPs.setInt(1, maSA-1);
+//            resetPs.executeUpdate();
+            
+            // Execute the delete statement and get the number of affected rows
+            int rowAffected = ps2.executeUpdate();
 
-          // Set the result to true if the number of affected rows is greater than 0
-          if (rowAffected > 0) {
-            return true;
-          }
+            // Set the result to true if the number of affected rows is greater than 0
+            if (rowAffected > 0) {
+                return true;
+            }
         } catch (Exception ex) {
-          ex.printStackTrace();
+            ex.printStackTrace();
         } 
         return false;
     }
@@ -136,10 +149,6 @@ public class SuatAnDAO {
         return list;
     }
     
-    public void addMASA(){
-        
-    }
-    
     public boolean updateOrInsertListMASA(int maSA, String maMA, int soLuong) {
         try {
             // Kiểm tra xem bản ghi đã tồn tại trong bảng hay chưa
@@ -151,6 +160,9 @@ public class SuatAnDAO {
 
             // Nếu bản ghi đã tồn tại, cập nhật số lượng
             if (resultSet.next()) {
+                if(soLuong == 0){
+                    deleteRow(maSA, maMA);
+                }
                 String updateQuery = "UPDATE tbl_MonAn_SuatAn SET \"Số Lượng\" = ? WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
                 PreparedStatement updatePS = conn.prepareStatement(updateQuery);
                 updatePS.setInt(1, soLuong);
@@ -181,5 +193,17 @@ public class SuatAnDAO {
         }
         return false;
     }
-
+    
+    public boolean deleteRow(int maSA, String maMA){
+        try {
+            String deleteString = "DELETE FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
+            PreparedStatement deletePs = conn.prepareStatement(deleteString);
+            deletePs.setInt(1, maSA);
+            deletePs.setString(2, maMA);
+            return deletePs.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
