@@ -11,7 +11,7 @@ public class NguyenLieu{
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL, int khoiLuongNL, int giaNL, Date ngay) {
+    public NguyenLieu(int maNL, String tenNL ,Date ngay, int giaNL, int khoiLuongNL ) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;

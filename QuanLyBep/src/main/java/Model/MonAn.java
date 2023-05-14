@@ -1,5 +1,4 @@
 package Model;
-import Model.NguyenLieu;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -13,15 +12,17 @@ public class MonAn{
     
     //Khoi Tao
     public MonAn(){
+        NLYeuCau = new HashMap<>();
     }
-    
-    public MonAn(String maMon, String tenMon, int soLuong, Double dongia) {
+
+    public MonAn(String maMon, String tenMon, Double dongia, int soLuong, Map<Integer, NguyenLieu> NLYeuCau) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.dongia = dongia;
         this.soLuong = soLuong;
-        this.NLYeuCau = new HashMap<Integer, NguyenLieu>();
+        this.NLYeuCau = NLYeuCau;
     }
+    
     
     public MonAn(String tenMon){
         this.tenMon = tenMon;
@@ -69,6 +70,22 @@ public class MonAn{
     }
     //Get Set
 
+    public Double getDongia() {
+        return dongia;
+    }
+
+    public void setDongia(Double dongia) {
+        this.dongia = dongia;
+    }
+
+    public Map<Integer, NguyenLieu> getNLYeuCau() {
+        return NLYeuCau;
+    }
+
+    public void setNLYeuCau(Map<Integer, NguyenLieu> NLYeuCau) {
+        this.NLYeuCau = NLYeuCau;
+    }
+
     public int getSoLuong() {
         return soLuong;
     }
@@ -91,14 +108,6 @@ public class MonAn{
 
     public void setTenMon(String tenMon) {
         this.tenMon = tenMon;
-    }
-    
-    public Double getdongia(){
-    	return dongia;
-    }
-    
-    public void setgia(Double dongia){
-    	this.dongia = dongia;
     }
     
     //HashCode equals toString

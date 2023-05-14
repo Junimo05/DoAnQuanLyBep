@@ -118,7 +118,7 @@ public class SuatAnDAO {
                 MonAn MA = new MonAn();
                 MA.setTenMon(rs.getString("Tên Món Ăn"));
                 MA.setmaMon(rs.getString("Mã Món Ăn"));
-                MA.setgia(rs.getDouble("Đơn Giá"));
+                MA.setDongia(rs.getDouble("Đơn Giá"));
                 MA.setSoLuong(rs.getInt("Số Lượng"));
                 list.add(MA);
             }
@@ -137,7 +137,7 @@ public class SuatAnDAO {
             while(rs.next()){
                 MonAn MA = new MonAn();
                 MA.setTenMon(rs.getString("Tên Món Ăn"));
-                MA.setgia(rs.getDouble("Đơn Giá"));
+                MA.setDongia(rs.getDouble("Đơn Giá"));
                 MA.setmaMon(rs.getString("Mã Món Ăn"));
                 list.add(MA);
             }

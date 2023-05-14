@@ -101,4 +101,8 @@ public class SuatAn {
         sanSang = true;
         return true;
     }
+    
+    public void tongTien(){
+        
+    }
 }

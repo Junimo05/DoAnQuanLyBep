@@ -123,7 +123,11 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HomePage().setVisible(true);
+                try {
+                    new HomePage().setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 
             }
         });

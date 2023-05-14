@@ -5,11 +5,15 @@
 package Controller;
 
 import Model.MonAn;
+import Model.NguyenLieu;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,25 +38,56 @@ public class MonAnDAO {
         }
     }
     
-    public ArrayList<MonAn> getListMA(){
+    public ArrayList<MonAn> getListMA() {
         ArrayList<MonAn> list = new ArrayList<>();
         String sql = "SELECT * FROM tbl_MonAn";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                MonAn MA = new MonAn();
-                MA.setTenMon(rs.getString("Tên Món Ăn"));
-                MA.setmaMon(rs.getString("Mã Món Ăn"));
-                MA.setgia(rs.getDouble("Đơn Giá"));
-                MA.setSoLuong(rs.getInt("Số Lượng"));
-                list.add(MA);
+    
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+    
+            while (rs.next()) {
+                MonAn monAn = new MonAn();
+                monAn.setmaMon(rs.getString("Mã Món Ăn"));
+                monAn.setTenMon(rs.getString("Tên Món Ăn"));
+                monAn.setDongia(rs.getDouble("Đơn Giá"));
+                monAn.setSoLuong(rs.getInt("Số Lượng"));
+                monAn.setNLYeuCau(getListMANL(monAn));
+                // Thêm món ăn vào danh sách
+                list.add(monAn);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý hoặc ném ra Exception tùy theo trường hợp
         }
+    
         return list;
     }
+    
+    public Map<Integer, NguyenLieu> getListMANL(MonAn MA) {
+        Map<Integer, NguyenLieu> map = new HashMap<>();
+        
+        String sql = "SELECT m.\"Tên Món Ăn\", m.\"Mã Món Ăn\", m.\"Đơn Giá\", m.\"Số Lượng\", n.\"Mã Nguyên Liệu\", n.\"Tên Nguyên Liệu\", "
+                + "n.\"Đơn Giá\" AS \"Nguyên Liệu Đơn Giá\", mn.\"Số Lượng\" AS \"Nguyên Liệu Số Lượng\"" +
+        " FROM tbl_MonAn AS m" +
+        " INNER JOIN tbl_MonAn_NguyenLieu AS mn ON m.\"Mã Món Ăn\" = mn.\"Mã Món Ăn\"" +
+        " INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\"";
+    
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                NguyenLieu nl = new NguyenLieu();
+                nl.setMaNL(rs.getInt("Mã Nguyên Liệu"));
+                nl.setTenNL(rs.getString("Tên Nguyên Liệu"));
+                nl.setGiaNL(rs.getInt("Nguyên Liệu Đơn Giá"));
+                nl.setSoluongNL(rs.getInt("Nguyên Liệu Số Lượng"));
+                map.put(nl.getMaNL(), nl); // Using Map of NguyenLieu for NLYeuCau 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exception as needed or rethrow
+        }
+    
+        return map;
+    }
+    
     
     public boolean ThemMonAn(MonAn monAn) {
         String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\", \"Số Lượng\") VALUES (?, ?, ?, ?)";
@@ -60,7 +95,7 @@ public class MonAnDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, monAn.getMaMon());
             ps.setString(2, monAn.getTenMon());
-            ps.setDouble(3, monAn.getdongia());
+            ps.setDouble(3, monAn.getDongia());
             ps.setInt(4, monAn.getSoLuong());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
@@ -76,7 +111,7 @@ public class MonAnDAO {
 
             // Thiết lập giá trị cho các tham số của câu lệnh SQL
             ps.setString(1, monAn.getTenMon());
-            ps.setDouble(2, monAn.getdongia());
+            ps.setDouble(2, monAn.getDongia());
             ps.setInt(3, monAn.getSoLuong());
             ps.setString(4, monAn.getMaMon());
             // Thực hiện câu lệnh SQL
@@ -138,7 +173,6 @@ public class MonAnDAO {
         }
         return model;
     }
-
     
     public boolean ThemNLMA(String maMA, int maNL, int soLuong) throws Exception {
         String checkSql = "SELECT COUNT(*) FROM tbl_MonAn_NguyenLieu WHERE \"Mã Nguyên Liệu\"=? AND \"Mã Món Ăn\" = ?";
@@ -161,17 +195,8 @@ public class MonAnDAO {
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             throw e;
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-        }
+        } 
     }
-
-
     
     public boolean XoaNLMA(String maMA, int maNL){
         String sql = "DELETE FROM tbl_MonAn_NguyenLieu WHERE \"Mã Món Ăn\" = ? AND \"Mã Nguyên Liệu\" = ?";

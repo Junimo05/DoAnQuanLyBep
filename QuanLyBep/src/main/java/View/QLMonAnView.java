@@ -589,7 +589,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         monAn.setmaMon(maMonAnStr);
         monAn.setTenMon(tenMonAn);
-        monAn.setgia(donGia);
+        monAn.setDongia(donGia);
 
         if (new MonAnDAO().ThemMonAn(monAn)) { // Thêm món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
@@ -647,7 +647,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         
         monAn.setmaMon(maMonAnStr);
         monAn.setTenMon(tenMonAn);
-        monAn.setgia(donGia);
+        monAn.setDongia(donGia);
         monAn.setSoLuong(soLuong);
         
         if(new MonAnDAO().CapNhatMonAn(monAn)) { // Cập nhật món ăn thành công
@@ -807,7 +807,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = listMA.get(i);
             model.addRow(new Object[]{
-                tmp.getMaMon(), tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong()
+                tmp.getMaMon(), tmp.getTenMon(), tmp.getDongia(), tmp.getSoLuong()
             });
         }
     }
@@ -879,7 +879,15 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         
         int maNL = Integer.parseInt(maNLStr);
         
-        MonAn MA = new MonAn();
+        NguyenLieu nl = new NguyenLieu();
+        ArrayList<NguyenLieu> listNL = new NguyenLieuDAO().getListNL();
+        for(NguyenLieu tmp : listNL){
+            if(tmp.getMaNL() == maNL){
+                nl.setMaNL(maNL);
+                nl.setTenNL(tmp.getTenNL());
+                break;
+            }
+        }
         
         
         if(new MonAnDAO().XoaNLMA(maMonStr, maNL)) {
