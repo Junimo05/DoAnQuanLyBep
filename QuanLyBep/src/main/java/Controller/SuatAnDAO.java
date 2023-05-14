@@ -122,13 +122,11 @@ public class SuatAnDAO {
                 MA.setSoLuong(rs.getInt("Số Lượng"));
                 list.add(MA);
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
-    
-    
     
     public ArrayList<MonAn> getListDSMA(){
         ArrayList<MonAn> list = new ArrayList<>();

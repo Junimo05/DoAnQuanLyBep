@@ -679,6 +679,8 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             JOptionPane.showMessageDialog(rootPane, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialogbtt_ResetClicked();
             loadTableDSMA();
+            //Cap nhat trong Model
+            CapNhatMonAn(MaSA);
         } else {
             JOptionPane.showMessageDialog(rootPane, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
@@ -717,6 +719,18 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+//Model 
+    public void CapNhatMonAn(int maSA){
+        SuatAn tmp;
+        for (SuatAn SA : list) {
+            if(SA.getMaSuatAn() == maSA){
+                tmp = SA;
+            }
+        }
+        
+        
+    }
+//
 //Chức năng hỗ trợ
     
     private int getMaSA(){

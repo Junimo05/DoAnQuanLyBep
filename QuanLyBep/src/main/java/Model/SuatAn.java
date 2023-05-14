@@ -24,12 +24,6 @@ public class SuatAn {
         sanSang = false;
         thoiGian = new Date();
     }
-    
-    public SuatAn(int MaSuatAn){
-        this.MaSuatAn = MaSuatAn;
-        this.sanSang = false;
-        this.ds = new HashMap<MonAn, Integer>();
-    }
 
     public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<MonAn, Integer> ds) {
         this.MaSuatAn = MaSuatAn;

@@ -11,8 +11,8 @@ import Model.NguyenLieu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
@@ -29,7 +29,6 @@ import javax.swing.table.TableRowSorter;
 public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private MonAn monAn;
     private ArrayList<MonAn> listMA = new MonAnDAO().getListMA();
-    private ArrayList<NguyenLieu> listNL = new NguyenLieuDAO().getListNL();
     /**
      * Creates new form QLMonAnView
      */
@@ -202,6 +201,11 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         });
         tbl_SuaNguyenLieu.setColumnSelectionAllowed(true);
         tbl_SuaNguyenLieu.getTableHeader().setReorderingAllowed(false);
+        tbl_SuaNguyenLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_SuaNguyenLieuMouseClicked(evt);
+            }
+        });
         dialog_ScrollPane.setViewportView(tbl_SuaNguyenLieu);
         tbl_SuaNguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_SuaNguyenLieu.getColumnModel().getColumnCount() > 0) {
@@ -233,8 +237,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                         }
                     }
                 }else {
-                    dialogbtt_Sua.setEnabled(true);
-                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Sua.setEnabled(false);
+                    dialogbtt_Xoa.setEnabled(false);
                     dialogtxt_MaMonAn.setEnabled(true);
                     dialogtxt_MaNguyenLieu.setEnabled(true);
                 }
@@ -548,7 +552,11 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         if (e.getSource() == btt_Nhap) {
             btt_NhapClick();
         } else if (e.getSource() == dialogbtt_Nhap) {
-            dialogbtt_NhapClick();
+            try {
+                dialogbtt_NhapClick();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         } else if (e.getSource() == btt_Sua) {
             btt_SuaClick();
         } else if (e.getSource() == dialogbtt_Sua) {
@@ -613,6 +621,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         }
 
     }
+    
     public void btt_XoaNhapClick(){
         txt_MaMonAn.setEnabled(true);
         txt_MaMonAn.setText("");
@@ -673,29 +682,30 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));
     }//GEN-LAST:event_txt_SearchKeyReleased
 
-    Set<Integer> selectedRows = new HashSet<>();
-    Set<Integer> selectedCols = new HashSet<>();
+    private int selectedRow = -1;
+    private int selectedCol = -1;
     private void tbl_QLMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_QLMonAnMouseClicked
         int row = tbl_QLMonAn.rowAtPoint(evt.getPoint());
         int col = tbl_QLMonAn.columnAtPoint(evt.getPoint());
         if(evt.getClickCount() == 2){
             dialog_SuaNguyenLieu.setVisible(true);
             String ma = tbl_QLMonAn.getValueAt(row, 0).toString();
+            dialog_SuaNguyenLieu.setTitle("Món Ăn: " + ma);
             loadTableNgLieu(ma);
+            dialogbtt_XoaNhapClick();
         }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+            if (row == selectedRow && col == selectedCol) {
                 tbl_QLMonAn.removeRowSelectionInterval(row, row);
-                tbl_QLMonAn.removeColumnSelectionInterval(col, col);
-                selectedRows.remove(row);
-                selectedCols.remove(col);
+                tbl_QLMonAn.removeColumnSelectionInterval(0, 3);
+                selectedRow = -1;
+                selectedCol = -1;
                 btt_XoaNhapClick();
             } else {
                 // Otherwise, select the cell
-                tbl_QLMonAn.addRowSelectionInterval(row, row);
-                tbl_QLMonAn.addColumnSelectionInterval(col, col);
-                selectedRows.add(row);
-                selectedCols.add(col);
+                tbl_QLMonAn.changeSelection(row, col, false, false);
+                selectedRow = row;
+                selectedCol = col;
             }
         }
     }//GEN-LAST:event_tbl_QLMonAnMouseClicked
@@ -703,12 +713,35 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         new HomePage().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+    
+    private int selectedRow2 = -1;
+    private int selectedCol2 = -1;
+    private void tbl_SuaNguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SuaNguyenLieuMouseClicked
+        int row = tbl_SuaNguyenLieu.rowAtPoint(evt.getPoint());
+        int col = tbl_SuaNguyenLieu.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+            // If cell is already selected and isSelected is true, then deselect it
+            if (row == selectedRow2 && col == selectedCol2) {
+                tbl_SuaNguyenLieu.removeRowSelectionInterval(row, row);
+                tbl_SuaNguyenLieu.removeColumnSelectionInterval(0, 3);
+                selectedRow2 = -1;
+                selectedCol2 = -1;
+                btt_XoaNhapClick();
+            } else {
+                // Otherwise, select the cell
+                tbl_SuaNguyenLieu.changeSelection(row, col, false, false);
+                selectedRow2 = row;
+                selectedCol2 = col;
+            }
+        }
+    }//GEN-LAST:event_tbl_SuaNguyenLieuMouseClicked
 
     private void load(){
         btt_Sua.setEnabled(false);
         btt_Xoa.setEnabled(false);
         loadTableMA();
     }
+    
     public String validateInputValues(String maMonAn, String tenMonAn, String donGia, String soLuong) {
         if (maMonAn.isEmpty() || tenMonAn.isEmpty() || donGia.isEmpty() || soLuong.isEmpty()) {
             return "Vui lòng nhập đầy đủ thông tin!";
@@ -780,6 +813,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     }
     
     private void loadTableNgLieu(String ma){
+        dialogtxt_MaMonAn.setEnabled(false);
+        dialogtxt_MaMonAn.setText(ma);
         dialogbtt_Sua.setEnabled(false);
         dialogbtt_Xoa.setEnabled(false);
         String[] columns = {"STT", "Mã Món Ăn", "Mã Nguyên Liệu", "Số Lượng"};
@@ -788,7 +823,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         tbl_SuaNguyenLieu.setModel(model);
     }
     
-    public void dialogbtt_NhapClick(){
+    public void dialogbtt_NhapClick() throws Exception{
         String maMonStr = dialogtxt_MaMonAn.getText();
         String maNLStr = dialogtxt_MaNguyenLieu.getText();
         String soLuongStr = dialogtxt_SoLuong.getText();
@@ -802,21 +837,33 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         int maNL = Integer.parseInt(maNLStr);
         int soLuong = Integer.parseInt(soLuongStr);
         
-        MonAn MA = new MonAn();
-        for(MonAn obj : listMA){
-            String ma = obj.getMaMon();
-            if(ma == maNLStr){
-                obj.addUpNL(maNL, soLuong);
+        //Tìm ra nguyên liệu trong database
+        NguyenLieu nl = new NguyenLieu();
+        ArrayList<NguyenLieu> listNL = new NguyenLieuDAO().getListNL();
+        for(NguyenLieu tmp : listNL){
+            if(tmp.getMaNL() == maNL){
+                nl.setMaNL(maNL);
+                nl.setTenNL(tmp.getTenNL());
+                nl.setSoluongNL(soLuong);
                 break;
             }
         }
         
-        if (new MonAnDAO().ThemNLMA(maMonStr, maNL, soLuong)) { // Thêm món ăn thành công
+        //Tìm Món Ăn và cập nhật
+        for(MonAn ma : listMA){
+            if(ma.getMaMon() == maMonStr){
+                ma.addUpNL(nl);
+                break;
+            }
+        }
+        
+        if (new MonAnDAO().ThemNLMA(maMonStr, nl.getMaNL(), nl.getSoluongNL())) { // Thêm món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             loadTableNgLieu(maMonStr);
             dialogbtt_XoaNhapClick();
         } else { // Thêm món ăn không thành công
             JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            
         }
     }
     
@@ -833,13 +880,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         int maNL = Integer.parseInt(maNLStr);
         
         MonAn MA = new MonAn();
-        for(MonAn obj : listMA){
-            String ma = obj.getMaMon();
-            if(ma == maNLStr){
-                obj.delNL(maNL);
-                break;
-            }
-        }
+        
         
         if(new MonAnDAO().XoaNLMA(maMonStr, maNL)) {
             JOptionPane.showMessageDialog(rootPane, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
@@ -859,9 +900,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     }
     
     public void dialogbtt_XoaNhapClick(){
-        dialogtxt_MaMonAn.setEnabled(true);
+        dialogtxt_MaMonAn.setEnabled(false);
         dialogtxt_MaNguyenLieu.setEnabled(true);
-        dialogtxt_MaMonAn.setText("");
         dialogtxt_MaNguyenLieu.setText("");
         dialogtxt_SoLuong.setText("");
     }
@@ -880,14 +920,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         int maNL = Integer.parseInt(maNLStr);
         int soLuong = Integer.parseInt(soLuongStr);
         
-        MonAn MA = new MonAn();
-        for(MonAn obj : listMA){
-            String ma = obj.getMaMon();
-            if(ma == maNLStr){
-                obj.addUpNL(maNL, soLuong);
-                break;
-            }
-        }
+        
         
         if (new MonAnDAO().CapNhatMANL(maNLStr, maNL, soLuong)) {
             JOptionPane.showMessageDialog(rootPane, "Cập nhật món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);

@@ -5,13 +5,13 @@ public class NguyenLieu{
     private String tenNL;
     private Date ngay; 
     private int khoiLuongNL;
-    private Double giaNL;
+    private int giaNL;
     
     //Khởi Tạo
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL, int khoiLuongNL, Double giaNL, Date ngay) {
+    public NguyenLieu(int maNL, String tenNL, int khoiLuongNL, int giaNL, Date ngay) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;
@@ -19,19 +19,25 @@ public class NguyenLieu{
         this.giaNL = giaNL;
     }
     
-    //Add use check
-    public void add(int soLuong){
-        this.khoiLuongNL += soLuong;
+    public void update(NguyenLieu nl){
+        this.maNL = nl.maNL;
+        this.tenNL = nl.tenNL;
+        this.ngay = nl.ngay;
+        this.khoiLuongNL = nl.khoiLuongNL;
+        this.giaNL = nl.giaNL;
     }
+    
     public void use(int soLuong){
         this.khoiLuongNL -= soLuong;
     }
+    
     public boolean check(int soLuong){
         if(this.khoiLuongNL >= soLuong){
             return true;
         }
         return false;
     }
+    
     // Get Set()
     public int getMaNL() {
             return maNL;
@@ -57,10 +63,10 @@ public class NguyenLieu{
     public void setSoluongNL(int soluongNL) {
             this.khoiLuongNL = soluongNL;
     }
-    public Double getGiaNL() {
+    public int getGiaNL() {
             return giaNL;
     }
-    public void setGiaNL(Double giaNL) {
+    public void setGiaNL(int giaNL) {
             this.giaNL = giaNL;
     }
     

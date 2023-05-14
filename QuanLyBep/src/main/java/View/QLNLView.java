@@ -81,7 +81,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         btt_QLNhanVien = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Quản Lý Nhân Viên");
+        setTitle("Quản Lý Nguyên Liệu");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -333,6 +333,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
     /**
      * Events
      */
@@ -372,7 +373,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
 
         // Set input values to NguyenLieu instance
         int maNL = Integer.parseInt(maNLStr);
-        double giaNL = Double.parseDouble(giaNLStr);
+        int giaNL = Integer.parseInt(giaNLStr);
         int soluongNL = Integer.parseInt(soluongNLStr);
 
         nl.setMaNL(maNL);
@@ -492,7 +493,7 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         }
         
         int maNL = Integer.parseInt(maNLStr);
-        double giaNL = Double.parseDouble(giaNLStr);
+        int giaNL = Integer.parseInt(giaNLStr);
         int soluongNL = Integer.parseInt(soluongNLStr);
 
         nl.setMaNL(maNL);
@@ -501,7 +502,16 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         nl.setSoluongNL(soluongNL);
         nl.setNgay(ngayNhap);
         
-        if(new NguyenLieuDAO().CapNhatNguyenLieu(nl)) {
+        //Cập Nhật Cho Phần Tử Trong SQL qua Model
+        NguyenLieu updateItem = new NguyenLieu();
+        for(NguyenLieu change : list){
+            if(change.getMaNL() == maNL){
+                change.update(nl);
+                updateItem = change;
+            }
+        }
+        
+        if(new NguyenLieuDAO().CapNhatNguyenLieu(updateItem)) {
           JOptionPane.showMessageDialog(rootPane, "Cập Nhật Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
           loadTable();
           bttXoaNhapClick();
@@ -555,8 +565,8 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_txt_SearchKeyReleased
     
     //
-    Set<Integer> selectedRows = new HashSet<>();
-    Set<Integer> selectedCols = new HashSet<>();
+    private int selectedRow = -1;
+    private int selectedCol = -1;
     private void tbl_NguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_NguyenLieuMouseClicked
         int row = tbl_NguyenLieu.rowAtPoint(evt.getPoint());
         int col = tbl_NguyenLieu.columnAtPoint(evt.getPoint());
@@ -564,18 +574,17 @@ public class QLNLView extends javax.swing.JFrame implements ActionListener {
         // Check if the cell is valid and left mouse button is clicked
         if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+            if (row == selectedRow && col == selectedCol) {
                 tbl_NguyenLieu.removeRowSelectionInterval(row, row);
-                tbl_NguyenLieu.removeColumnSelectionInterval(col, col);
-                selectedRows.remove(row);
-                selectedCols.remove(col);
+                tbl_NguyenLieu.removeColumnSelectionInterval(0, 4);
+                selectedRow = -1;
+                selectedCol = -1;
                 bttXoaNhapClick();
             } else {
                 // Otherwise, select the cell
-                tbl_NguyenLieu.addRowSelectionInterval(row, row);
-                tbl_NguyenLieu.addColumnSelectionInterval(col, col);
-                selectedRows.add(row);
-                selectedCols.add(col);
+                tbl_NguyenLieu.changeSelection(row, col, false, false);
+                selectedRow = row;
+                selectedCol = col;
             }
         }
     }//GEN-LAST:event_tbl_NguyenLieuMouseClicked

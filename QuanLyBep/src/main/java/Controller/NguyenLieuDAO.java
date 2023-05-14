@@ -47,7 +47,7 @@ public class NguyenLieuDAO {
                 NguyenLieu NL = new NguyenLieu();
                 NL.setMaNL(rs.getInt("Mã Nguyên Liệu"));
                 NL.setTenNL(rs.getString("Tên Nguyên Liệu"));
-                NL.setGiaNL(rs.getDouble("Đơn Giá"));
+                NL.setGiaNL(rs.getInt("Đơn Giá"));
                 NL.setSoluongNL(rs.getInt("Khối Lượng(kg)"));
                 NL.setNgay(rs.getDate("Ngày Nhập"));
                 

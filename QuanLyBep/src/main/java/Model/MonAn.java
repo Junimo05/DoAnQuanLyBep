@@ -9,7 +9,7 @@ public class MonAn{
     private String tenMon;
     private Double dongia;
     private int soLuong;
-    private Map<NguyenLieu, Integer> NLYeuCau; 
+    private Map<Integer, NguyenLieu> NLYeuCau; 
     
     //Khoi Tao
     public MonAn(){
@@ -20,59 +20,50 @@ public class MonAn{
         this.tenMon = tenMon;
         this.dongia = dongia;
         this.soLuong = soLuong;
-        this.NLYeuCau = new HashMap<NguyenLieu, Integer>();
+        this.NLYeuCau = new HashMap<Integer, NguyenLieu>();
     }
     
     public MonAn(String tenMon){
         this.tenMon = tenMon;
     }
-    //Add Del Print
-    public void addUpNL(int ma, int tieuThu){
-        for(NguyenLieu key : NLYeuCau.keySet()){
-            if(key.getMaNL() == ma){
+    
+//Add Del Print
+    public void addUpNL(NguyenLieu nl){
+        for(int key : NLYeuCau.keySet()){
+            if(key == nl.getMaNL()){
                 this.NLYeuCau.remove(key);
             }
-            this.NLYeuCau.put(key, tieuThu);
+            this.NLYeuCau.put(key, nl);
             break;
         }
-        
     }
     
-    public void delNL(int ma){
-        for(NguyenLieu key : NLYeuCau.keySet()){
-            if(key.getMaNL() == ma){
+    public void delNL(NguyenLieu nl){
+        for(int key : NLYeuCau.keySet()){
+            if(key == nl.getMaNL()){
                 this.NLYeuCau.remove(key);
                 break;
             }
         }
     }
     
-    public void printDs(){
-        for (Map.Entry<NguyenLieu, Integer> entry : NLYeuCau.entrySet()) {
-            NguyenLieu key = entry.getKey();
-            Integer value = entry.getValue();
-            System.out.println(key.getTenNL() + ": " + value + "\n");
-        } 
-    }
     //Make
     public boolean make(){
         if(check()){
-            for (Map.Entry<NguyenLieu, Integer> entry : this.NLYeuCau.entrySet()) {
-                NguyenLieu key = entry.getKey();
-                Integer value = entry.getValue();
-                key.use(value);
+            for (Map.Entry<Integer, NguyenLieu> entry : this.NLYeuCau.entrySet()) {
+                int key = entry.getKey();
+                NguyenLieu value = entry.getValue();
+                
             }
             return true;
         }
         return false;
     }
     public boolean check(){
-        for (Map.Entry<NguyenLieu, Integer> entry : this.NLYeuCau.entrySet()) {
-            NguyenLieu key = entry.getKey();
-            Integer value = entry.getValue();
-            if(!key.check(value)){
-                return false;
-            }
+        for (Map.Entry<Integer, NguyenLieu> entry : this.NLYeuCau.entrySet()) {
+            int key = entry.getKey();
+            NguyenLieu value = entry.getValue();
+            
         }
         return true;
     }
@@ -132,6 +123,7 @@ public class MonAn{
         final MonAn other = (MonAn) obj;
         return Objects.equals(this.maMon, other.maMon);
     }
+
    
 }
    

@@ -140,20 +140,38 @@ public class MonAnDAO {
     }
 
     
-    public boolean ThemNLMA(String maMA, int maNL, int soLuong){
-        String sql = "INSERT INTO tbl_MonAn_NguyenLieu(\"Mã Món Ăn\", \"Mã Nguyên Liệu\", \"Số Lượng\") "
-                + "VALUES (?, ?, ?)";
+    public boolean ThemNLMA(String maMA, int maNL, int soLuong) throws Exception {
+        String checkSql = "SELECT COUNT(*) FROM tbl_MonAn_NguyenLieu WHERE \"Mã Nguyên Liệu\"=? AND \"Mã Món Ăn\" = ?";
+        String insertSql = "INSERT INTO tbl_MonAn_NguyenLieu(\"Mã Món Ăn\", \"Mã Nguyên Liệu\", \"Số Lượng\") "
+            + "VALUES (?, ?, ?)";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement checkPs = conn.prepareStatement(checkSql);
+            checkPs.setInt(1, maNL);
+            checkPs.setString(2, maMA);
+            rs = checkPs.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                throw new Exception("Mã nguyên liệu đã tồn tại");
+            }
+            ps = conn.prepareStatement(insertSql);
             ps.setString(1, maMA);
             ps.setInt(2, maNL);
             ps.setInt(3, soLuong);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
         }
-        return false;
     }
+
+
     
     public boolean XoaNLMA(String maMA, int maNL){
         String sql = "DELETE FROM tbl_MonAn_NguyenLieu WHERE \"Mã Món Ăn\" = ? AND \"Mã Nguyên Liệu\" = ?";
