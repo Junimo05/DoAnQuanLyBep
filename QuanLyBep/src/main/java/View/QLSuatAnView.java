@@ -4,6 +4,7 @@
  */
 package View;
 
+import Controller.MainController;
 import Controller.MonAnDAO;
 import Controller.SuatAnDAO;
 import Model.MonAn;
@@ -19,6 +20,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.Action;
@@ -29,6 +32,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -61,6 +66,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         //Add Event button
         btt_ThemSuatAn.addActionListener(this);
         btt_XoaSuatAn.addActionListener(this);
+        btt_ThucHienSA.addActionListener(this);
         dialogbtt_Save.addActionListener(this);
         dialogbtt_Delete.addActionListener(this);
         dialogbtt_Reset.addActionListener(this);
@@ -135,10 +141,12 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         btt_ThemSuatAn = new javax.swing.JButton();
+        btt_ThucHienSA = new javax.swing.JButton();
         btt_XoaSuatAn = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
-        txt_Search = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        txt_Search = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_SuatAn = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -436,6 +444,9 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         btt_ThemSuatAn.setText("Thêm");
         btt_ThemSuatAn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
+        btt_ThucHienSA.setText("Thực Hiện Suất Ăn");
+        btt_ThucHienSA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
         btt_XoaSuatAn.setText("Xóa");
         btt_XoaSuatAn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
@@ -443,22 +454,29 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btt_XoaSuatAn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btt_ThemSuatAn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btt_ThemSuatAn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btt_ThucHienSA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(btt_XoaSuatAn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(btt_ThemSuatAn, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btt_XoaSuatAn, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(btt_ThemSuatAn, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btt_ThucHienSA, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btt_XoaSuatAn, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
+        jLabel7.setToolTipText("");
+        jLabel7.setEnabled(false);
 
         txt_Search.setBorder(null);
         txt_Search.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -467,27 +485,27 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
-        jLabel7.setToolTipText("");
-        jLabel7.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_Search, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+                .addComponent(txt_Search)
                 .addContainerGap())
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_Search)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txt_Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         tbl_SuatAn.setModel(new javax.swing.table.DefaultTableModel(
@@ -530,11 +548,34 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             public void valueChanged(ListSelectionEvent e) {
                 if (!selectionModel.isSelectionEmpty()) {
                     btt_XoaSuatAn.setEnabled(true);
+                    btt_ThucHienSA.setEnabled(true);
                 }else{
                     btt_XoaSuatAn.setEnabled(false);
+                    btt_ThucHienSA.setEnabled(false);
                 }
             }
         });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -543,21 +584,14 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -623,6 +657,8 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             dialogbtt_DeleteClicked();
         } else if (e.getSource() == dialogbtt_Reset) {
             dialogbtt_ResetClicked();
+        } else if (e.getSource() == btt_ThucHienSA){
+            btt_ThucHienSAClicked();
         }
     }
 
@@ -658,6 +694,24 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             }
         } else {
           JOptionPane.showMessageDialog(rootPane, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void btt_ThucHienSAClicked(){
+        DefaultTableModel model = (DefaultTableModel) tbl_SuatAn.getModel();
+        int rowIndex = tbl_SuatAn.getSelectedRow();
+        String maSAStr = model.getValueAt(rowIndex, 0).toString();
+        int maSA = Integer.parseInt(maSAStr);
+        for(SuatAn sa : list){
+            if(sa.getMaSuatAn() == maSA){
+                if(new MainController().MakeSA(sa)){
+                    loadTableSA();
+                    JOptionPane.showMessageDialog(rootPane, "Thực Hiện Suất Ăn Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Thực Hiện Suất Ăn Không Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+                break;
+            }
         }
     }
     
@@ -714,7 +768,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
             model.addRow(new Object[]{
-                tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong(), tmp.getMaMon()
+                tmp.getTenMon(), tmp.getDongia(), tmp.getSoLuong(), tmp.getMaMon()
             });
         }
     }
@@ -741,6 +795,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     
     private void load(){
         btt_XoaSuatAn.setEnabled(false);
+        btt_ThucHienSA.setEnabled(false);
         loadTableSA();
     }
     
@@ -754,7 +809,33 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             model.addRow(new Object[]{
                 tmp.getMaSuatAn(), tmp.getSanSang(), tmp.getTongTien(), tmp.getThoiGian()
             });
-        } 
+        }
+        
+        //Lọc tất cả Suất Ăn chưa sẵn sàng lên đầu tiên
+        TableModel model1 = tbl_SuatAn.getModel();
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model1);
+        sorter.setComparator(1, new Comparator<Object>() {
+            public int compare(Object o1, Object o2) {
+                Boolean b1 = (Boolean) o1;
+                Boolean b2 = (Boolean) o2;
+                if (b1 == null && b2 == null) {
+                    return 0;
+                } else if (b1 == null) {
+                    return 1;
+                } else if (b2 == null) {
+                    return -1;
+                } else if (b1.booleanValue() == b2.booleanValue()) {
+                    return 0;
+                } else if (b1.booleanValue()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
+
+        sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+        tbl_SuatAn.setRowSorter(sorter);
     }
 
     private void loadTableMonAnSuatAn(int MA){
@@ -768,7 +849,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
             model.addRow(new Object[]{
-                tmp.getTenMon(), tmp.getdongia(), tmp.getSoLuong(), tmp.getMaMon()
+                tmp.getTenMon(), tmp.getDongia(), tmp.getSoLuong(), tmp.getMaMon()
             });
         }
     }
@@ -781,7 +862,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = list.get(i);
             model.addRow(new Object[]{
-                tmp.getTenMon(), tmp.getdongia(), tmp.getMaMon()
+                tmp.getTenMon(), tmp.getDongia(), tmp.getMaMon()
             });
         }
         dialogtbl_DSMA.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
@@ -833,8 +914,8 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
        new HomePage().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
         
-    Set<Integer> selectedRows = new HashSet<>();
-    Set<Integer> selectedCols = new HashSet<>();
+    private int selectedRow = -1;
+    private int selectedCol = -1;
     private void tbl_SuatAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SuatAnMouseClicked
         int row = tbl_SuatAn.rowAtPoint(evt.getPoint());
         int col = tbl_SuatAn.columnAtPoint(evt.getPoint());
@@ -848,17 +929,16 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
             loadTableDSMA();
         }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+            if (row == selectedRow && col == selectedCol) {
                 tbl_SuatAn.removeRowSelectionInterval(row, row);
-                tbl_SuatAn.removeColumnSelectionInterval(col, col);
-                selectedRows.remove(row);
-                selectedCols.remove(col);
+                tbl_SuatAn.removeColumnSelectionInterval(0, 3);
+                selectedRow = -1;
+                selectedCol = -1;
             } else {
                 // Otherwise, select the cell
-                tbl_SuatAn.addRowSelectionInterval(row, row);
-                tbl_SuatAn.addColumnSelectionInterval(col, col);
-                selectedRows.add(row);
-                selectedCols.add(col);
+                tbl_SuatAn.changeSelection(row, col, false, false);
+                selectedRow = row;
+                selectedCol = col;
                 btt_XoaSuatAn.setEnabled(true);
             }
         }
@@ -1033,6 +1113,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JMenu btt_QLNhanVien;
     private javax.swing.JMenu btt_QLSuatAn;
     private javax.swing.JButton btt_ThemSuatAn;
+    private javax.swing.JButton btt_ThucHienSA;
     private javax.swing.JButton btt_XoaSuatAn;
     private javax.swing.JDialog dialog_MonAnSuatAn;
     private javax.swing.JButton dialogbtt_Delete;
@@ -1054,6 +1135,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane scrollPane;

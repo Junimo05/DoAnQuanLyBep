@@ -182,17 +182,17 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         tbl_SuaNguyenLieu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Số Lượng NL"
+                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Nguyên Liệu", "Số Lượng NL"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -213,6 +213,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             tbl_SuaNguyenLieu.getColumnModel().getColumn(1).setResizable(false);
             tbl_SuaNguyenLieu.getColumnModel().getColumn(2).setResizable(false);
             tbl_SuaNguyenLieu.getColumnModel().getColumn(3).setResizable(false);
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(4).setResizable(false);
         }
         ListSelectionModel selectionModel2 = tbl_SuaNguyenLieu.getSelectionModel();
 

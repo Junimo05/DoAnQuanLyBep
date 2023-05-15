@@ -1,4 +1,7 @@
 package Model;
+import Controller.MainController;
+import Controller.NguyenLieuDAO;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,21 +53,32 @@ public class MonAn{
     
     //Make
     public boolean make(){
-        if(check()){
-            for (Map.Entry<Integer, NguyenLieu> entry : this.NLYeuCau.entrySet()) {
-                int key = entry.getKey();
-                NguyenLieu value = entry.getValue();
-                
-            }
-            return true;
+        ArrayList<NguyenLieu> ds = new NguyenLieuDAO().getListNL();
+        if(!check(ds)){
+            return false;
         }
-        return false;
-    }
-    public boolean check(){
         for (Map.Entry<Integer, NguyenLieu> entry : this.NLYeuCau.entrySet()) {
             int key = entry.getKey();
             NguyenLieu value = entry.getValue();
-            
+            for(NguyenLieu tmp : ds){
+                if(tmp.getMaNL() == key){
+                    tmp.use(value.getSoluongNL());
+                }
+            }
+        }
+        new MainController().UpdateNL(ds);
+        return true;
+    }
+    
+    public boolean check(ArrayList<NguyenLieu> ds){
+        for (Map.Entry<Integer, NguyenLieu> entry : this.NLYeuCau.entrySet()) {
+            int key = entry.getKey();
+            NguyenLieu value = entry.getValue();
+            for(NguyenLieu tmp : ds){
+                if(tmp.getMaNL() == key && !tmp.check(value.getSoluongNL())){
+                    return false;
+                }
+            }
         }
         return true;
     }

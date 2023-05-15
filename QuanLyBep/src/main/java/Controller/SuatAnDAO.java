@@ -10,9 +10,12 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -49,13 +52,37 @@ public class SuatAnDAO {
                 SA.setTongTien(rs.getInt("Tổng Giá Tiền"));
                 Timestamp timestamp = rs.getTimestamp("Thời Gian");
                 SA.setThoiGian(timestamp);
-                
+                SA.setDs(getMapMA(SA));
                 list.add(SA);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
+    }
+    
+    public Map<String, MonAn> getMapMA(SuatAn SA){
+        Map<String, MonAn> map = new HashMap<>();
+        
+        String sql = "SELECT n.\"Tên Món Ăn\", n.\"Mã Món Ăn\", n.\"Đơn Giá\", mn.\"Số Lượng\" AS \"Số Lượng Món Ăn\"" +
+                " FROM tbl_SuatAn AS m" +
+                " INNER JOIN tbl_MonAn_SuatAn AS mn ON m.\"Mã Suất Ăn\" = mn.\"Mã Suất Ăn\"" +
+                " INNER JOIN tbl_MonAn AS n ON mn.\"Mã Món Ăn\" = n.\"Mã Món Ăn\"";
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                MonAn MA = new MonAn();
+                MA.setmaMon(rs.getString("Mã Món Ăn"));
+                MA.setTenMon(rs.getString("Tên Món Ăn"));
+                MA.setDongia(rs.getDouble("Đơn Giá"));
+                MA.setSoLuong(rs.getInt("Số Lượng Món Ăn"));
+                map.put(MA.getMaMon(), MA); // Using Map of NguyenLieu for NLYeuCau 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exception as needed or rethrow
+        }
+    
+        return map;
     }
     
     public boolean ThemSuatAn(SuatAn SA){
@@ -67,6 +94,20 @@ public class SuatAnDAO {
             ps.setString(2, dateFormat.format(SA.getThoiGian()));
 
             return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean UpdateSA(SuatAn SA){
+        try {
+            String updateQuery = "UPDATE tbl_SuatAn SET \"Sẵn Sàng\" = ?, \"Tổng Tiền\" = ? WHERE \"Mã Suất Ăn\" = ?";
+            PreparedStatement updatePS = conn.prepareStatement(updateQuery);
+            updatePS.setBoolean(1, SA.getSanSang());
+            updatePS.setInt(2, SA.getTongTien());
+            updatePS.setInt(3, SA.getMaSuatAn());
+            return updatePS.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,22 +170,7 @@ public class SuatAnDAO {
     }
     
     public ArrayList<MonAn> getListDSMA(){
-        ArrayList<MonAn> list = new ArrayList<>();
-        String sql = "SELECT \"Tên Món Ăn\", \"Đơn Giá\", \"Mã Món Ăn\" FROM tbl_MonAn";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                MonAn MA = new MonAn();
-                MA.setTenMon(rs.getString("Tên Món Ăn"));
-                MA.setDongia(rs.getDouble("Đơn Giá"));
-                MA.setmaMon(rs.getString("Mã Món Ăn"));
-                list.add(MA);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
+        return new MonAnDAO().getListMA();
     }
     
     public boolean updateOrInsertListMASA(int maSA, String maMA, int soLuong) {

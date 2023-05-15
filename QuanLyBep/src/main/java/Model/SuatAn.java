@@ -17,7 +17,7 @@ public class SuatAn {
     boolean sanSang;
     int tongTien;
     Date thoiGian;
-    Map<MonAn, Integer> ds;
+    Map<String, MonAn> ds;
     
     //Khoi tao
     public SuatAn() {
@@ -25,7 +25,7 @@ public class SuatAn {
         thoiGian = new Date();
     }
 
-    public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<MonAn, Integer> ds) {
+    public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<String, MonAn> ds) {
         this.MaSuatAn = MaSuatAn;
         this.sanSang = sanSang;
         this.tongTien = tongTien;
@@ -67,42 +67,53 @@ public class SuatAn {
         this.MaSuatAn = MaSuatAn;
     }
 
-    public Map<MonAn, Integer> getDs() {
+    public Map<String, MonAn> getDs() {
         return ds;
     }
 
-    public void setDs(Map<MonAn, Integer> ds) {
+    public void setDs(Map<String, MonAn> ds) {
         this.ds = ds;
     }
     
     //Them, Xoa, Thuc Hien Suat An
-    public void capNhatMonAn(MonAn monAn, int soLuong) {
-        ds.put(monAn,soLuong);
+    public void capNhatMonAn(MonAn monAn) {
+        for(String key : ds.keySet()){
+            if(key == monAn.getMaMon()){
+                this.ds.remove(key);
+            }
+            this.ds.put(key, monAn);
+            break;
+        }
     }
     
-    public void xoaMonAn(MonAn monAn, int soLuongCanXoa) {
-        if (ds.containsKey(monAn)) {
-            int soLuongHienTai = ds.get(monAn); 
-                ds.remove(monAn);                      
-        } else {
-            // Nếu món ăn không tồn tại trong Map, thông báo lỗi
-            throw new IllegalArgumentException("Món ăn không tồn tại trong suất ăn!");
+    public void xoaMonAn(MonAn monAn) {
+        for(String key : ds.keySet()){
+            if(key == monAn.getMaMon()){
+                this.ds.remove(key);
+                break;
+            }
         }
     }
     
     public boolean make(){
-        for (Map.Entry<MonAn, Integer> entry : ds.entrySet()) {
-            MonAn key = entry.getKey();
-            int val = entry.getValue();
-            for(int i = 0; i < val; i++){
-                if(!key.make()) return false;
+        for (Map.Entry<String, MonAn> entry : ds.entrySet()) {
+            String key = entry.getKey();
+            MonAn val = entry.getValue();
+            if(!val.make()){
+                return false;
             }
         }
-        sanSang = true;
+        this.sanSang = true;
         return true;
     }
     
     public void tongTien(){
-        
+        int sum = 0;
+        for (Map.Entry<String, MonAn> entry : ds.entrySet()) {
+            String key = entry.getKey();
+            MonAn val = entry.getValue();
+            sum += val.getDongia() * val.getSoLuong();
+        }
+        this.tongTien = sum;
     }
 }

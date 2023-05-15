@@ -88,7 +88,6 @@ public class MonAnDAO {
         return map;
     }
     
-    
     public boolean ThemMonAn(MonAn monAn) {
         String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\", \"Số Lượng\") VALUES (?, ?, ?, ?)";
         try {

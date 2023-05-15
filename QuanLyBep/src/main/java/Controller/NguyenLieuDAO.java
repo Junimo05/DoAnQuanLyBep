@@ -100,6 +100,7 @@ public class NguyenLieuDAO {
             return false;
         }   
     }
+    
     public boolean xoaNguyenLieu(int maNL) {
         String sql = "DELETE FROM tbl_NguyenLieu WHERE \"Mã Nguyên Liệu\" = ?";
         try {
