@@ -39,5 +39,11 @@ public class MainController {
     *   Sự Kiện Cập Nhật Món Ăn
     */
     
-    
+    public void UpdateSA(){
+        for(SuatAn SA : DSSA){
+            SA.tongTien();
+            new SuatAnDAO().UpdateSA(SA);
+        }
+        
+    }
 }

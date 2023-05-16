@@ -715,30 +715,33 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void dialogbtt_SaveClicked(){
+    public void dialogbtt_SaveClicked() {
         TableModel model = dialogtbl_MonAnSA.getModel();
-        //Cập Nhật
+        // Cập Nhật
+        ArrayList<Object[]> dataList = new ArrayList<>();
         int MaSA = getMaSA();
-        boolean flag = true;
+
         for (int i = 0; i < model.getRowCount(); i++) {
             String MaMA = (String) model.getValueAt(i, 3);
-            Integer sl = Integer.valueOf(model.getValueAt(i, 2).toString());
-            int soLuong = sl.intValue();
-            if(!new SuatAnDAO().updateOrInsertListMASA(MaSA, MaMA, soLuong)){
-                flag = false;
-            }
+            int soLuong = (int) model.getValueAt(i, 2);
+
+            Object[] dataItem = new Object[] { MaMA, soLuong };
+            dataList.add(dataItem);
         }
-        
-        if(flag) {
+
+        boolean flag = new SuatAnDAO().updateOrInsertListMASA(dataList, MaSA);
+        if (flag) {
             JOptionPane.showMessageDialog(rootPane, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialogbtt_ResetClicked();
+            new MainController().UpdateSA();
             loadTableDSMA();
-            //Cap nhat trong Model
-            CapNhatMonAn(MaSA);
+            loadTableSA();
         } else {
             JOptionPane.showMessageDialog(rootPane, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+
     
     public void dialogbtt_DeleteClicked(){
         DefaultTableModel model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
@@ -773,18 +776,6 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-//Model 
-    public void CapNhatMonAn(int maSA){
-        SuatAn tmp;
-        for (SuatAn SA : list) {
-            if(SA.getMaSuatAn() == maSA){
-                tmp = SA;
-            }
-        }
-        
-        
-    }
-//
 //Chức năng hỗ trợ
     
     private int getMaSA(){

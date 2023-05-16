@@ -67,15 +67,18 @@ public class SuatAnDAO {
         String sql = "SELECT n.\"Tên Món Ăn\", n.\"Mã Món Ăn\", n.\"Đơn Giá\", mn.\"Số Lượng\" AS \"Số Lượng Món Ăn\"" +
                 " FROM tbl_SuatAn AS m" +
                 " INNER JOIN tbl_MonAn_SuatAn AS mn ON m.\"Mã Suất Ăn\" = mn.\"Mã Suất Ăn\"" +
-                " INNER JOIN tbl_MonAn AS n ON mn.\"Mã Món Ăn\" = n.\"Mã Món Ăn\"";
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()) {
+                " INNER JOIN tbl_MonAn AS n ON mn.\"Mã Món Ăn\" = n.\"Mã Món Ăn\""
+                + "WHERE m.\"Mã Suất Ăn\" = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, SA.getMaSuatAn());
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 MonAn MA = new MonAn();
                 MA.setmaMon(rs.getString("Mã Món Ăn"));
                 MA.setTenMon(rs.getString("Tên Món Ăn"));
                 MA.setDongia(rs.getDouble("Đơn Giá"));
                 MA.setSoLuong(rs.getInt("Số Lượng Món Ăn"));
+                MA.setNLYeuCau(new MonAnDAO().getListMANL(MA));
                 map.put(MA.getMaMon(), MA); // Using Map of NguyenLieu for NLYeuCau 
             }
         } catch (SQLException e) {
@@ -102,7 +105,7 @@ public class SuatAnDAO {
     
     public boolean UpdateSA(SuatAn SA){
         try {
-            String updateQuery = "UPDATE tbl_SuatAn SET \"Sẵn Sàng\" = ?, \"Tổng Tiền\" = ? WHERE \"Mã Suất Ăn\" = ?";
+            String updateQuery = "UPDATE tbl_SuatAn SET \"Sẵn Sàng\" = ?, \"Tổng Giá Tiền\" = ? WHERE \"Mã Suất Ăn\" = ?";
             PreparedStatement updatePS = conn.prepareStatement(updateQuery);
             updatePS.setBoolean(1, SA.getSanSang());
             updatePS.setInt(2, SA.getTongTien());
@@ -173,50 +176,47 @@ public class SuatAnDAO {
         return new MonAnDAO().getListMA();
     }
     
-    public boolean updateOrInsertListMASA(int maSA, String maMA, int soLuong) {
+    public boolean updateOrInsertListMASA(ArrayList<Object[]> dataList, int maSA) {
         try {
-            // Kiểm tra xem bản ghi đã tồn tại trong bảng hay chưa
-            String selectQuery = "SELECT * FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
-            PreparedStatement selectPS = conn.prepareStatement(selectQuery);
-            selectPS.setInt(1, maSA);
-            selectPS.setString(2, maMA);
-            ResultSet resultSet = selectPS.executeQuery();
-
-            // Nếu bản ghi đã tồn tại, cập nhật số lượng
-            if (resultSet.next()) {
-                if(soLuong == 0){
-                    deleteRow(maSA, maMA);
+            for (Object[] dataItem : dataList) {
+                String maMA = (String) dataItem[0];
+                int soLuong = (int) dataItem[1];
+    
+                // Kiểm tra xem bản ghi đã tồn tại trong bảng hay chưa
+                String selectQuery = "SELECT * FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
+                PreparedStatement selectPS = conn.prepareStatement(selectQuery);
+                selectPS.setInt(1, maSA);
+                selectPS.setString(2, maMA);
+                ResultSet resultSet = selectPS.executeQuery();
+    
+                // Nếu bản ghi đã tồn tại, cập nhật số lượng
+                if (resultSet.next()) {
+                    if (soLuong == 0) { // Nếu số lượng bằng 0, xóa bản ghi
+                        deleteRow(maSA, maMA);
+                    } else { // Ngược lại, cập nhật số lượng
+                        String updateQuery = "UPDATE tbl_MonAn_SuatAn SET \"Số Lượng\" = ? WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
+                        PreparedStatement updatePS = conn.prepareStatement(updateQuery);
+                        updatePS.setInt(1, soLuong);
+                        updatePS.setInt(2, maSA);
+                        updatePS.setString(3, maMA);
+                        updatePS.executeUpdate();
+                    }
+                } else { // Nếu bản ghi chưa tồn tại, thêm mới
+                    String insertQuery = "INSERT INTO tbl_MonAn_SuatAn (\"Mã Suất Ăn\", \"Mã Món Ăn\", \"Số Lượng\") VALUES (?, ?, ?)";
+                    PreparedStatement insertPS = conn.prepareStatement(insertQuery);
+                    insertPS.setInt(1, maSA);
+                    insertPS.setString(2, maMA);
+                    insertPS.setInt(3, soLuong);
+                    insertPS.executeUpdate();
                 }
-                String updateQuery = "UPDATE tbl_MonAn_SuatAn SET \"Số Lượng\" = ? WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";
-                PreparedStatement updatePS = conn.prepareStatement(updateQuery);
-                updatePS.setInt(1, soLuong);
-                updatePS.setInt(2, maSA);
-                updatePS.setString(3, maMA);
-                return updatePS.executeUpdate() > 0;
-
-            } else { // Nếu bản ghi chưa tồn tại, thêm mới
-                String insertQuery = "MERGE INTO tbl_MonAn_SuatAn AS target "
-                                    + "USING (VALUES (?, ?, ?)) AS source (\"Mã Suất Ăn\", \"Mã Món Ăn\", \"Số Lượng\") "
-                                    + "ON target.\"Mã Suất Ăn\" = source.\"Mã Suất Ăn\" AND target.\"Mã Món Ăn\" = source.\"Mã Món Ăn\" "
-                                    + "WHEN MATCHED THEN "
-                                    + "UPDATE SET target.\"Số Lượng\" = ? "
-                                    + "WHEN NOT MATCHED THEN "
-                                    + "INSERT (\"Mã Suất Ăn\", \"Mã Món Ăn\", \"Số Lượng\") VALUES (?, ?, ?);";
-                PreparedStatement insertPS = conn.prepareStatement(insertQuery);
-                insertPS.setInt(1, maSA);
-                insertPS.setString(2, maMA);
-                insertPS.setInt(3, soLuong);
-                insertPS.setInt(4, soLuong);
-                insertPS.setInt(5, maSA);
-                insertPS.setString(6, maMA);
-                insertPS.setInt(7, soLuong);
-                return insertPS.executeUpdate() > 0;
             }
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+    
     
     public boolean deleteRow(int maSA, String maMA){
         try {

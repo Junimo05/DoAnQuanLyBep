@@ -50,7 +50,6 @@ public class MonAnDAO {
                 monAn.setmaMon(rs.getString("Mã Món Ăn"));
                 monAn.setTenMon(rs.getString("Tên Món Ăn"));
                 monAn.setDongia(rs.getDouble("Đơn Giá"));
-                monAn.setSoLuong(rs.getInt("Số Lượng"));
                 monAn.setNLYeuCau(getListMANL(monAn));
                 // Thêm món ăn vào danh sách
                 list.add(monAn);
@@ -65,14 +64,16 @@ public class MonAnDAO {
     public Map<Integer, NguyenLieu> getListMANL(MonAn MA) {
         Map<Integer, NguyenLieu> map = new HashMap<>();
         
-        String sql = "SELECT m.\"Tên Món Ăn\", m.\"Mã Món Ăn\", m.\"Đơn Giá\", m.\"Số Lượng\", n.\"Mã Nguyên Liệu\", n.\"Tên Nguyên Liệu\", "
+        String sql = "SELECT m.\"Tên Món Ăn\", m.\"Mã Món Ăn\", m.\"Đơn Giá\", n.\"Mã Nguyên Liệu\", n.\"Tên Nguyên Liệu\", "
                 + "n.\"Đơn Giá\" AS \"Nguyên Liệu Đơn Giá\", mn.\"Số Lượng\" AS \"Nguyên Liệu Số Lượng\"" +
         " FROM tbl_MonAn AS m" +
         " INNER JOIN tbl_MonAn_NguyenLieu AS mn ON m.\"Mã Món Ăn\" = mn.\"Mã Món Ăn\"" +
-        " INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\"";
+        " INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\""
+                + "WHERE m.\"Mã Món Ăn\" = ?";
     
-        try (PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setString(1, MA.getMaMon());
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 NguyenLieu nl = new NguyenLieu();
                 nl.setMaNL(rs.getInt("Mã Nguyên Liệu"));
@@ -145,7 +146,10 @@ public class MonAnDAO {
     }
     
     public DefaultTableModel GetModelNgLieu(DefaultTableModel model, String ma){
-        String sql = "SELECT * FROM tbl_MonAn_NguyenLieu WHERE \"Mã Món Ăn\" = ?";
+        String sql = "SELECT mn.\"Mã Món Ăn\", mn.\"Mã Nguyên Liệu\", mn.\"Số Lượng\", n.\"Tên Nguyên Liệu\"" +
+                    "FROM tbl_MonAn_NguyenLieu mn " +
+                    "INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\"" +
+                    "WHERE mn.\"Mã Món Ăn\" = ?";
         try{
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, ma);
@@ -159,8 +163,8 @@ public class MonAnDAO {
                 String maMA = rs.getString("Mã Món Ăn");
                 int maNL = rs.getInt("Mã Nguyên Liệu");
                 int soLuong = rs.getInt("Số Lượng");
-
-                Object[] row = {count, maMA, maNL, soLuong};
+                String tenMA = rs.getString("Tên Nguyên Liệu");
+                Object[] row = {count, maMA, maNL, tenMA, soLuong};
 
                 model.addRow(row);
 

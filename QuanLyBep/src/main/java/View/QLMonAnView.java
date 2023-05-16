@@ -83,8 +83,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         btt_Xoa = new javax.swing.JButton();
         btt_Sua = new javax.swing.JButton();
         btt_XoaNhap = new javax.swing.JButton();
-        lbl_SoLuong = new javax.swing.JLabel();
-        txt_SoLuong = new javax.swing.JTextField();
         ScrollPane = new javax.swing.JScrollPane();
         tbl_QLMonAn = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -323,8 +321,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         btt_XoaNhap.setText("Xóa Nhập");
 
-        lbl_SoLuong.setText("Số Lượng");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -334,12 +330,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btt_XoaNhap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addComponent(btt_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbl_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_SoLuong))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btt_Nhap, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -371,11 +363,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_DonGia)
                     .addComponent(txt_DonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_SoLuong, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(10, 10, 10)
+                .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btt_Nhap)
                     .addComponent(btt_Sua))
@@ -388,17 +376,17 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         tbl_QLMonAn.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá ", "Số Lượng"
+                "Mã Món Ăn", "Tên Món Ăn", "Đơn Giá "
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -418,7 +406,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             tbl_QLMonAn.getColumnModel().getColumn(0).setResizable(false);
             tbl_QLMonAn.getColumnModel().getColumn(1).setResizable(false);
             tbl_QLMonAn.getColumnModel().getColumn(2).setResizable(false);
-            tbl_QLMonAn.getColumnModel().getColumn(3).setResizable(false);
         }
         ListSelectionModel selectionModel = tbl_QLMonAn.getSelectionModel();
 
@@ -435,12 +422,10 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
                             Object ma = tbl_QLMonAn.getValueAt(selectedRow, 0);
                             Object ten = tbl_QLMonAn.getValueAt(selectedRow, 1);
                             Object dongia = tbl_QLMonAn.getValueAt(selectedRow, 2);
-                            Object soLuong = tbl_QLMonAn.getValueAt(selectedRow, 3);
                             //gán dữ liệu
                             txt_MaMonAn.setText(ma.toString());
                             txt_TenMonAn.setText(ten.toString());
                             txt_DonGia.setText(dongia.toString());
-                            txt_SoLuong.setText(soLuong.toString());
                         }
                     }
                 }else {
@@ -579,8 +564,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         String maMonAnStr = txt_MaMonAn.getText();
         String tenMonAn = txt_TenMonAn.getText();
         String donGiaStr = txt_DonGia.getText();
-        String soLuongStr = txt_SoLuong.getText();
-        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr, soLuongStr);
+        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr);
         if (errorMessage != null) {
             JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
@@ -628,28 +612,24 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         txt_MaMonAn.setText("");
         txt_TenMonAn.setText("");
         txt_DonGia.setText("");
-        txt_SoLuong.setText("");
     }
     
     public void btt_SuaClick(){
         monAn = new MonAn();
         String maMonAnStr = txt_MaMonAn.getText();
         String tenMonAn = txt_TenMonAn.getText();
-        String donGiaStr = txt_DonGia.getText();
-        String soLuongStr = txt_SoLuong.getText();   
-        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr, soLuongStr);
+        String donGiaStr = txt_DonGia.getText(); 
+        String errorMessage = validateInputValues(maMonAnStr, tenMonAn, donGiaStr);
         if (errorMessage != null) {
             JOptionPane.showMessageDialog(rootPane, errorMessage, "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         double donGia = Double.parseDouble(donGiaStr);
-        int soLuong = Integer.parseInt(soLuongStr);
         
         monAn.setmaMon(maMonAnStr);
         monAn.setTenMon(tenMonAn);
         monAn.setDongia(donGia);
-        monAn.setSoLuong(soLuong);
         
         if(new MonAnDAO().CapNhatMonAn(monAn)) { // Cập nhật món ăn thành công
             JOptionPane.showMessageDialog(rootPane, "Cập nhật món ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
@@ -743,8 +723,8 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         loadTableMA();
     }
     
-    public String validateInputValues(String maMonAn, String tenMonAn, String donGia, String soLuong) {
-        if (maMonAn.isEmpty() || tenMonAn.isEmpty() || donGia.isEmpty() || soLuong.isEmpty()) {
+    public String validateInputValues(String maMonAn, String tenMonAn, String donGia) {
+        if (maMonAn.isEmpty() || tenMonAn.isEmpty() || donGia.isEmpty()) {
             return "Vui lòng nhập đầy đủ thông tin!";
         }
 
@@ -752,15 +732,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             Double.parseDouble(donGia);
         } catch (NumberFormatException e) {
             return "Đơn giá phải là số thực!";
-        }
-        
-        try {
-            int sL= Integer.parseInt(soLuong);
-            if (sL <= 0) {
-                return "Số lượng phải là một số nguyên dương";
-            }
-        } catch (NumberFormatException e) {
-            return "Số lượng phải là một số nguyên";
         }
         return null; // trả về null nếu không có lỗi nào xảy ra
     }
@@ -808,7 +779,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         for(int i = 0 ; i <= n; i++){
             MonAn tmp = listMA.get(i);
             model.addRow(new Object[]{
-                tmp.getMaMon(), tmp.getTenMon(), tmp.getDongia(), tmp.getSoLuong()
+                tmp.getMaMon(), tmp.getTenMon(), tmp.getDongia()
             });
         }
     }
@@ -818,7 +789,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         dialogtxt_MaMonAn.setText(ma);
         dialogbtt_Sua.setEnabled(false);
         dialogbtt_Xoa.setEnabled(false);
-        String[] columns = {"STT", "Mã Món Ăn", "Mã Nguyên Liệu", "Số Lượng"};
+        String[] columns = {"STT", "Mã Món Ăn", "Mã Nguyên Liệu", "Nguyên Liệu", "Số Lượng"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
         model = new MonAnDAO().GetModelNgLieu(model, ma);
         tbl_SuaNguyenLieu.setModel(model);
@@ -974,14 +945,12 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel lbl_MaMonAn;
     private javax.swing.JLabel lbl_MaMonAnDialog;
     private javax.swing.JLabel lbl_MaNguyenLieu;
-    private javax.swing.JLabel lbl_SoLuong;
     private javax.swing.JLabel lbl_TenMonAn;
     private javax.swing.JTable tbl_QLMonAn;
     private javax.swing.JTable tbl_SuaNguyenLieu;
     private javax.swing.JTextField txt_DonGia;
     private javax.swing.JTextField txt_MaMonAn;
     private javax.swing.JTextField txt_Search;
-    private javax.swing.JTextField txt_SoLuong;
     private javax.swing.JTextField txt_TenMonAn;
     // End of variables declaration//GEN-END:variables
     
