@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package View;
+package View.Palette;
 
 import View.QLSuatAnView.TableActionEvent;
 import java.awt.event.ActionEvent;
@@ -36,8 +36,8 @@ public class PanelAction extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btt_Plus = new View.ActionButton();
-        btt_Minus = new View.ActionButton();
+        btt_Plus = new View.Palette.ActionButton();
+        btt_Minus = new View.Palette.ActionButton();
 
         btt_Plus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/plus.png"))); // NOI18N
 
@@ -63,8 +63,8 @@ public class PanelAction extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ActionButton btt_Minus;
-    private View.ActionButton btt_Plus;
+    private View.Palette.ActionButton btt_Minus;
+    private View.Palette.ActionButton btt_Plus;
     // End of variables declaration//GEN-END:variables
 
 }

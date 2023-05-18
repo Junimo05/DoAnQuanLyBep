@@ -6,6 +6,7 @@ package Controller;
 
 import Model.MonAn;
 import Model.NguyenLieu;
+import View.QLMonAnView;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -177,7 +178,7 @@ public class MonAnDAO {
         return model;
     }
     
-    public boolean ThemNLMA(String maMA, int maNL, int soLuong) throws Exception {
+    public boolean ThemNLMA(String maMA, int maNL, int soLuong){
         String checkSql = "SELECT COUNT(*) FROM tbl_MonAn_NguyenLieu WHERE \"Mã Nguyên Liệu\"=? AND \"Mã Món Ăn\" = ?";
         String insertSql = "INSERT INTO tbl_MonAn_NguyenLieu(\"Mã Món Ăn\", \"Mã Nguyên Liệu\", \"Số Lượng\") "
             + "VALUES (?, ?, ?)";
@@ -189,7 +190,8 @@ public class MonAnDAO {
             checkPs.setString(2, maMA);
             rs = checkPs.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                throw new Exception("Mã nguyên liệu đã tồn tại");
+                new QLMonAnView().showErrorDialog("Nguyên Liệu đã có trong món ăn");
+                return false;
             }
             ps = conn.prepareStatement(insertSql);
             ps.setString(1, maMA);
@@ -197,8 +199,9 @@ public class MonAnDAO {
             ps.setInt(3, soLuong);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
-            throw e;
-        } 
+            e.printStackTrace();
+        }
+        return false;
     }
     
     public boolean XoaNLMA(String maMA, int maNL){

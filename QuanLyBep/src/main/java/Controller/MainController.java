@@ -21,10 +21,12 @@ public class MainController {
     /*
     *   Sự Kiện phục vụ yêu cầu thực hiện món ăn
     */
-    public boolean  MakeSA(SuatAn SA){
-        if(SA.make()){
-            if(new SuatAnDAO().UpdateSA(SA)) return true;
-            else return false;
+    public boolean MakeSA(SuatAn SA){
+        if(SA.getSanSang() != true){
+            if(SA.make()){
+                if(new SuatAnDAO().UpdateSA(SA)) return true;
+                else return false;
+            }    
         }
         return false;
     }
@@ -39,11 +41,12 @@ public class MainController {
     *   Sự Kiện Cập Nhật Món Ăn
     */
     
-    public void UpdateSA(){
+    public void UpdateSA(int MaSA){
         for(SuatAn SA : DSSA){
-            SA.tongTien();
-            new SuatAnDAO().UpdateSA(SA);
+            if(SA.getMaSuatAn() == MaSA){
+                SA.tongTien();
+                new SuatAnDAO().UpdateSA(SA);
+            }
         }
-        
     }
 }

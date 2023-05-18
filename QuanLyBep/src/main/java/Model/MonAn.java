@@ -62,7 +62,7 @@ public class MonAn{
             NguyenLieu value = entry.getValue();
             for(NguyenLieu tmp : ds){
                 if(tmp.getMaNL() == key){
-                    tmp.use(value.getSoluongNL());
+                    tmp.use(value.getSoluongNL() * tmp.getSoluongNL());
                 }
             }
         }

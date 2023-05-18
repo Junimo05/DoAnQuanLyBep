@@ -32,6 +32,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
     /**
      * Creates new form QLMonAnView
      */
+    
     public QLMonAnView() {
         initComponents();
         btt_Nhap.addActionListener(this);
@@ -264,11 +265,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -640,6 +636,10 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         }
     }
     
+    public void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+    
     private void QLSA_toolBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_QLSA_toolBarMouseClicked
         new QLSuatAnView().setVisible(true);
         this.dispose();
@@ -690,10 +690,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             }
         }
     }//GEN-LAST:event_tbl_QLMonAnMouseClicked
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        new HomePage().setVisible(true);
-    }//GEN-LAST:event_formWindowClosing
     
     private int selectedRow2 = -1;
     private int selectedCol2 = -1;
@@ -795,7 +791,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         tbl_SuaNguyenLieu.setModel(model);
     }
     
-    public void dialogbtt_NhapClick() throws Exception{
+    public void dialogbtt_NhapClick(){
         String maMonStr = dialogtxt_MaMonAn.getText();
         String maNLStr = dialogtxt_MaNguyenLieu.getText();
         String soLuongStr = dialogtxt_SoLuong.getText();
@@ -834,8 +830,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             loadTableNgLieu(maMonStr);
             dialogbtt_XoaNhapClick();
         } else { // Thêm món ăn không thành công
-            JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            
+            JOptionPane.showMessageDialog(rootPane, "Thêm Nguyên Liệu không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE); 
         }
     }
     
@@ -899,7 +894,6 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
         
         int maNL = Integer.parseInt(maNLStr);
         int soLuong = Integer.parseInt(soLuongStr);
-        
         
         
         if (new MonAnDAO().CapNhatMANL(maNLStr, maNL, soLuong)) {

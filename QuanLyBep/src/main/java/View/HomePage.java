@@ -4,9 +4,12 @@
  */
 package View;
 import View.QLNLView;
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 /**
  *
@@ -20,6 +23,8 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
    
     public HomePage() {
         initComponents();
+        setBackground(new Color(0,0,0,0));
+        MainMenu.initMoving(HomePage.this);
         bttQLMA.addActionListener(this);
         bttQLNL.addActionListener(this);
         bttQLNV.addActionListener(this);
@@ -35,29 +40,21 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        homePanel1 = new View.Palette.HomePanel();
         jPanel1 = new javax.swing.JPanel();
-        bttQLSA = new javax.swing.JButton();
         bttQLMA = new javax.swing.JButton();
         bttQLNL = new javax.swing.JButton();
         bttQLNV = new javax.swing.JButton();
+        bttQLSA = new javax.swing.JButton();
+        MainMenu = new View.Palette.MenuPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Trang Chủ");
+        setUndecorated(true);
 
-        jLabel1.setBackground(new java.awt.Color(255, 102, 102));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản Lý Bếp");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        homePanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 4));
-
-        bttQLSA.setBackground(new java.awt.Color(255, 102, 102));
-        bttQLSA.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bttQLSA.setText("Quản Lý Suất Ăn");
-        bttQLSA.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(bttQLSA);
 
         bttQLMA.setBackground(new java.awt.Color(255, 153, 153));
         bttQLMA.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -74,19 +71,41 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         bttQLNV.setText("Quản Lý Nhân Viên");
         jPanel1.add(bttQLNV);
 
+        bttQLSA.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        bttQLSA.setText("Quản Lý Suất Ăn");
+        bttQLSA.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(bttQLSA);
+
+        javax.swing.GroupLayout homePanel1Layout = new javax.swing.GroupLayout(homePanel1);
+        homePanel1.setLayout(homePanel1Layout);
+        homePanel1Layout.setHorizontalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        homePanel1Layout.setVerticalGroup(
+            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
+                .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 460, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(homePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+            .addComponent(homePanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -134,11 +153,12 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private View.Palette.MenuPanel MainMenu;
     private javax.swing.JButton bttQLMA;
     private javax.swing.JButton bttQLNL;
     private javax.swing.JButton bttQLNV;
     private javax.swing.JButton bttQLSA;
-    private javax.swing.JLabel jLabel1;
+    private View.Palette.HomePanel homePanel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
     

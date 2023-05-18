@@ -5,7 +5,6 @@
 package View;
 
 import Controller.MainController;
-import Controller.MonAnDAO;
 import Controller.SuatAnDAO;
 import Model.MonAn;
 import Model.SuatAn;
@@ -22,9 +21,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -36,16 +32,12 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -733,7 +725,7 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
         if (flag) {
             JOptionPane.showMessageDialog(rootPane, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialogbtt_ResetClicked();
-            new MainController().UpdateSA();
+            new MainController().UpdateSA(MaSA);
             loadTableDSMA();
             loadTableSA();
         } else {
@@ -778,6 +770,10 @@ public class QLSuatAnView extends javax.swing.JFrame implements ActionListener{
     
 //Chức năng hỗ trợ
     
+    public void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(null, message, "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
+
     private int getMaSA(){
         String tmp = dialog_MonAnSuatAn.getTitle();
         int num = Integer.parseInt(tmp.replaceAll("[^0-9]", ""));

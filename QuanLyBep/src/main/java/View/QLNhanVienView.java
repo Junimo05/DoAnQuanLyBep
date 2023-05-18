@@ -11,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
@@ -763,8 +761,8 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
     
     
     
-    Set<Integer> selectedRows = new HashSet<>();
-    Set<Integer> selectedCols = new HashSet<>();
+    private int selectedRow = -1;
+    private int selectedCol = -1;
     private void tbl_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_NhanVienMouseClicked
         int row = tbl_NhanVien.rowAtPoint(evt.getPoint());
         int col = tbl_NhanVien.columnAtPoint(evt.getPoint());
@@ -776,18 +774,17 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
             loadTableChamCong(ma);  
         }else if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows.contains(row) && selectedCols.contains(col)) {
+            if (row == selectedRow && col == selectedCol) {
                 tbl_NhanVien.removeRowSelectionInterval(row, row);
-                tbl_NhanVien.removeColumnSelectionInterval(col, col);
-                selectedRows.remove(row);
-                selectedCols.remove(col);
+                tbl_NhanVien.removeColumnSelectionInterval(0, 4);
+                selectedRow = -1;
+                selectedCol = -1;
                 bttXoaNhapNVClicked();
             } else {
                 // Otherwise, select the cell
-                tbl_NhanVien.addRowSelectionInterval(row, row);
-                tbl_NhanVien.addColumnSelectionInterval(col, col);
-                selectedRows.add(row);
-                selectedCols.add(col);
+                tbl_NhanVien.changeSelection(row, col, false, false);
+                selectedRow = row;
+                selectedCol = col;
             }
         }
     }//GEN-LAST:event_tbl_NhanVienMouseClicked
@@ -799,25 +796,26 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         tbl_ChamCong.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + keyword));// Lọc các hàng trên bảng theo chuỗi tìm kiếm, không phân biệt hoa thường
     }//GEN-LAST:event_dialogtxt_SearchKeyReleased
-
+    
+    private int selectedRow2 = -1;
+    private int selectedCol2 = -1;
     private void tbl_ChamCongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChamCongMouseClicked
         int row = tbl_ChamCong.rowAtPoint(evt.getPoint());
         int col = tbl_ChamCong.columnAtPoint(evt.getPoint());
         
         if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
             // If cell is already selected and isSelected is true, then deselect it
-            if (selectedRows2.contains(row) && selectedCols2.contains(col)) {
+            if (row == selectedRow2 && col == selectedCol2) {
                 tbl_ChamCong.removeRowSelectionInterval(row, row);
-                tbl_ChamCong.removeColumnSelectionInterval(col, col);
-                selectedRows2.remove(row);
-                selectedCols2.remove(col);
+                tbl_ChamCong.removeColumnSelectionInterval(0, 4);
+                selectedRow2 = -1;
+                selectedCol2 = -1;
                 bttXoaNhapNVClicked();
             } else {
                 // Otherwise, select the cell
-                tbl_ChamCong.addRowSelectionInterval(row, row);
-                tbl_ChamCong.addColumnSelectionInterval(col, col);
-                selectedRows2.add(row);
-                selectedCols2.add(col);
+                tbl_ChamCong.changeSelection(row,col, false , false);
+                selectedRow2 = row;
+                selectedCol2 = col;
             }
         }
     }//GEN-LAST:event_tbl_ChamCongMouseClicked
@@ -826,8 +824,7 @@ public class QLNhanVienView extends javax.swing.JFrame implements ActionListener
         new HomePage().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
     
-    Set<Integer> selectedRows2 = new HashSet<>();
-    Set<Integer> selectedCols2 = new HashSet<>();    
+    
     private String validateInputValues(String maNVStr, String soGioLamStr, String luongTheoGioStr, java.sql.Date ngayCham) {
         if (maNVStr.isEmpty() || soGioLamStr.isEmpty() || luongTheoGioStr.isEmpty() || ngayCham == null) {
             return "Vui lòng điền đầy đủ thông tin";
