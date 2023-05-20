@@ -30,6 +30,15 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
      */
     public QLMonAnViewPanel() {
         initComponents();
+        btt_Nhap.addActionListener(this);
+        dialogbtt_Nhap.addActionListener(this);
+        btt_Sua.addActionListener(this);
+        dialogbtt_Sua.addActionListener(this);
+        btt_Xoa.addActionListener(this);
+        dialogbtt_Xoa.addActionListener(this);
+        btt_XoaNhap.addActionListener(this);
+        dialogbtt_XoaNhap.addActionListener(this);
+        load();
     }
 
     /**
@@ -346,7 +355,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageIcon/search.png"))); // NOI18N
         jLabel2.setToolTipText("");
         jLabel2.setEnabled(false);
 
@@ -564,7 +573,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
         }
     }//GEN-LAST:event_tbl_SuaNguyenLieuMouseClicked
 
-        private void load(){
+    private void load(){
         btt_Sua.setEnabled(false);
         btt_Xoa.setEnabled(false);
         loadTableMA();

@@ -6,7 +6,7 @@ package Controller;
 
 import Model.MonAn;
 import Model.NguyenLieu;
-import View.QLMonAnView;
+import View.QLMonAnViewPanel;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -190,7 +190,7 @@ public class MonAnDAO {
             checkPs.setString(2, maMA);
             rs = checkPs.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
-                new QLMonAnView().showErrorDialog("Nguyên Liệu đã có trong món ăn");
+                new QLMonAnViewPanel().showErrorDialog("Nguyên Liệu đã có trong món ăn");
                 return false;
             }
             ps = conn.prepareStatement(insertSql);

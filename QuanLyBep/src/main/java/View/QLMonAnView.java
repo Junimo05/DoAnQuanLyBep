@@ -441,7 +441,7 @@ public class QLMonAnView extends javax.swing.JFrame implements ActionListener {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/search.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageIcon/search.png"))); // NOI18N
         jLabel2.setToolTipText("");
         jLabel2.setEnabled(false);
 

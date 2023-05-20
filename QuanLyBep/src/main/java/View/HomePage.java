@@ -3,14 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
+import View.Palette.EventMenuSelected;
 import View.QLNLView;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JComponent;
 /**
  *
  * @author anhtu
@@ -25,12 +23,34 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         initComponents();
         setBackground(new Color(0,0,0,0));
         MainMenu.initMoving(HomePage.this);
+        MainMenu.addEventMenuSelected(new EventMenuSelected(){
+            @Override
+            public void selected(int index) {
+               if(index == 0){
+                   
+               }else if(index == 3){
+                   setForm(new QLMonAnViewPanel());
+               }else if(index == 6){
+                   
+               }else if(index == 9){
+                   
+               }
+            }
+            
+        });
         bttQLMA.addActionListener(this);
         bttQLNL.addActionListener(this);
         bttQLNV.addActionListener(this);
         bttQLSA.addActionListener(this);
     }
-
+    
+    private void setForm(JComponent com){
+        mainPanel.removeAll();
+        mainPanel.add(com);
+        mainPanel.repaint();
+        mainPanel.revalidate();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,19 +60,14 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        homePanel1 = new View.Palette.HomePanel();
         jPanel1 = new javax.swing.JPanel();
         bttQLMA = new javax.swing.JButton();
         bttQLNL = new javax.swing.JButton();
         bttQLNV = new javax.swing.JButton();
         bttQLSA = new javax.swing.JButton();
+        homePanel = new View.Palette.HomePanel();
+        mainPanel = new javax.swing.JPanel();
         MainMenu = new View.Palette.MenuPanel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Trang Chủ");
-        setUndecorated(true);
-
-        homePanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setLayout(new java.awt.GridLayout(0, 4));
 
@@ -76,36 +91,44 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         bttQLSA.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(bttQLSA);
 
-        javax.swing.GroupLayout homePanel1Layout = new javax.swing.GroupLayout(homePanel1);
-        homePanel1.setLayout(homePanel1Layout);
-        homePanel1Layout.setHorizontalGroup(
-            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        homePanel1Layout.setVerticalGroup(
-            homePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanel1Layout.createSequentialGroup()
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Trang Chủ");
+        setUndecorated(true);
+
+        homePanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        mainPanel.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
                 .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 460, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE))
+        );
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(MainMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homePanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -143,6 +166,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+//                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                     new HomePage().setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -158,8 +182,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JButton bttQLNL;
     private javax.swing.JButton bttQLNV;
     private javax.swing.JButton bttQLSA;
-    private View.Palette.HomePanel homePanel1;
+    private View.Palette.HomePanel homePanel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
     
     /**
