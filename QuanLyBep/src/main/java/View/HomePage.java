@@ -3,8 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
+import Backup_JFrame.QLMonAnView;
+import Backup_JFrame.QLSuatAnView;
+import Backup_JFrame.QLNhanVienView;
 import View.Palette.EventMenuSelected;
-import View.QLNLView;
+import Backup_JFrame.QLNLView;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,13 +30,13 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
             @Override
             public void selected(int index) {
                if(index == 0){
-                   
+                   setForm(new QLSuatAnViewPanel());
                }else if(index == 3){
                    setForm(new QLMonAnViewPanel());
                }else if(index == 6){
-                   
+                   setForm(new QLNLViewPanel());
                }else if(index == 9){
-                   
+                   setForm(new QLNhanVienViewPanel());
                }
             }
             
