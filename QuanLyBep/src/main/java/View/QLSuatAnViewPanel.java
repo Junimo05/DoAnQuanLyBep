@@ -459,6 +459,19 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
             }
         });
         jScrollPane1.setViewportView(tbl_SuatAn);
+        ListSelectionModel selectionModel = tbl_SuatAn.getSelectionModel();
+
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel.isSelectionEmpty()) {
+                    btt_XoaSuatAn.setEnabled(true);
+                    btt_ThucHienSA.setEnabled(true);
+                }else{
+                    btt_XoaSuatAn.setEnabled(false);
+                    btt_ThucHienSA.setEnabled(false);
+                }
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -599,14 +612,12 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
             dialogbtt_ResetClicked();
             new MainController().UpdateSA(MaSA);
             loadTableDSMA();
-            loadTableSA();
+            loadTableSA();      
         } else {
             JOptionPane.showMessageDialog(this, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-
-    
     public void dialogbtt_DeleteClicked(){
         DefaultTableModel model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
         int rowIndex = dialogtbl_MonAnSA.getSelectedRow();

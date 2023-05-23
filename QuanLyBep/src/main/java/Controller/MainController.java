@@ -36,11 +36,7 @@ public class MainController {
             new NguyenLieuDAO().CapNhatNguyenLieu(nl);
         }
     }
-    
-    /*
-    *   Sự Kiện Cập Nhật Món Ăn
-    */
-    
+
     public void UpdateSA(int MaSA){
         for(SuatAn SA : DSSA){
             if(SA.getMaSuatAn() == MaSA){
@@ -48,5 +44,9 @@ public class MainController {
                 new SuatAnDAO().UpdateSA(SA);
             }
         }
+    }
+    
+    public void ConfirmSA(){
+        
     }
 }

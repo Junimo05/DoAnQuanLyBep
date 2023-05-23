@@ -23,7 +23,7 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="dialog_Panel" alignment="0" max="32767" attributes="0"/>
-              <Component id="dialog_ScrollPane" alignment="0" pref="448" max="32767" attributes="0"/>
+              <Component id="dialog_ScrollPane" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -202,6 +202,9 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_SuaNguyenLieuMouseClicked"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="ListSelectionModel selectionModel2 = tbl_SuaNguyenLieu.getSelectionModel();&#xa;&#xa;selectionModel2.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!selectionModel2.isSelectionEmpty()) {&#xa;        dialogbtt_Sua.setEnabled(true);&#xa;        dialogbtt_Xoa.setEnabled(true);&#xa;        if(e.getValueIsAdjusting()){&#xa;            dialogtxt_MaMonAn.setEnabled(false);&#xa;            dialogtxt_MaNguyenLieu.setEnabled(false);&#xa;            int selectedRow = tbl_SuaNguyenLieu.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //l&#x1ea5;y d&#x1eef; li&#x1ec7;u&#xa;                Object maMonAn = tbl_SuaNguyenLieu.getValueAt(selectedRow, 1);&#xa;                Object maNguyenLieu = tbl_SuaNguyenLieu.getValueAt(selectedRow, 2);&#xa;                Object soLuong = tbl_SuaNguyenLieu.getValueAt(selectedRow, 3);&#xa;                //g&#xe1;n d&#x1eef; li&#x1ec7;u&#xa;                dialogtxt_MaMonAn.setText(maMonAn.toString());&#xa;                dialogtxt_MaNguyenLieu.setText(maNguyenLieu.toString());&#xa;                dialogtxt_SoLuong.setText(soLuong.toString());&#xa;            }&#xa;        }&#xa;       }else {&#xa;            dialogbtt_Sua.setEnabled(false);&#xa;            dialogbtt_Xoa.setEnabled(false);&#xa;            dialogtxt_MaMonAn.setEnabled(true);&#xa;            dialogtxt_MaNguyenLieu.setEnabled(true);&#xa;       }&#xa;   }&#xa;});"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -278,8 +281,8 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="42" max="-2" attributes="0"/>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="78" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -457,6 +460,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_QLMonAnMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="ListSelectionModel selectionModel = tbl_QLMonAn.getSelectionModel();&#xa;&#xa;selectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;   public void valueChanged(ListSelectionEvent e) {&#xa;       if (!selectionModel.isSelectionEmpty()) {&#xa;        btt_Sua.setEnabled(true);&#xa;        btt_Xoa.setEnabled(true);&#xa;        if(e.getValueIsAdjusting()){&#xa;            txt_MaMonAn.setEnabled(false);&#xa;            int selectedRow = tbl_QLMonAn.getSelectedRow();&#xa;            if(selectedRow != -1){&#xa;                //l&#x1ea5;y d&#x1eef; li&#x1ec7;u&#xa;                Object ma = tbl_QLMonAn.getValueAt(selectedRow, 0);&#xa;                Object ten = tbl_QLMonAn.getValueAt(selectedRow, 1);&#xa;                Object dongia = tbl_QLMonAn.getValueAt(selectedRow, 2);&#xa;                //g&#xe1;n d&#x1eef; li&#x1ec7;u&#xa;                txt_MaMonAn.setText(ma.toString());&#xa;                txt_TenMonAn.setText(ten.toString());&#xa;                txt_DonGia.setText(dongia.toString());&#xa;            }&#xa;        }&#xa;       }else {&#xa;            btt_Sua.setEnabled(false);&#xa;            btt_Xoa.setEnabled(false);&#xa;            txt_MaMonAn.setEnabled(true);&#xa;       }&#xa;   }&#xa;});"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -12,8 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -195,6 +198,36 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             }
         });
         dialog_ScrollPane.setViewportView(tbl_SuaNguyenLieu);
+        ListSelectionModel selectionModel2 = tbl_SuaNguyenLieu.getSelectionModel();
+
+        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel2.isSelectionEmpty()) {
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Xoa.setEnabled(true);
+                    if(e.getValueIsAdjusting()){
+                        dialogtxt_MaMonAn.setEnabled(false);
+                        dialogtxt_MaNguyenLieu.setEnabled(false);
+                        int selectedRow = tbl_SuaNguyenLieu.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lấy dữ liệu
+                            Object maMonAn = tbl_SuaNguyenLieu.getValueAt(selectedRow, 1);
+                            Object maNguyenLieu = tbl_SuaNguyenLieu.getValueAt(selectedRow, 2);
+                            Object soLuong = tbl_SuaNguyenLieu.getValueAt(selectedRow, 3);
+                            //gán dữ liệu
+                            dialogtxt_MaMonAn.setText(maMonAn.toString());
+                            dialogtxt_MaNguyenLieu.setText(maNguyenLieu.toString());
+                            dialogtxt_SoLuong.setText(soLuong.toString());
+                        }
+                    }
+                }else {
+                    dialogbtt_Sua.setEnabled(false);
+                    dialogbtt_Xoa.setEnabled(false);
+                    dialogtxt_MaMonAn.setEnabled(true);
+                    dialogtxt_MaNguyenLieu.setEnabled(true);
+                }
+            }
+        });
 
         javax.swing.GroupLayout dialog_SuaNguyenLieuLayout = new javax.swing.GroupLayout(dialog_SuaNguyenLieu.getContentPane());
         dialog_SuaNguyenLieu.getContentPane().setLayout(dialog_SuaNguyenLieuLayout);
@@ -208,7 +241,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
         dialog_SuaNguyenLieuLayout.setVerticalGroup(
             dialog_SuaNguyenLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(dialog_Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+            .addComponent(dialog_ScrollPane)
         );
 
         dialog_SuaNguyenLieu.pack();
@@ -245,8 +278,8 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -345,6 +378,34 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             }
         });
         ScrollPane.setViewportView(tbl_QLMonAn);
+        ListSelectionModel selectionModel = tbl_QLMonAn.getSelectionModel();
+
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel.isSelectionEmpty()) {
+                    btt_Sua.setEnabled(true);
+                    btt_Xoa.setEnabled(true);
+                    if(e.getValueIsAdjusting()){
+                        txt_MaMonAn.setEnabled(false);
+                        int selectedRow = tbl_QLMonAn.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lấy dữ liệu
+                            Object ma = tbl_QLMonAn.getValueAt(selectedRow, 0);
+                            Object ten = tbl_QLMonAn.getValueAt(selectedRow, 1);
+                            Object dongia = tbl_QLMonAn.getValueAt(selectedRow, 2);
+                            //gán dữ liệu
+                            txt_MaMonAn.setText(ma.toString());
+                            txt_TenMonAn.setText(ten.toString());
+                            txt_DonGia.setText(dongia.toString());
+                        }
+                    }
+                }else {
+                    btt_Sua.setEnabled(false);
+                    btt_Xoa.setEnabled(false);
+                    txt_MaMonAn.setEnabled(true);
+                }
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 

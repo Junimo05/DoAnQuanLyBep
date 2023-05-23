@@ -30,12 +30,14 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
             @Override
             public void selected(int index) {
                if(index == 0){
-                   setForm(new QLSuatAnViewPanel());
+                   setForm(new HomePagePanel());
                }else if(index == 3){
-                   setForm(new QLMonAnViewPanel());
+                   setForm(new QLSuatAnViewPanel());
                }else if(index == 6){
-                   setForm(new QLNLViewPanel());
+                   setForm(new QLMonAnViewPanel());
                }else if(index == 9){
+                   setForm(new QLNLViewPanel());
+               }else if(index == 12){
                    setForm(new QLNhanVienViewPanel());
                }
             }
@@ -45,6 +47,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         bttQLNL.addActionListener(this);
         bttQLNV.addActionListener(this);
         bttQLSA.addActionListener(this);
+        setForm(new HomePagePanel());
     }
     
     private void setForm(JComponent com){
@@ -114,9 +117,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(MainMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -124,14 +125,14 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(homePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(homePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(homePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
