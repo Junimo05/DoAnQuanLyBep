@@ -4,6 +4,7 @@
  */
 package View;
 
+import Controller.DataHomePageDAO;
 import Controller.MainController;
 import Controller.SuatAnDAO;
 import Model.MonAn;
@@ -545,7 +546,13 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
             JOptionPane.showMessageDialog(this, "Thêm suất ăn thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialog_MonAnSuatAn.setVisible(true);
             loadTableSA();
-            String ma = tbl_SuatAn.getValueAt(tbl_SuatAn.getRowCount()-1, 0).toString();
+            String ma = null;
+            for(int i = tbl_SuatAn.getRowCount()-1; i >= 0; i--){
+                if(tbl_SuatAn.getValueAt(i, 1).toString() == "false"){
+                    ma = tbl_SuatAn.getValueAt(i, 0).toString();
+                    break;
+                }
+            }
             int MA = Integer.parseInt(ma);
             loadTableMonAnSuatAn(MA);
             loadTableDSMA();
@@ -582,8 +589,9 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         for(SuatAn sa : list){
             if(sa.getMaSuatAn() == maSA){
                 if(new MainController().MakeSA(sa)){
-                    loadTableSA();
                     JOptionPane.showMessageDialog(this, "Thực Hiện Suất Ăn Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                    loadTableSA();
+                    new DataHomePageDAO().updateTongKet();
                 }else{
                     JOptionPane.showMessageDialog(this, "Thực Hiện Suất Ăn Không Thành Công", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
                 }

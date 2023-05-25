@@ -213,7 +213,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                             //lấy dữ liệu
                             Object maMonAn = tbl_SuaNguyenLieu.getValueAt(selectedRow, 1);
                             Object maNguyenLieu = tbl_SuaNguyenLieu.getValueAt(selectedRow, 2);
-                            Object soLuong = tbl_SuaNguyenLieu.getValueAt(selectedRow, 3);
+                            Object soLuong = tbl_SuaNguyenLieu.getValueAt(selectedRow, 4);
                             //gán dữ liệu
                             dialogtxt_MaMonAn.setText(maMonAn.toString());
                             dialogtxt_MaNguyenLieu.setText(maNguyenLieu.toString());

@@ -3,20 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
-import Backup_JFrame.QLMonAnView;
-import Backup_JFrame.QLSuatAnView;
-import Backup_JFrame.QLNhanVienView;
 import View.Palette.EventMenuSelected;
-import Backup_JFrame.QLNLView;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 /**
  *
  * @author anhtu
  */
-public class HomePage extends javax.swing.JFrame implements ActionListener{
+public class HomePage extends javax.swing.JFrame{
 
     /**
      * Creates new form HomePage
@@ -39,14 +34,19 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
                    setForm(new QLNLViewPanel());
                }else if(index == 12){
                    setForm(new QLNhanVienViewPanel());
+               }else if(index == 15){
+                   int confirmed = JOptionPane.showConfirmDialog(null, 
+                        "Bạn có chắc muốn thoát không?", "Xác nhận thoát", 
+                        JOptionPane.YES_NO_OPTION);
+
+                    if (confirmed == JOptionPane.YES_OPTION) {
+                        // Thoát khỏi chương trình
+                        System.exit(0);
+                    }
                }
             }
             
         });
-        bttQLMA.addActionListener(this);
-        bttQLNL.addActionListener(this);
-        bttQLNV.addActionListener(this);
-        bttQLSA.addActionListener(this);
         setForm(new HomePagePanel());
     }
     
@@ -66,36 +66,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        bttQLMA = new javax.swing.JButton();
-        bttQLNL = new javax.swing.JButton();
-        bttQLNV = new javax.swing.JButton();
-        bttQLSA = new javax.swing.JButton();
         homePanel = new View.Palette.HomePanel();
         mainPanel = new javax.swing.JPanel();
         MainMenu = new View.Palette.MenuPanel();
-
-        jPanel1.setLayout(new java.awt.GridLayout(0, 4));
-
-        bttQLMA.setBackground(new java.awt.Color(255, 153, 153));
-        bttQLMA.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bttQLMA.setText("Quản Lý Món Ăn");
-        jPanel1.add(bttQLMA);
-
-        bttQLNL.setBackground(new java.awt.Color(255, 204, 204));
-        bttQLNL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bttQLNL.setText("Quản Lý Nguyên Liệu");
-        jPanel1.add(bttQLNL);
-
-        bttQLNV.setBackground(new java.awt.Color(255, 255, 204));
-        bttQLNV.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bttQLNV.setText("Quản Lý Nhân Viên");
-        jPanel1.add(bttQLNV);
-
-        bttQLSA.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        bttQLSA.setText("Quản Lý Suất Ăn");
-        bttQLSA.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(bttQLSA);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Trang Chủ");
@@ -110,9 +83,9 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
-                .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(MainMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 958, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,12 +155,7 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.Palette.MenuPanel MainMenu;
-    private javax.swing.JButton bttQLMA;
-    private javax.swing.JButton bttQLNL;
-    private javax.swing.JButton bttQLNV;
-    private javax.swing.JButton bttQLSA;
     private View.Palette.HomePanel homePanel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
     
@@ -195,36 +163,4 @@ public class HomePage extends javax.swing.JFrame implements ActionListener{
      * Events
      */
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(bttQLSA)){
-            bttQLSAClick();
-        }else if(e.getSource().equals(bttQLMA)){
-            bttQLMAClick();
-        }else if(e.getSource().equals(bttQLNL)){
-            bttQLNLClick();
-        }else{
-            bttQLNVClick();
-        }
-    }
-    
-    public void bttQLSAClick(){
-        new QLSuatAnView().setVisible(true);
-        this.dispose();
-    }
-    
-    public void bttQLMAClick(){
-        new QLMonAnView().setVisible(true);
-        this.dispose();
-    }
-    
-    public void bttQLNLClick(){
-        new QLNLView().setVisible(true);
-        this.dispose();
-    }
-    
-    public void bttQLNVClick(){
-        new QLNhanVienView().setVisible(true);
-        this.dispose();
-    }
 }

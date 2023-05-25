@@ -51,6 +51,10 @@ public class MenuPanel extends javax.swing.JPanel {
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
         listMenu1.addItem(new Model_Menu("employee", "Nhân Viên", Model_Menu.MenuType.MENU));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("", "", Model_Menu.MenuType.EMPTY));
+        listMenu1.addItem(new Model_Menu("power-button", "Thoát", Model_Menu.MenuType.MENU));
+        
     }
     
     @Override
@@ -114,7 +118,7 @@ public class MenuPanel extends javax.swing.JPanel {
         );
         movingLayout.setVerticalGroup(
             movingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
         );
 
         listMenu1.setBorder(null);
@@ -132,8 +136,8 @@ public class MenuPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(moving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(listMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
