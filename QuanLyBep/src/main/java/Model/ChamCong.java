@@ -21,21 +21,27 @@ public class ChamCong {
     public void setgioLam(int soGioLam){
             this.soGioLam = soGioLam;
     }
+    
     public int getgioLam(){
             return soGioLam;
     }
+    
     public void setngayLam(Date ngayLam){
             this.ngayLam = ngayLam;
     }
+    
     public Date getngayLam(){
             return ngayLam;
     }
+    
     public void setmaNV(String maNV){
             this.maNV = maNV;
     }
+    
     public String getmaNV() {
             return maNV;
     }
+    
     public double getLuongTheoGio() {
         return luongTheoGio;
     }

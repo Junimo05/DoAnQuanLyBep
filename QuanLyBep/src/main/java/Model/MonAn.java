@@ -62,7 +62,8 @@ public class MonAn{
             NguyenLieu value = entry.getValue();
             for(NguyenLieu tmp : ds){
                 if(tmp.getMaNL() == key){
-                    tmp.use(value.getSoluongNL() * tmp.getSoluongNL());
+                    tmp.use(value.getSoluongNL() * this.getSoLuong());
+                    break;
                 }
             }
         }
@@ -75,7 +76,7 @@ public class MonAn{
             int key = entry.getKey();
             NguyenLieu value = entry.getValue();
             for(NguyenLieu tmp : ds){
-                if(tmp.getMaNL() == key && !tmp.check(value.getSoluongNL())){
+                if(tmp.getMaNL() == key && !tmp.check(value.getSoluongNL() * this.getSoLuong())){
                     return false;
                 }
             }

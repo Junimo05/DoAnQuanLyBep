@@ -5,8 +5,11 @@
 package View;
 
 import Controller.DataHomePageDAO;
+import Controller.MainController;
 import Controller.NhanVienDAO;
+import Controller.SuatAnDAO;
 import Model.NhanVien;
+import Model.SuatAn;
 import View.Palette.Model_Card;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -40,6 +43,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         getData();
         load_MAHome();
         load_SAHome();
+        load_ReadySA();
         dialogtxt_VaoLam.setEnabled(false);
         dialogtxt_TanLam.setEnabled(false);
     }
@@ -71,6 +75,19 @@ public class HomePagePanel extends javax.swing.JPanel {
         model = new DataHomePageDAO().getModelSAHome(model);
         tbl_SuatAnHome.setModel(model);
         CustomTable();
+    }
+    
+    public void load_ReadySA(){
+        ArrayList<SuatAn> list = new SuatAnDAO().getListSA();
+        DefaultTableModel model = (DefaultTableModel) tbl_ReadySA.getModel();
+        model.setRowCount(0);
+        for(SuatAn sa : list){
+            if(sa.getSanSang() == true){
+                model.addRow(new Object[]{
+                    sa.getMaSuatAn(), sa.getSanSang()
+                });
+            }
+        }
     }
     
     public void CustomTable(){
@@ -119,7 +136,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         tbl_MonAnHome = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_ReadySA = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
 
@@ -216,6 +233,9 @@ public class HomePagePanel extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
+
+        dialog_ChamCong.pack();
+        dialog_ChamCong.setLocationRelativeTo(null);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 255), 1, true));
@@ -373,7 +393,7 @@ public class HomePagePanel extends javax.swing.JPanel {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_ReadySA.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -392,28 +412,30 @@ public class HomePagePanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        tbl_ReadySA.setColumnSelectionAllowed(true);
+        tbl_ReadySA.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbl_ReadySA);
+        tbl_ReadySA.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tbl_ReadySA.getColumnModel().getColumnCount() > 0) {
+            tbl_ReadySA.getColumnModel().getColumn(0).setResizable(false);
+            tbl_ReadySA.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jPanel4.setBackground(new java.awt.Color(153, 153, 255));
 
         jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageIcon/calendar.png"))); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,15 +446,16 @@ public class HomePagePanel extends javax.swing.JPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -470,20 +493,19 @@ public class HomePagePanel extends javax.swing.JPanel {
             // Nếu chưa chấm công vào, lưu giờ vào và cập nhật label
             dialogtxt_VaoLam.setText(timestampString);
             if(new DataHomePageDAO().ChamCong(id, timestampString, null)){
-                JOptionPane.showMessageDialog(this, "Thành công!", "Chấm Công Thành công", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(this, "Thành công!", "Chấm Công Không Thành công", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Chấm Công Không Thành Công", "Thành công!", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             // Nếu đã chấm công vào, lưu giờ ra và cập nhật label
             dialogtxt_TanLam.setText(timestampString);
             if(new DataHomePageDAO().ChamCong(id, null, timestampString)){
-                JOptionPane.showMessageDialog(this, "Thành công!", "Chấm Công Thành công", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
                 //Them Phan Cap Nhat Vao Bang Cham Cong
-                
-                
+                new MainController().UpdateChamCong(id);
             }else{
-                JOptionPane.showMessageDialog(this, "Lỗi!", "Chấm Công Không Thành công", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Chấm Công Không Thành Công", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             }
         }
         clearDialog();
@@ -496,21 +518,40 @@ public class HomePagePanel extends javax.swing.JPanel {
         ArrayList<NhanVien> list = new NhanVienDAO().getListNV();
         boolean flag = false;
         for(NhanVien tmp : list){
-            if(id == tmp.getMaNV()){
+            if(id == null ? tmp.getMaNV() == null : id.equals(tmp.getMaNV())){
                 flag = true;
                 break;
             }
         }
         if(flag){
             String timeIn = new DataHomePageDAO().getTimeIn(id);
+            String timeOut = new DataHomePageDAO().getTimeOut(id);
             if(timeIn != null){
                 dialogtxt_VaoLam.setText(timeIn); 
+            }else{
+                 dialogtxt_VaoLam.setText("");
             }
-            dialogbtt_ChamCong.setEnabled(true);
+            
+            if(timeOut != null){
+                dialogtxt_TanLam.setText(timeOut);
+            }else{
+                dialogtxt_TanLam.setText("");
+            }
+            
+            if(dialogtxt_TanLam.getText().equals("")){
+                dialogbtt_ChamCong.setEnabled(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Đã Chấm Công Ngày Hôm Nay", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            }
         }else{
-            JOptionPane.showMessageDialog(this, "Lỗi!", "Mã Nhân Viên Không Tồn Tại", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Mã Nhân Viên Không Tồn Tại", "Lỗi!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_dialogbtt_KiemTraMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        dialog_ChamCong.setVisible(true);
+        dialogbtt_ChamCong.setEnabled(false);
+    }//GEN-LAST:event_jButton1MouseClicked
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -539,8 +580,8 @@ public class HomePagePanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable tbl_MonAnHome;
+    private javax.swing.JTable tbl_ReadySA;
     private javax.swing.JTable tbl_SuatAnHome;
     // End of variables declaration//GEN-END:variables
 }

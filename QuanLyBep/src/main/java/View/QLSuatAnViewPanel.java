@@ -176,6 +176,22 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         dialogtbl_MonAnSA.setColumnSelectionAllowed(true);
         dialogtbl_MonAnSA.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(dialogtbl_MonAnSA);
+        TableModelListener tableModelListener = new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                // setEnable button
+                dialogbtt_Reset.setEnabled(true);
+                //
+                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
+                    int row = e.getFirstRow();
+                    int quantity = Integer.parseInt(dialogtbl_MonAnSA.getValueAt(row, 2).toString());
+                    if (quantity == 0) {
+                        ((DefaultTableModel) dialogtbl_MonAnSA.getModel()).removeRow(row);
+                    }
+                }
+            }
+        };
+        dialogtbl_MonAnSA.getModel().addTableModelListener(tableModelListener);
 
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
 
@@ -690,30 +706,30 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         }
         
         //Lọc tất cả Suất Ăn chưa sẵn sàng lên đầu tiên
-        TableModel model1 = tbl_SuatAn.getModel();
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model1);
-        sorter.setComparator(1, new Comparator<Object>() {
-            public int compare(Object o1, Object o2) {
-                Boolean b1 = (Boolean) o1;
-                Boolean b2 = (Boolean) o2;
-                if (b1 == null && b2 == null) {
-                    return 0;
-                } else if (b1 == null) {
-                    return 1;
-                } else if (b2 == null) {
-                    return -1;
-                } else if (b1.booleanValue() == b2.booleanValue()) {
-                    return 0;
-                } else if (b1.booleanValue()) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-        });
-
-        sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
-        tbl_SuatAn.setRowSorter(sorter);
+//        TableModel model1 = tbl_SuatAn.getModel();
+//        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model1);
+//        sorter.setComparator(1, new Comparator<Object>() {
+//            public int compare(Object o1, Object o2) {
+//                Boolean b1 = (Boolean) o1;
+//                Boolean b2 = (Boolean) o2;
+//                if (b1 == null && b2 == null) {
+//                    return 0;
+//                } else if (b1 == null) {
+//                    return 1;
+//                } else if (b2 == null) {
+//                    return -1;
+//                } else if (b1.booleanValue() == b2.booleanValue()) {
+//                    return 0;
+//                } else if (b1.booleanValue()) {
+//                    return 1;
+//                } else {
+//                    return -1;
+//                }
+//            }
+//        });
+//
+//        sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
+//        tbl_SuatAn.setRowSorter(sorter);
     }
 
     private void loadTableMonAnSuatAn(int MA){
@@ -817,7 +833,7 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         enableButtMF();
     }//GEN-LAST:event_dialog_MonAnSuatAnWindowClosing
 //
-
+    
     //Tạo Panel Chứa Button + Events
     public class PanelAction extends javax.swing.JPanel {
         public PanelAction() {

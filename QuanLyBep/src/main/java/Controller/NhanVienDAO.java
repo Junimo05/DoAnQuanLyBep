@@ -143,15 +143,15 @@ public class NhanVienDAO {
     }
     
     public boolean capNhatChamCong(ChamCong cc) {
-        String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=? AND \"Ngày Làm\"=?";
+        String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Ngày Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=?";
         
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setInt(1, cc.getgioLam());
-            ps.setDouble(2, cc.getLuongTheoGio());
-            ps.setString(3, cc.getmaNV());
-            ps.setDate(4, cc.getngayLam());
+            ps.setDouble(3, cc.getLuongTheoGio());
+            ps.setString(4, cc.getmaNV());
+            ps.setDate(2, cc.getngayLam());
             
             int rows = ps.executeUpdate();
 

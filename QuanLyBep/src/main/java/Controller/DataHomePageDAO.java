@@ -114,8 +114,15 @@ public class DataHomePageDAO {
                 int numMA = rs.getInt("so_monan");
                 int doanhthu = rs.getInt("doanh_thu");
                 
-                String sql2 = "INSERT INTO tbl_ThongKe ([Thời Gian], [Số Suất Ăn], [Số Món Ăn], [Doanh Thu]) " +
-                "VALUES (?, ?, ?, ?)";
+                String sql2 = "MERGE INTO tbl_ThongKe AS target " +
+                "USING (SELECT ? as [Thời Gian], ? as [Số Suất Ăn], ? as [Số Món Ăn], ? as [Doanh Thu]) AS source " +
+                "ON target.[Thời Gian] = source.[Thời Gian] " +
+                "WHEN MATCHED THEN " +
+                "    UPDATE SET [Số Suất Ăn] = source.[Số Suất Ăn], [Số Món Ăn] = source.[Số Món Ăn], [Doanh Thu] = source.[Doanh Thu] " +
+                "WHEN NOT MATCHED THEN " +
+                "    INSERT ([Thời Gian], [Số Suất Ăn], [Số Món Ăn], [Doanh Thu]) " +
+                "    VALUES (source.[Thời Gian], source.[Số Suất Ăn], source.[Số Món Ăn], source.[Doanh Thu]);";
+
                 
                 try {
                     PreparedStatement ps2 = conn.prepareStatement(sql2);
@@ -192,28 +199,35 @@ public class DataHomePageDAO {
         return model;
     }
     
-    public boolean ChamCong(String id, String timeIn, String timeOut){
-        String sql = "INSERT INTO tbl_NhanVien_ChamCong ([Mã Nhân Viên], Time_In, Time_Out) VALUES (?, ?, ?)";
-        try{
-            // Tạo một đối tượng PreparedStatement để thiết lập tham số cho câu truy vấn SQL
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, id); // Thiết lập giá trị cho tham số user_id
+    public boolean ChamCong(String id, String timeIn, String timeOut) {
+        String checkSql = "SELECT COUNT(*) FROM tbl_NhanVien_ChamCong WHERE [Mã Nhân Viên] = ? AND CONVERT(date, Time_In) = CONVERT(date, GETDATE())";
+        String insertSql = "INSERT INTO tbl_NhanVien_ChamCong ([Mã Nhân Viên], Time_In, Time_Out) VALUES (?, ?, ?)";
+        String updateSql = "UPDATE tbl_NhanVien_ChamCong SET Time_Out = ? WHERE [Mã Nhân Viên] = ? AND CONVERT(date, Time_In) = CONVERT(date, GETDATE())";
 
-            if (timeIn != null) {
-                ps.setString(2, timeIn); // Thiết lập giá trị cho tham số time_in
+        try {
+            // Tạo một đối tượng PreparedStatement để kiểm tra xem đã tồn tại bản ghi cho mã nhân viên và thời gian đó trong ngày hiện tại hay chưa.
+            PreparedStatement checkPs = conn.prepareStatement(checkSql);
+            checkPs.setString(1, id);
+            ResultSet rs = checkPs.executeQuery();
+            rs.next();
+            boolean isRecordExist = rs.getInt(1) > 0;
+
+            PreparedStatement ps;
+            if (isRecordExist) {
+                // Nếu đã tồn tại bản ghi, sử dụng câu lệnh UPDATE để cập nhật giờ ra
+                ps = conn.prepareStatement(updateSql);
+                ps.setString(1, timeOut);
+                ps.setString(2, id);
             } else {
-                ps.setNull(2, Types.NVARCHAR); // Sử dụng null nếu không có giờ vào
+                // Nếu không, sử dụng câu lệnh INSERT để thêm bản ghi mới vào CSDL
+                ps = conn.prepareStatement(insertSql);
+                ps.setString(1, id);
+                ps.setString(2, timeIn);
+                ps.setString(3, timeOut);
             }
 
-            if (timeOut != null) {
-                ps.setString(3, timeOut); // Thiết lập giá trị cho tham số time_out
-            } else {
-                ps.setNull(3, Types.NVARCHAR); // Sử dụng null nếu không có giờ ra
-            }
-
-            // Thực thi câu truy vấn SQL để thêm dữ liệu vào bảng punch clock
+            // Thực thi câu truy vấn SQL để thực hiện thêm hoặc cập nhật dữ liệu vào bảng punch clock
             return ps.executeUpdate() > 0;
-            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -231,6 +245,24 @@ public class DataHomePageDAO {
             ResultSet rs = ps.executeQuery();
             rs.next();
             String datetime = rs.getString("Time_In");
+            return datetime;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public String getTimeOut(String id){
+        String sql = "SELECT Time_Out "
+                + "FROM tbl_NhanVien_ChamCong "
+                + "WHERE [Mã Nhân Viên] = ? AND CONVERT(date, Time_In) = CONVERT(date, GETDATE());";
+        try{
+            // Tạo một đối tượng PreparedStatement để thiết lập tham số cho câu truy vấn SQL
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, id); // Thiết lập giá trị cho tham số user_id
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            String datetime = rs.getString("Time_Out");
             return datetime;
         } catch (SQLException ex) {
             ex.printStackTrace();

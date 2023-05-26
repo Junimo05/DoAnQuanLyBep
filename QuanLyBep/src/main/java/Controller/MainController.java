@@ -4,9 +4,13 @@
  */
 package Controller;
 
+import Model.ChamCong;
 import Model.MonAn;
 import Model.NguyenLieu;
 import Model.SuatAn;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +28,7 @@ public class MainController {
     public boolean MakeSA(SuatAn SA){
         if(SA.getSanSang() != true){
             if(SA.make()){
-                if(new SuatAnDAO().UpdateSA(SA)) return true;
-                else return false;
+                return new SuatAnDAO().UpdateSA(SA);
             }    
         }
         return false;
@@ -46,7 +49,38 @@ public class MainController {
         }
     }
     
-    public void ConfirmSA(){
+    public void UpdateChamCong(String id){
+        String timeIn = new DataHomePageDAO().getTimeIn(id);
+        String timeOut = new DataHomePageDAO().getTimeOut(id);
         
+        //So Gio Lam
+        // Parse chuỗi timeIn và timeOut thành đối tượng LocalTime
+        LocalTime inTime = LocalTime.parse(timeIn);
+        LocalTime outTime = LocalTime.parse(timeOut);
+
+        // Tính số giờ làm việc
+        Duration duration = Duration.between(inTime, outTime);
+        long hoursWorked = duration.toHours();
+
+        // Làm tròn số giờ làm việc đến giờ gần nhất
+        hoursWorked = Math.round(hoursWorked);
+        int hoursAsInt = Math.toIntExact(hoursWorked);
+        
+        //Luong
+        float luong = 0;
+        if(hoursAsInt <= 4){
+            luong = 19000;
+        }else if(hoursAsInt > 4 && hoursAsInt < 8){
+            luong = 21000;
+        }else if(hoursAsInt > 8){
+            luong = 23000;
+        }
+        
+        //Date
+        LocalDate date = LocalDate.parse(timeIn.substring(0, 10));
+        java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+        
+        ChamCong cc = new ChamCong(id, hoursAsInt, luong, sqlDate);
+        new NhanVienDAO().capNhatChamCong(cc);
     }
 }
