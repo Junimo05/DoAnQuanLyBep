@@ -19,9 +19,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Date;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,14 +29,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -61,7 +57,7 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         dialogbtt_Save.addActionListener(this);
         dialogbtt_Delete.addActionListener(this);
         dialogbtt_Reset.addActionListener(this);
-        
+        tbl_SuatAn.getColumnModel().getColumn(3).setCellRenderer(new DateTimeRenderer());
         evDialog = new QLSuatAnViewPanel.TableActionEvent() {
             @Override
             public void Increment(int row) {
@@ -176,22 +172,22 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         dialogtbl_MonAnSA.setColumnSelectionAllowed(true);
         dialogtbl_MonAnSA.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(dialogtbl_MonAnSA);
-        TableModelListener tableModelListener = new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                // setEnable button
-                dialogbtt_Reset.setEnabled(true);
-                //
-                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
-                    int row = e.getFirstRow();
-                    int quantity = Integer.parseInt(dialogtbl_MonAnSA.getValueAt(row, 2).toString());
-                    if (quantity == 0) {
-                        ((DefaultTableModel) dialogtbl_MonAnSA.getModel()).removeRow(row);
-                    }
-                }
-            }
-        };
-        dialogtbl_MonAnSA.getModel().addTableModelListener(tableModelListener);
+        //TableModelListener tableModelListener = new TableModelListener() {
+            //            @Override
+            //            public void tableChanged(TableModelEvent e) {
+                //                // setEnable button
+                //                dialogbtt_Reset.setEnabled(true);
+                //                //
+                //                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
+                    //                    int row = e.getFirstRow();
+                    //                    int quantity = Integer.parseInt(dialogtbl_MonAnSA.getValueAt(row, 2).toString());
+                    //                    if (quantity == 0) {
+                        //                        ((DefaultTableModel) dialogtbl_MonAnSA.getModel()).removeRow(row);
+                        //                    }
+                    //                }
+                //            }
+            //    };
+        //    dialogtbl_MonAnSA.getModel().addTableModelListener(tableModelListener);
 
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
 
@@ -705,31 +701,6 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
             });
         }
         
-        //Lọc tất cả Suất Ăn chưa sẵn sàng lên đầu tiên
-//        TableModel model1 = tbl_SuatAn.getModel();
-//        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model1);
-//        sorter.setComparator(1, new Comparator<Object>() {
-//            public int compare(Object o1, Object o2) {
-//                Boolean b1 = (Boolean) o1;
-//                Boolean b2 = (Boolean) o2;
-//                if (b1 == null && b2 == null) {
-//                    return 0;
-//                } else if (b1 == null) {
-//                    return 1;
-//                } else if (b2 == null) {
-//                    return -1;
-//                } else if (b1.booleanValue() == b2.booleanValue()) {
-//                    return 0;
-//                } else if (b1.booleanValue()) {
-//                    return 1;
-//                } else {
-//                    return -1;
-//                }
-//            }
-//        });
-//
-//        sorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(1, SortOrder.ASCENDING)));
-//        tbl_SuatAn.setRowSorter(sorter);
     }
 
     private void loadTableMonAnSuatAn(int MA){
@@ -771,6 +742,18 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
     public void disableButtMF(){
         btt_ThemSuatAn.setEnabled(false);
         btt_XoaSuatAn.setEnabled(false);
+    }
+    
+    public class DateTimeRenderer extends DefaultTableCellRenderer {
+        private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
+        // Override phương thức getTableCellRendererComponent() và định dạng lại ngày giờ
+        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            if(value instanceof Date) {
+                value = sdf.format((Date) value);
+            }
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
     }
 //
     

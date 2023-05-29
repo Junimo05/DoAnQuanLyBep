@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +30,12 @@ public class MainController {
         if(SA.getSanSang() != true){
             if(SA.make()){
                 return new SuatAnDAO().UpdateSA(SA);
-            }    
+            }else{
+                JOptionPane.showMessageDialog(null, "Kiểm Tra Lại Số Lượng Nguyên Liệu", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Suất Ăn Đã Được Làm", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
     }

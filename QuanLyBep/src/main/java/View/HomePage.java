@@ -26,15 +26,17 @@ public class HomePage extends javax.swing.JFrame{
             public void selected(int index) {
                if(index == 0){
                    setForm(new HomePagePanel());
-               }else if(index == 3){
+               }else if(index == 2){
                    setForm(new QLSuatAnViewPanel());
-               }else if(index == 6){
+               }else if(index == 4){
                    setForm(new QLMonAnViewPanel());
-               }else if(index == 9){
+               }else if(index == 6){
                    setForm(new QLNLViewPanel());
-               }else if(index == 12){
+               }else if(index == 8){
                    setForm(new QLNhanVienViewPanel());
-               }else if(index == 15){
+               }else if(index == 10){
+                   setForm(new ThongKeViewPanel());
+               }else if(index == 12){
                    int confirmed = JOptionPane.showConfirmDialog(null, 
                         "Bạn có chắc muốn thoát không?", "Xác nhận thoát", 
                         JOptionPane.YES_NO_OPTION);

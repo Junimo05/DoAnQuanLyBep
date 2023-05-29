@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +52,9 @@ public class SuatAnDAO {
                 SA.setSanSang(rs.getBoolean("Sẵn Sàng"));
                 SA.setTongTien(rs.getInt("Tổng Giá Tiền"));
                 Timestamp timestamp = rs.getTimestamp("Thời Gian");
-                SA.setThoiGian(timestamp);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String formatDate = sdf.format(new Date(timestamp.getTime()));
+                SA.setThoiGian(sdf.parse(formatDate));
                 SA.setDs(getMapMA(SA));
                 list.add(SA);
             }
@@ -93,9 +96,8 @@ public class SuatAnDAO {
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setBoolean(1, SA.getSanSang());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            ps.setString(2, dateFormat.format(SA.getThoiGian()));
-
+            java.sql.Date time = new java.sql.Date(SA.getThoiGian().getTime());
+            ps.setDate(2, time);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

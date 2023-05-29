@@ -1,4 +1,4 @@
-package View.Palette;
+package View.Palette.Model;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;

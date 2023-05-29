@@ -10,12 +10,12 @@ import Controller.NhanVienDAO;
 import Controller.SuatAnDAO;
 import Model.NhanVien;
 import Model.SuatAn;
-import View.Palette.Model_Card;
+import View.Palette.Model.Model_Card;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import View.Palette.HeaderMA;
-import View.Palette.HeaderSA;
+import View.Palette.Header.HeaderMA;
+import View.Palette.Header.HeaderSA;
 import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -296,7 +296,6 @@ public class HomePagePanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbl_SuatAnHome.setColumnSelectionAllowed(true);
         tbl_SuatAnHome.setGridColor(new java.awt.Color(255, 51, 255));
         tbl_SuatAnHome.setRowHeight(25);
         tbl_SuatAnHome.setSelectionBackground(new java.awt.Color(51, 51, 255));
@@ -304,7 +303,6 @@ public class HomePagePanel extends javax.swing.JPanel {
         tbl_SuatAnHome.setShowGrid(true);
         tbl_SuatAnHome.getTableHeader().setReorderingAllowed(false);
         jScrollPane3.setViewportView(tbl_SuatAnHome);
-        tbl_SuatAnHome.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_SuatAnHome.getColumnModel().getColumnCount() > 0) {
             tbl_SuatAnHome.getColumnModel().getColumn(0).setResizable(false);
             tbl_SuatAnHome.getColumnModel().getColumn(1).setResizable(false);
@@ -502,6 +500,7 @@ public class HomePagePanel extends javax.swing.JPanel {
             dialogtxt_TanLam.setText(timestampString);
             if(new DataHomePageDAO().ChamCong(id, null, timestampString)){
                 JOptionPane.showMessageDialog(this, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
+                dialog_ChamCong.dispose();
                 //Them Phan Cap Nhat Vao Bang Cham Cong
                 new MainController().UpdateChamCong(id);
             }else{
@@ -542,6 +541,7 @@ public class HomePagePanel extends javax.swing.JPanel {
                 dialogbtt_ChamCong.setEnabled(true);
             }else{
                 JOptionPane.showMessageDialog(this, "Đã Chấm Công Ngày Hôm Nay", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+                dialogbtt_ChamCong.setEnabled(false);
             }
         }else{
             JOptionPane.showMessageDialog(this, "Mã Nhân Viên Không Tồn Tại", "Lỗi!", JOptionPane.ERROR_MESSAGE);

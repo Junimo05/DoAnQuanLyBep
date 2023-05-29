@@ -4,6 +4,7 @@
  */
 package View.Palette;
 
+import View.Palette.Model.Model_Menu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
