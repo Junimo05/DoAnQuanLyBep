@@ -179,7 +179,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Nguyên Liệu", "Số Lượng NL"
+                "ID", "Mã Món Ăn", "Mã Nguyên Liệu", "Nguyên Liệu", "Số Lượng NL(g)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -198,6 +198,14 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             }
         });
         dialog_ScrollPane.setViewportView(tbl_SuaNguyenLieu);
+        tbl_SuaNguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tbl_SuaNguyenLieu.getColumnModel().getColumnCount() > 0) {
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(0).setResizable(false);
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(1).setResizable(false);
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(2).setResizable(false);
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(3).setResizable(false);
+            tbl_SuaNguyenLieu.getColumnModel().getColumn(4).setResizable(false);
+        }
         ListSelectionModel selectionModel2 = tbl_SuaNguyenLieu.getSelectionModel();
 
         selectionModel2.addListSelectionListener(new ListSelectionListener() {
@@ -236,7 +244,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             .addGroup(dialog_SuaNguyenLieuLayout.createSequentialGroup()
                 .addComponent(dialog_Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE))
+                .addComponent(dialog_ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         dialog_SuaNguyenLieuLayout.setVerticalGroup(
             dialog_SuaNguyenLieuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -675,14 +683,14 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
         }
 
         // Kiểm tra số lượng
-        int soLuong = 0;
+        Float soLuong = 0f;
         try {
-            soLuong = Integer.parseInt(soLuongStr);
+            soLuong = Float.parseFloat(soLuongStr);
         } catch (NumberFormatException e) {
-            return "Số lượng phải là một số nguyên\n";
+            return "Số lượng phải là một số\n";
         }
-        if (soLuong < 1) {
-            return "Số lượng phải là một số nguyên dương\n";
+        if (soLuong < 0) {
+            return "Số lượng phải là một số dương\n";
         }
 
         return null;
@@ -724,7 +732,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
         }
         
         int maNL = Integer.parseInt(maNLStr);
-        int soLuong = Integer.parseInt(soLuongStr);
+        Float soLuong = Float.parseFloat(soLuongStr);
         
         //Tìm ra nguyên liệu trong database
         NguyenLieu nl = new NguyenLieu();

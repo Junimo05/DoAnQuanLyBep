@@ -23,11 +23,9 @@ public class NhanVien {
     public int getTuoi() {
         return tuoi;
     }
-
     public void setTuoi(int tuoi) {
         this.tuoi = tuoi;
     }
-
     public String getTenNV() {
             return tenNV;
     }

@@ -55,7 +55,7 @@ public class MainController {
         }
     }
     
-    public void UpdateChamCong(String id){
+    public boolean UpdateChamCong(String id){
         String timeIn = new DataHomePageDAO().getTimeIn(id);
         String timeOut = new DataHomePageDAO().getTimeOut(id);
         
@@ -87,6 +87,6 @@ public class MainController {
         java.sql.Date sqlDate = java.sql.Date.valueOf(date);
         
         ChamCong cc = new ChamCong(id, hoursAsInt, luong, sqlDate);
-        new NhanVienDAO().capNhatChamCong(cc);
+        return new NhanVienDAO().addChamCong(cc);
     }
 }

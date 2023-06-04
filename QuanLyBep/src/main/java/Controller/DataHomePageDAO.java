@@ -73,10 +73,10 @@ public class DataHomePageDAO {
     public int countMA(){
         String sql = "SELECT SUM([Tổng Số Lượng]) AS \"Tổng Giá Trị\"" 
                +" FROM ("
-               +"   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAn.[Số Lượng]) AS [Tổng Số Lượng]"
+               +"   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng]"
                +"   FROM tbl_MonAn AS MonAn"
-               +"   INNER JOIN tbl_MonAn_SuatAn AS SuatAn ON MonAn.[Mã Món Ăn] = SuatAn.[Mã Món Ăn]"
-               +"   INNER JOIN tbl_SuatAn AS Sa ON SuatAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn]"
+               +"   INNER JOIN tbl_MonAn_SuatAn AS SuatAnMonAn ON MonAn.[Mã Món Ăn] = SuatAnMonAn.[Mã Món Ăn]"
+               +"   INNER JOIN tbl_SuatAn AS Sa ON SuatAnMonAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn]"
                +"   WHERE Sa.[Sẵn Sàng] = 1"
                +"   GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá]"
                +" ) AS T";

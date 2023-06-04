@@ -142,6 +142,24 @@ public class NhanVienDAO {
         return list;
     }
     
+    public boolean addChamCong(ChamCong cc){
+        String sql = "INSERT INTO tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Ngày Làm\"=?, \"Lương Theo Giờ\"=?, \"Mã Nhân Viên\"=?";
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, cc.getgioLam());
+            ps.setDouble(3, cc.getLuongTheoGio());
+            ps.setString(4, cc.getmaNV());
+            ps.setDate(2, cc.getngayLam());
+            
+             return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public boolean capNhatChamCong(ChamCong cc) {
         String sql = "UPDATE tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Ngày Làm\"=?, \"Lương Theo Giờ\"=? WHERE \"Mã Nhân Viên\"=?";
         

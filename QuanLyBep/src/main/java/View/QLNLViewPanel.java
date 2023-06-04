@@ -305,7 +305,7 @@ public class QLNLViewPanel extends javax.swing.JPanel implements ActionListener{
         // Set input values to NguyenLieu instance
         int maNL = Integer.parseInt(maNLStr);
         int giaNL = Integer.parseInt(giaNLStr);
-        int soluongNL = Integer.parseInt(soluongNLStr);
+        Float soluongNL = Float.parseFloat(soluongNLStr);
 
         nl.setMaNL(maNL);
         nl.setTenNL(tenNL);
@@ -354,7 +354,7 @@ public class QLNLViewPanel extends javax.swing.JPanel implements ActionListener{
           return "Số lượng phải là số";
         }
 
-        int soluongNL = Integer.parseInt(soluongNLStr);
+        Float soluongNL = Float.parseFloat(soluongNLStr);
 
         if (soluongNL <= 0) {
           return "Số lượng phải lớn hơn 0";
@@ -424,7 +424,7 @@ public class QLNLViewPanel extends javax.swing.JPanel implements ActionListener{
         
         int maNL = Integer.parseInt(maNLStr);
         int giaNL = Integer.parseInt(giaNLStr);
-        int soluongNL = Integer.parseInt(soluongNLStr);
+        Float soluongNL = Float.parseFloat(soluongNLStr);
 
         nl.setMaNL(maNL);
         nl.setTenNL(tenNL);

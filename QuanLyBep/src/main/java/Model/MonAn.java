@@ -24,14 +24,13 @@ public class MonAn{
         this.dongia = dongia;
         this.soLuong = soLuong;
         this.NLYeuCau = NLYeuCau;
-    }
-    
+    }    
     
     public MonAn(String tenMon){
         this.tenMon = tenMon;
     }
     
-//Add Del Print
+    //Add Del Print
     public void addUpNL(NguyenLieu nl){
         for(int key : NLYeuCau.keySet()){
             if(key == nl.getMaNL()){
@@ -62,7 +61,7 @@ public class MonAn{
             NguyenLieu value = entry.getValue();
             for(NguyenLieu tmp : ds){
                 if(tmp.getMaNL() == key){
-                    tmp.use(value.getSoluongNL() * this.getSoLuong());
+                    tmp.use(value.getSoluongNL()/1000 * this.getSoLuong());
                     break;
                 }
             }
@@ -76,7 +75,7 @@ public class MonAn{
             int key = entry.getKey();
             NguyenLieu value = entry.getValue();
             for(NguyenLieu tmp : ds){
-                if(tmp.getMaNL() == key && !tmp.check(value.getSoluongNL() * this.getSoLuong())){
+                if(tmp.getMaNL() == key && !tmp.check(value.getSoluongNL()/1000 * this.getSoLuong())){
                     return false;
                 }
             }

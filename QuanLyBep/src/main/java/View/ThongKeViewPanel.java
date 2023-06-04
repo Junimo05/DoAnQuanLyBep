@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 /**
@@ -25,6 +26,7 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         initComponents();
         tbl_TK_SuatAn.getColumnModel().getColumn(3).setCellRenderer(new DateTimeRenderer());
         loadDatatbl(); 
+        loadDataTop_MA();
     }
     
     
@@ -37,7 +39,14 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         model = new ThongKeDAO().loadData(model, startDay, endDay);
     }
     
-    
+    public void loadDataTop_MA(){
+        DefaultTableModel model = (DefaultTableModel) tbl_TK_MonAn.getModel();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        model.setRowCount(0);
+        String startDay = "";
+        String endDay = "";
+        model = new ThongKeDAO().top_MA(model, startDay, endDay);
+    }
     public class DateTimeRenderer extends DefaultTableCellRenderer {
         private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     
@@ -229,11 +238,20 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
 
     private void btt_SearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_SearchMouseClicked
         DefaultTableModel model = (DefaultTableModel) tbl_TK_SuatAn.getModel();
+        DefaultTableModel model2 = (DefaultTableModel) tbl_TK_MonAn.getModel();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         model.setRowCount(0);
-        String startDay = df.format(txt_StartDay.getDate());
-        String endDay = df.format(txt_EndDay.getDate());
+        model2.setRowCount(0);
+        Date startDate = txt_StartDay.getDate();
+        Date endDate = txt_EndDay.getDate();
+        if (endDate.compareTo(startDate) < 0) {
+            JOptionPane.showMessageDialog(null, "Ngày Bắt Đầu và Kết Thúc Không Hợp Lệ", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String startDay = df.format(startDate);
+        String endDay = df.format(endDate);
         model = new ThongKeDAO().loadData(model, startDay, endDay);
+        model2 = new ThongKeDAO().top_MA(model2, startDay, endDay);
     }//GEN-LAST:event_btt_SearchMouseClicked
 
 

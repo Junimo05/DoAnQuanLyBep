@@ -62,4 +62,42 @@ public class ThongKeDAO {
         }
         return null;
     }
+    
+    public DefaultTableModel top_MA(DefaultTableModel model, String startDay, String endDay){
+        try {
+            PreparedStatement ps;
+            if(startDay.equals("") || endDay.equals("")){
+                ps = conn.prepareStatement("SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], "
+                        + "SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng] " +
+                "FROM tbl_MonAn AS MonAn " +
+                "INNER JOIN tbl_MonAn_SuatAn AS SuatAnMonAn ON MonAn.[Mã Món Ăn] = SuatAnMonAn.[Mã Món Ăn] " +
+                "INNER JOIN tbl_SuatAn AS Sa ON SuatAnMonAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn] " +
+                "WHERE Sa.[Sẵn Sàng] = 1 " +
+                "GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá] " + 
+                "ORDER By [Tổng Số Lượng] DESC");
+            }else{
+                ps = conn.prepareStatement("SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], "
+                        + "SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng] " +
+                "FROM tbl_MonAn AS MonAn " +
+                "INNER JOIN tbl_MonAn_SuatAn AS SuatAnMonAn ON MonAn.[Mã Món Ăn] = SuatAnMonAn.[Mã Món Ăn] " +
+                "INNER JOIN tbl_SuatAn AS Sa ON SuatAnMonAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn] " +
+                "WHERE Sa.[Sẵn Sàng] = 1 AND Sa.[Thời Gian] BETWEEN ? AND ? " +
+                "GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá] " +
+                "ORDER By [Tổng Số Lượng] DESC");
+                ps.setString(1, startDay);
+                ps.setString(2, endDay);
+                
+            }
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String tenMA = rs.getString("Tên Món Ăn");
+                int soLuong = rs.getInt("Tổng Số Lượng");
+                model.addRow(new Object[]{tenMA, soLuong});
+            }
+            return model;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

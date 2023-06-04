@@ -66,7 +66,7 @@ public class MonAnDAO {
         Map<Integer, NguyenLieu> map = new HashMap<>();
         
         String sql = "SELECT m.\"Tên Món Ăn\", m.\"Mã Món Ăn\", m.\"Đơn Giá\", n.\"Mã Nguyên Liệu\", n.\"Tên Nguyên Liệu\", "
-                + "n.\"Đơn Giá\" AS \"Nguyên Liệu Đơn Giá\", mn.\"Số Lượng\" AS \"Nguyên Liệu Số Lượng\"" +
+                + "n.\"Đơn Giá\" AS \"Nguyên Liệu Đơn Giá\", mn.\"Số Lượng(g)\" AS \"Nguyên Liệu Số Lượng\"" +
         " FROM tbl_MonAn AS m" +
         " INNER JOIN tbl_MonAn_NguyenLieu AS mn ON m.\"Mã Món Ăn\" = mn.\"Mã Món Ăn\"" +
         " INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\""
@@ -80,7 +80,7 @@ public class MonAnDAO {
                 nl.setMaNL(rs.getInt("Mã Nguyên Liệu"));
                 nl.setTenNL(rs.getString("Tên Nguyên Liệu"));
                 nl.setGiaNL(rs.getInt("Nguyên Liệu Đơn Giá"));
-                nl.setSoluongNL(rs.getInt("Nguyên Liệu Số Lượng"));
+                nl.setSoluongNL(rs.getFloat("Nguyên Liệu Số Lượng"));
                 map.put(nl.getMaNL(), nl); // Using Map of NguyenLieu for NLYeuCau 
             }
         } catch (SQLException e) {
@@ -147,7 +147,7 @@ public class MonAnDAO {
     }
     
     public DefaultTableModel GetModelNgLieu(DefaultTableModel model, String ma){
-        String sql = "SELECT mn.\"Mã Món Ăn\", mn.\"Mã Nguyên Liệu\", mn.\"Số Lượng\", n.\"Tên Nguyên Liệu\"" +
+        String sql = "SELECT mn.\"Mã Món Ăn\", mn.\"Mã Nguyên Liệu\", mn.\"Số Lượng(g)\", n.\"Tên Nguyên Liệu\"" +
                     "FROM tbl_MonAn_NguyenLieu mn " +
                     "INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\"" +
                     "WHERE mn.\"Mã Món Ăn\" = ?";
@@ -163,7 +163,7 @@ public class MonAnDAO {
             while(rs.next()){
                 String maMA = rs.getString("Mã Món Ăn");
                 int maNL = rs.getInt("Mã Nguyên Liệu");
-                int soLuong = rs.getInt("Số Lượng");
+                Float soLuong = rs.getFloat("Số Lượng(g)");
                 String tenMA = rs.getString("Tên Nguyên Liệu");
                 Object[] row = {count, maMA, maNL, tenMA, soLuong};
 
@@ -178,9 +178,9 @@ public class MonAnDAO {
         return model;
     }
     
-    public boolean ThemNLMA(String maMA, int maNL, int soLuong){
+    public boolean ThemNLMA(String maMA, int maNL, Float soLuong){
         String checkSql = "SELECT COUNT(*) FROM tbl_MonAn_NguyenLieu WHERE \"Mã Nguyên Liệu\"=? AND \"Mã Món Ăn\" = ?";
-        String insertSql = "INSERT INTO tbl_MonAn_NguyenLieu(\"Mã Món Ăn\", \"Mã Nguyên Liệu\", \"Số Lượng\") "
+        String insertSql = "INSERT INTO tbl_MonAn_NguyenLieu(\"Mã Món Ăn\", \"Mã Nguyên Liệu\", \"Số Lượng(g)\") "
             + "VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -196,7 +196,7 @@ public class MonAnDAO {
             ps = conn.prepareStatement(insertSql);
             ps.setString(1, maMA);
             ps.setInt(2, maNL);
-            ps.setInt(3, soLuong);
+            ps.setFloat(3, soLuong);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -225,7 +225,7 @@ public class MonAnDAO {
     }
     
     public boolean CapNhatMANL(String maMA, int maNL, int soLuong) {
-        String sql = "UPDATE tbl_MonAn_NguyenLieu SET \"Số Lượng\" = ? WHERE \"Mã Món Ăn\" = ? AND \"Mã Nguyên Liệu\" = ?";
+        String sql = "UPDATE tbl_MonAn_NguyenLieu SET \"Số Lượng(g)\" = ? WHERE \"Mã Món Ăn\" = ? AND \"Mã Nguyên Liệu\" = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 

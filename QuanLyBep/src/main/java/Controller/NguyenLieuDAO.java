@@ -48,7 +48,7 @@ public class NguyenLieuDAO {
                 NL.setMaNL(rs.getInt("Mã Nguyên Liệu"));
                 NL.setTenNL(rs.getString("Tên Nguyên Liệu"));
                 NL.setGiaNL(rs.getInt("Đơn Giá"));
-                NL.setSoluongNL(rs.getInt("Khối Lượng(kg)"));
+                NL.setSoluongNL(rs.getFloat("Khối Lượng(kg)"));
                 NL.setNgay(rs.getDate("Ngày Nhập"));
                 
                 list.add(NL);
@@ -67,7 +67,7 @@ public class NguyenLieuDAO {
             ps.setInt(1,  NL.getMaNL());
             ps.setString(2, NL.getTenNL());
             ps.setDouble(3, NL.getGiaNL());
-            ps.setInt(4, NL.getSoluongNL());
+            ps.setFloat(4, NL.getSoluongNL());
             ps.setDate(5, new Date(NL.getNgay().getTime()));
             
             return ps.executeUpdate() > 0;
@@ -86,7 +86,7 @@ public class NguyenLieuDAO {
             // Thiết lập giá trị cho các tham số của câu lệnh SQL
             ps.setString(1, nl.getTenNL());
             ps.setDouble(2, nl.getGiaNL());
-            ps.setInt(3, nl.getSoluongNL());
+            ps.setFloat(3, nl.getSoluongNL());
             ps.setDate(4, nl.getNgay());
             ps.setInt(5, nl.getMaNL());
 

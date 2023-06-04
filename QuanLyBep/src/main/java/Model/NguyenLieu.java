@@ -4,14 +4,14 @@ public class NguyenLieu{
     private int maNL;
     private String tenNL;
     private Date ngay; 
-    private int khoiLuongNL;
+    private Float khoiLuongNL;
     private int giaNL;
     
     //Khởi Tạo
     public NguyenLieu() {
     }
 
-    public NguyenLieu(int maNL, String tenNL ,Date ngay, int giaNL, int khoiLuongNL ) {
+    public NguyenLieu(int maNL, String tenNL ,Date ngay, int giaNL, Float khoiLuongNL ) {
         this.maNL = maNL;
         this.tenNL = tenNL;
         this.ngay = ngay;
@@ -27,11 +27,11 @@ public class NguyenLieu{
         this.giaNL = nl.giaNL;
     }
     
-    public void use(int soLuong){
+    public void use(Float soLuong){
         this.khoiLuongNL -= soLuong;
     }
     
-    public boolean check(int soLuong){
+    public boolean check(Float soLuong){
         if(this.khoiLuongNL >= soLuong){
             return true;
         }
@@ -57,10 +57,10 @@ public class NguyenLieu{
     public void setNgay(Date ngay) {
             this.ngay = ngay;
     }
-    public int getSoluongNL() {
+    public Float getSoluongNL() {
             return khoiLuongNL;
     }
-    public void setSoluongNL(int soluongNL) {
+    public void setSoluongNL(Float soluongNL) {
             this.khoiLuongNL = soluongNL;
     }
     public int getGiaNL() {
