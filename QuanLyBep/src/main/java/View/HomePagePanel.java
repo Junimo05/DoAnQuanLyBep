@@ -102,6 +102,7 @@ public class HomePagePanel extends javax.swing.JPanel {
         dialogtxt_VaoLam.setText("");
         dialogtxt_TanLam.setText("");
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

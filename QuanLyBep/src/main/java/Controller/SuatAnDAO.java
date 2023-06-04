@@ -52,6 +52,7 @@ public class SuatAnDAO {
                 SA.setSanSang(rs.getBoolean("Sẵn Sàng"));
                 SA.setTongTien(rs.getInt("Tổng Giá Tiền"));
                 Timestamp timestamp = rs.getTimestamp("Thời Gian");
+                SA.setLoiNhuan(rs.getFloat("Lợi Nhuận"));
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 String formatDate = sdf.format(new Date(timestamp.getTime()));
                 SA.setThoiGian(sdf.parse(formatDate));
@@ -107,11 +108,12 @@ public class SuatAnDAO {
     
     public boolean UpdateSA(SuatAn SA){
         try {
-            String updateQuery = "UPDATE tbl_SuatAn SET \"Sẵn Sàng\" = ?, \"Tổng Giá Tiền\" = ? WHERE \"Mã Suất Ăn\" = ?";
+            String updateQuery = "UPDATE tbl_SuatAn SET \"Sẵn Sàng\" = ?, \"Tổng Giá Tiền\" = ?, [Lợi Nhuận] = ? WHERE \"Mã Suất Ăn\" = ?";
             PreparedStatement updatePS = conn.prepareStatement(updateQuery);
             updatePS.setBoolean(1, SA.getSanSang());
             updatePS.setInt(2, SA.getTongTien());
-            updatePS.setInt(3, SA.getMaSuatAn());
+            updatePS.setDouble(3, SA.getLoiNhuan());
+            updatePS.setInt(4, SA.getMaSuatAn());
             return updatePS.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -218,8 +220,7 @@ public class SuatAnDAO {
         }
         return false;
     }
-    
-    
+       
     public boolean deleteRow(int maSA, String maMA){
         try {
             String deleteString = "DELETE FROM tbl_MonAn_SuatAn WHERE \"Mã Suất Ăn\" = ? AND \"Mã Món Ăn\" = ?";

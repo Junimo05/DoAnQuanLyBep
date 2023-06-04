@@ -36,6 +36,8 @@ public class MainController {
             }
         }else{
             JOptionPane.showMessageDialog(null, "Suất Ăn Đã Được Làm", "Thông Báo", JOptionPane.INFORMATION_MESSAGE);
+            SA.tinh_loiNhuan();
+            new SuatAnDAO().UpdateSA(SA);
         }
         return false;
     }
@@ -55,6 +57,9 @@ public class MainController {
         }
     }
     
+    /*
+    *   Cập nhật Chấm Công
+    */
     public boolean UpdateChamCong(String id){
         String timeIn = new DataHomePageDAO().getTimeIn(id);
         String timeOut = new DataHomePageDAO().getTimeOut(id);

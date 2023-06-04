@@ -37,6 +37,7 @@ public class DataHomePageDAO {
         }
     }
     
+    //Tinh so Suat An, Mon An, Doanh Thu cua toan bo thoi gian
     public int countSA(){
         String sql = "SELECT COUNT(*) AS so_sa " +
                 "FROM tbl_SuatAn " +
@@ -92,9 +93,10 @@ public class DataHomePageDAO {
         return 0;
     }
     
+    //Update vao bang Thong Ke
     public boolean updateTongKet(){
         String sql = "SELECT CONVERT(date, [Thời Gian]) AS thoi_gian," +
-                "       COUNT(DISTINCT CONVERT(date, [Thời Gian])) AS so_suatan_ngay," +
+                "       COUNT(*) AS so_suatan_ngay," +
                 "       SUM([Tổng Giá Tiền]) AS doanh_thu," +
                 "       SUM([Tổng Số Lượng]) AS so_monan " +
                 "FROM tbl_SuatAn " +
@@ -115,14 +117,14 @@ public class DataHomePageDAO {
                 int doanhthu = rs.getInt("doanh_thu");
                 
                 String sql2 = "MERGE INTO tbl_ThongKe AS target " +
-                "USING (SELECT ? as [Thời Gian], ? as [Số Suất Ăn], ? as [Số Món Ăn], ? as [Doanh Thu]) AS source " +
+                "USING (SELECT ? AS [Thời Gian], ? AS [Số Suất Ăn], ? AS [Số Món Ăn], ? AS [Doanh Thu]) AS source " +
                 "ON target.[Thời Gian] = source.[Thời Gian] " +
                 "WHEN MATCHED THEN " +
                 "    UPDATE SET [Số Suất Ăn] = source.[Số Suất Ăn], [Số Món Ăn] = source.[Số Món Ăn], [Doanh Thu] = source.[Doanh Thu] " +
                 "WHEN NOT MATCHED THEN " +
                 "    INSERT ([Thời Gian], [Số Suất Ăn], [Số Món Ăn], [Doanh Thu]) " +
-                "    VALUES (source.[Thời Gian], source.[Số Suất Ăn], source.[Số Món Ăn], source.[Doanh Thu]);";
-
+                "    VALUES (source.[Thời Gian], source.[Số Suất Ăn], source.[Số Món Ăn], source.[Doanh Thu]) " +
+                "WHEN NOT MATCHED BY SOURCE THEN DELETE;";
                 
                 try {
                     PreparedStatement ps2 = conn.prepareStatement(sql2);
@@ -144,6 +146,7 @@ public class DataHomePageDAO {
         return false;
     }
     
+    //Lay Model cho View HomePagePanel
     public DefaultTableModel getModelMAHome(DefaultTableModel model){
         String sql = "   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAn.[Số Lượng]) AS [Tổng Số Lượng]"
                +"   FROM tbl_MonAn AS MonAn"
@@ -199,6 +202,7 @@ public class DataHomePageDAO {
         return model;
     }
     
+    //Chuc Nang Cham Cong tren HomePagePanel
     public boolean ChamCong(String id, String timeIn, String timeOut) {
         String checkSql = "SELECT COUNT(*) FROM tbl_NhanVien_ChamCong WHERE [Mã Nhân Viên] = ? AND CONVERT(date, Time_In) = CONVERT(date, GETDATE())";
         String insertSql = "INSERT INTO tbl_NhanVien_ChamCong ([Mã Nhân Viên], Time_In, Time_Out) VALUES (?, ?, ?)";

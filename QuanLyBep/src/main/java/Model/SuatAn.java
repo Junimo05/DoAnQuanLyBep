@@ -4,8 +4,10 @@
  */
 package Model;
 
+import Controller.NguyenLieuDAO;
 import java.util.Map;
 import Model.MonAn;
+import java.util.ArrayList;
 import java.util.Date;
 /**
  *
@@ -17,6 +19,7 @@ public class SuatAn {
     int tongTien;
     Date thoiGian;
     Map<String, MonAn> ds;
+    double loiNhuan;
     
     //Khoi tao
     public SuatAn() {
@@ -24,7 +27,7 @@ public class SuatAn {
         thoiGian = new Date();
     }
 
-    public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<String, MonAn> ds) {
+    public SuatAn(int MaSuatAn, boolean sanSang, int tongTien, Date thoiGian, Map<String, MonAn> ds, double loiNhuan) {
         this.MaSuatAn = MaSuatAn;
         this.sanSang = sanSang;
         this.tongTien = tongTien;
@@ -73,6 +76,14 @@ public class SuatAn {
     public void setDs(Map<String, MonAn> ds) {
         this.ds = ds;
     }
+
+    public double getLoiNhuan() {
+        return loiNhuan;
+    }
+
+    public void setLoiNhuan(double loiNhuan) {
+        this.loiNhuan = loiNhuan;
+    }
     
     //Them, Xoa, Thuc Hien Suat An
     public void capNhatMonAn(MonAn monAn) {
@@ -103,6 +114,7 @@ public class SuatAn {
             }
         }
         this.sanSang = true;
+        tinh_loiNhuan();
         return true;
     }
     
@@ -114,5 +126,25 @@ public class SuatAn {
             sum += val.getDongia() * val.getSoLuong();
         }
         this.tongTien = sum;
+    }
+    
+    public void tinh_loiNhuan(){
+        double cost = 0;
+        ArrayList<NguyenLieu> dsNL = new NguyenLieuDAO().getListNL();
+        for (Map.Entry<String, MonAn> entry : this.ds.entrySet()) {
+            String key = entry.getKey();
+            MonAn val = entry.getValue();
+            for (Map.Entry<Integer, NguyenLieu> entryVal : val.getNLYeuCau().entrySet()) {
+                int keyVal = entryVal.getKey();
+                NguyenLieu value = entryVal.getValue();
+                for(NguyenLieu tmp : dsNL){
+                    if(tmp.getMaNL() == keyVal){
+                        cost += tmp.getGiaNL() * value.getSoluongNL()/1000;
+                        break;
+                    }
+                }
+            }
+        }
+        this.loiNhuan = this.tongTien - cost;
     }
 }
