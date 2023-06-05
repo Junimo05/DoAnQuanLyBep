@@ -100,4 +100,91 @@ public class ThongKeDAO {
         }
         return null;
     }
+    
+    public int countSA(String startDay, String endDay){  
+        try {
+            PreparedStatement ps;
+            if(startDay.equals("") || endDay.equals("")){
+                ps = conn.prepareStatement("SELECT COUNT(*) AS so_sa " +
+                    "FROM tbl_SuatAn " +
+                    "WHERE \"Sẵn Sàng\" = 1");
+            }else{
+                ps = conn.prepareStatement("SELECT COUNT(*) AS so_sa " +
+                    "FROM tbl_SuatAn " +
+                    "WHERE \"Sẵn Sàng\" = 1 AND [Thời Gian] BETWEEN ? AND ?");
+                ps.setString(1, startDay);
+                ps.setString(2, endDay);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();   
+            int numSA = rs.getInt("so_sa");
+            return numSA;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int countTT(String startDay, String endDay){
+        try {
+            PreparedStatement ps;
+            if(startDay.equals("") || endDay.equals("")){
+                ps = conn.prepareStatement("SELECT SUM(\"Tổng Giá Tiền\") AS sum "
+                + "FROM tbl_SuatAn "
+                + "WHERE \"Sẵn Sàng\" = 1");
+            }else{
+                ps = conn.prepareStatement("SELECT SUM(\"Tổng Giá Tiền\") AS sum "
+                + "FROM tbl_SuatAn "
+                + "WHERE \"Sẵn Sàng\" = 1 AND [Thời Gian] BETWEEN ? AND ?");
+                ps.setString(1, startDay);
+                ps.setString(2, endDay);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            rs.next(); 
+            int profit = rs.getInt("sum");
+            return profit;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int countMA(String startDay, String endDay){
+        try {
+            PreparedStatement ps;
+            if(startDay.equals("") || endDay.equals("")){
+               ps = conn.prepareStatement("SELECT SUM([Tổng Số Lượng]) AS \"Tổng Giá Trị\"" 
+               +" FROM ("
+               +"   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng]"
+               +"   FROM tbl_MonAn AS MonAn"
+               +"   INNER JOIN tbl_MonAn_SuatAn AS SuatAnMonAn ON MonAn.[Mã Món Ăn] = SuatAnMonAn.[Mã Món Ăn]"
+               +"   INNER JOIN tbl_SuatAn AS Sa ON SuatAnMonAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn]"
+               +"   WHERE Sa.[Sẵn Sàng] = 1"
+               +"   GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá]"
+               +" ) AS T");
+            }else{
+                ps = conn.prepareStatement("SELECT SUM([Tổng Số Lượng]) AS \"Tổng Giá Trị\"" 
+               +" FROM ("
+               +"   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng]"
+               +"   FROM tbl_MonAn AS MonAn"
+               +"   INNER JOIN tbl_MonAn_SuatAn AS SuatAnMonAn ON MonAn.[Mã Món Ăn] = SuatAnMonAn.[Mã Món Ăn]"
+               +"   INNER JOIN tbl_SuatAn AS Sa ON SuatAnMonAn.[Mã Suất Ăn] = Sa.[Mã Suất Ăn]"
+               +"   WHERE Sa.[Sẵn Sàng] = 1 AND Sa.[Thời Gian] BETWEEN ? AND ?"
+               +"   GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá]"
+               +" ) AS T");
+                ps.setString(1, startDay);
+                ps.setString(2, endDay);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int numMA = rs.getInt("Tổng Giá Trị");
+            return numMA;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
