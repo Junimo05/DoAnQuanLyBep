@@ -94,12 +94,4 @@ public class MainController {
         ChamCong cc = new ChamCong(id, hoursAsInt, luong, sqlDate);
         return new NhanVienDAO().addChamCong(cc);
     }
-    
-    //C:\Users\anhtu\JaspersoftWorkspace\MyReports\ThongKeEx.jrxml
-    
-    /*
-    *   Thực hiện tạo báo cáo
-    */
-    
-    
 }

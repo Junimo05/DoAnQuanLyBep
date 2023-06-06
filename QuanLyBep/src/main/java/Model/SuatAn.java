@@ -6,7 +6,6 @@ package Model;
 
 import Controller.NguyenLieuDAO;
 import java.util.Map;
-import Model.MonAn;
 import java.util.ArrayList;
 import java.util.Date;
 /**
@@ -14,12 +13,12 @@ import java.util.Date;
  * @author anhtu
  */
 public class SuatAn {
-    int MaSuatAn;
-    boolean sanSang;
-    int tongTien;
-    Date thoiGian;
-    Map<String, MonAn> ds;
-    double loiNhuan;
+    private int MaSuatAn;
+    private boolean sanSang;
+    private int tongTien;
+    private Date thoiGian;
+    private Map<String, MonAn> ds;
+    private double loiNhuan;
     
     //Khoi tao
     public SuatAn() {

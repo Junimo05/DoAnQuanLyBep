@@ -89,10 +89,14 @@ public class ThongKeDAO {
                 
             }
             ResultSet rs = ps.executeQuery();
+            int count = 1;
             while(rs.next()){
                 String tenMA = rs.getString("Tên Món Ăn");
+                double donGia = rs.getDouble("Đơn Giá");
                 int soLuong = rs.getInt("Tổng Số Lượng");
-                model.addRow(new Object[]{tenMA, soLuong});
+                double tongTien = donGia * soLuong;
+                model.addRow(new Object[]{count, tenMA, soLuong, donGia, tongTien});
+                count++;
             }
             return model;
         } catch (Exception e) {
