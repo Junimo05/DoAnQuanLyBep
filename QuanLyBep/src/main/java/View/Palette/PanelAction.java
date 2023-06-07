@@ -4,7 +4,7 @@
  */
 package View.Palette;
 
-import Backup_JFrame.QLSuatAnView.TableActionEvent;
+import View.QLSuatAnViewPanel.TableActionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

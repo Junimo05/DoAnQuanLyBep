@@ -34,18 +34,8 @@
   </Layout>
   <SubComponents>
     <Component class="View.Palette.ActionButton" name="btt_Plus">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/plus.png"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="View.Palette.ActionButton" name="btt_Minus">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/minus.png"/>
-        </Property>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
