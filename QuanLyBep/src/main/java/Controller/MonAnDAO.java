@@ -91,13 +91,12 @@ public class MonAnDAO {
     }
     
     public boolean ThemMonAn(MonAn monAn) {
-        String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\", \"Số Lượng\") VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\") VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, monAn.getMaMon());
             ps.setString(2, monAn.getTenMon());
             ps.setDouble(3, monAn.getDongia());
-            ps.setInt(4, monAn.getSoLuong());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +105,7 @@ public class MonAnDAO {
     }   
     
     public boolean CapNhatMonAn(MonAn monAn) {
-        String sql = "UPDATE tbl_MonAn SET \"Tên Món Ăn\"=?, \"Đơn Giá\"=?, \"Số Lượng\" = ? WHERE \"Mã Món Ăn\"=?";
+        String sql = "UPDATE tbl_MonAn SET \"Tên Món Ăn\"=?, \"Đơn Giá\"=? WHERE \"Mã Món Ăn\"=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
 

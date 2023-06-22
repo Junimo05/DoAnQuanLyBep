@@ -50,6 +50,7 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         tbl_TK_SuatAn.getColumnModel().getColumn(3).setCellRenderer(new DateTimeRenderer());
         loadDatatbl(); 
         loadDataTop_MA();
+        btt_BaoCao.setEnabled(false);
     }
     
     
@@ -360,6 +361,7 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         model = new ThongKeDAO().loadData(model, startDay, endDay);
         model2 = new ThongKeDAO().top_MA(model2, startDay, endDay);
         getDataCard(startDay, endDay);
+        btt_BaoCao.setEnabled(true);
     }//GEN-LAST:event_btt_SearchMouseClicked
 
     private void btt_BaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_BaoCaoMouseClicked
@@ -416,6 +418,7 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.setVisible(true);
             
+            btt_BaoCao.setEnabled(false);
         } catch (JRException ex) {
             Logger.getLogger(ThongKeViewPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
