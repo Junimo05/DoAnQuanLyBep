@@ -41,7 +41,7 @@ public class MonAnDAO {
     
     public ArrayList<MonAn> getListMA() {
         ArrayList<MonAn> list = new ArrayList<>();
-        String sql = "SELECT * FROM tbl_MonAn";
+        String sql = "SELECT * FROM tbl_MonAn WHERE IsDeleted = 0";
     
         try (PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -70,7 +70,7 @@ public class MonAnDAO {
         " FROM tbl_MonAn AS m" +
         " INNER JOIN tbl_MonAn_NguyenLieu AS mn ON m.\"Mã Món Ăn\" = mn.\"Mã Món Ăn\"" +
         " INNER JOIN tbl_NguyenLieu AS n ON mn.\"Mã Nguyên Liệu\" = n.\"Mã Nguyên Liệu\""
-                + "WHERE m.\"Mã Món Ăn\" = ?";
+                + "WHERE m.\"Mã Món Ăn\" = ? AND m.IsDeleted = 0";
     
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setString(1, MA.getMaMon());
@@ -91,7 +91,7 @@ public class MonAnDAO {
     }
     
     public boolean ThemMonAn(MonAn monAn) {
-        String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\") VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tbl_MonAn(\"Mã Món Ăn\", \"Tên Món Ăn\", \"Đơn Giá\", IsDeleted) VALUES (?, ?, ?, 0)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, monAn.getMaMon());
@@ -127,11 +127,13 @@ public class MonAnDAO {
     }
     
     public boolean xoaMonAn(String maMonAn) {
-        String sql = "DELETE FROM tbl_MonAn WHERE \"Mã Món Ăn\" = ?";
+        String sql = "UPDATE tbl_MonAn " +
+                    "SET IsDeleted = 1 " +
+                    "WHERE [Mã Món Ăn] = ?; ";
+
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, maMonAn);
-
             // Thực hiện câu lệnh delete và lấy số hàng bị ảnh hưởng
             int rowAffected = ps.executeUpdate();
 

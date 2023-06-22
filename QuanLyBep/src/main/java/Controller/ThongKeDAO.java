@@ -37,8 +37,10 @@ public class ThongKeDAO {
     public DefaultTableModel loadData(DefaultTableModel model, String startDay, String endDay){
         try {
             PreparedStatement ps;
-            if(startDay.equals("") || endDay.equals("")){
+            if(startDay.equals("1") && endDay.equals("1")){
                 ps = conn.prepareStatement("SELECT * FROM tbl_SuatAn WHERE [Sẵn Sàng] = 1");
+            }else if(startDay.equals("") || endDay.equals("")){
+                return model;
             }else{
                 ps = conn.prepareStatement("SELECT * FROM tbl_SuatAn WHERE [Thời Gian] BETWEEN ? AND ? AND [Sẵn Sàng] = 1");
                 ps.setString(1, startDay);
@@ -66,7 +68,7 @@ public class ThongKeDAO {
     public DefaultTableModel top_MA(DefaultTableModel model, String startDay, String endDay){
         try {
             PreparedStatement ps;
-            if(startDay.equals("") || endDay.equals("")){
+            if(startDay.equals("1") && endDay.equals("1")){
                 ps = conn.prepareStatement("SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], "
                         + "SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng] " +
                 "FROM tbl_MonAn AS MonAn " +
@@ -75,6 +77,8 @@ public class ThongKeDAO {
                 "WHERE Sa.[Sẵn Sàng] = 1 " +
                 "GROUP BY MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá] " + 
                 "ORDER By [Tổng Số Lượng] DESC");
+            }else if(startDay.equals("") || endDay.equals("")){
+                return model;
             }else{
                 ps = conn.prepareStatement("SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], "
                         + "SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng] " +
@@ -109,6 +113,8 @@ public class ThongKeDAO {
         try {
             PreparedStatement ps;
             if(startDay.equals("") || endDay.equals("")){
+                return 0;
+            }else if(startDay.equals("1") || endDay.equals("1")){
                 ps = conn.prepareStatement("SELECT COUNT(*) AS so_sa " +
                     "FROM tbl_SuatAn " +
                     "WHERE \"Sẵn Sàng\" = 1");
@@ -134,6 +140,8 @@ public class ThongKeDAO {
         try {
             PreparedStatement ps;
             if(startDay.equals("") || endDay.equals("")){
+                return 0;
+            }else if(startDay.equals("1") || endDay.equals("1")){
                 ps = conn.prepareStatement("SELECT SUM(\"Tổng Giá Tiền\") AS sum "
                 + "FROM tbl_SuatAn "
                 + "WHERE \"Sẵn Sàng\" = 1");
@@ -159,6 +167,8 @@ public class ThongKeDAO {
         try {
             PreparedStatement ps;
             if(startDay.equals("") || endDay.equals("")){
+                return 0;
+            }else if(startDay.equals("1") || endDay.equals("1")){
                ps = conn.prepareStatement("SELECT SUM([Tổng Số Lượng]) AS \"Tổng Giá Trị\"" 
                +" FROM ("
                +"   SELECT MonAn.[Mã Món Ăn], MonAn.[Tên Món Ăn], MonAn.[Đơn Giá], SUM(SuatAnMonAn.[Số Lượng]) AS [Tổng Số Lượng]"
@@ -186,6 +196,33 @@ public class ThongKeDAO {
             rs.next();
             int numMA = rs.getInt("Tổng Giá Trị");
             return numMA;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int countLoiNhuan(String startDay, String endDay){
+        try {
+            PreparedStatement ps;
+            if(startDay.equals("") || endDay.equals("")){
+                return 0;
+            }else if(startDay.equals("1") || endDay.equals("1")){
+                ps = conn.prepareStatement("SELECT SUM(\"Lợi Nhuận\") AS sum "
+                + "FROM tbl_SuatAn "
+                + "WHERE \"Sẵn Sàng\" = 1");
+            }else{
+                ps = conn.prepareStatement("SELECT SUM(\"Lợi Nhuận\") AS sum "
+                + "FROM tbl_SuatAn "
+                + "WHERE \"Sẵn Sàng\" = 1 AND [Thời Gian] BETWEEN ? AND ?");
+                ps.setString(1, startDay);
+                ps.setString(2, endDay);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            rs.next(); 
+            int loiNhuan = rs.getInt("sum");
+            return loiNhuan;
         } catch (Exception e) {
             e.printStackTrace();
         }

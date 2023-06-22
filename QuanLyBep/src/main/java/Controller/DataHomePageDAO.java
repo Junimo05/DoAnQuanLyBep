@@ -90,6 +90,21 @@ public class DataHomePageDAO {
         return 0;
     }
     
+    public int countLoiNhuan(){
+        try {
+            PreparedStatement ps;
+            ps = conn.prepareStatement("SELECT SUM(\"Lợi Nhuận\") AS sum "
+            + "FROM tbl_SuatAn "
+            + "WHERE \"Sẵn Sàng\" = 1");
+            ResultSet rs = ps.executeQuery();
+            rs.next(); 
+            int loiNhuan = rs.getInt("sum");
+            return loiNhuan;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     //Update vao bang Thong Ke
     public boolean updateTongKet(){
         String sql = "SELECT CONVERT(date, [Thời Gian]) AS thoi_gian," +

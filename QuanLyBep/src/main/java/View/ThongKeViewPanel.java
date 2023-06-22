@@ -8,9 +8,6 @@ import Controller.ThongKeDAO;
 import Model.ThongKeModel;
 import View.Palette.Model.Model_Card;
 import java.awt.Component;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javax.swing.table.DefaultTableModel;
 import java.text.ParseException;
@@ -58,8 +55,8 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tbl_TK_SuatAn.getModel();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         model.setRowCount(0);
-        String startDay = "";
-        String endDay = "";
+        String startDay = "1";
+        String endDay = "1";
         model = new ThongKeDAO().loadData(model, startDay, endDay);
     }
     
@@ -67,8 +64,8 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tbl_TK_MonAn.getModel();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         model.setRowCount(0);
-        String startDay = "";
-        String endDay = "";
+        String startDay = "1";
+        String endDay = "1";
         model = new ThongKeDAO().top_MA(model, startDay, endDay);
         
         //load Card
@@ -79,12 +76,12 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
         int numSA = new ThongKeDAO().countSA(startDay, endDay);
         int profit = new ThongKeDAO().countTT(startDay, endDay);
         int numMA = new ThongKeDAO().countMA(startDay, endDay);
-
+        int loiNhuan = new ThongKeDAO().countLoiNhuan(startDay, endDay);
         String strNumSA = Integer.toString(numSA);
         String strProfit = Integer.toString(profit);
         String strNumMA = Integer.toString(numMA);
         
-        card_ProfitTK.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/profit.png")), "Tổng Doanh Thu", strProfit, ""));
+        card_ProfitTK.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/profit.png")), "Tổng Doanh Thu", strProfit, "Lợi nhuận: " + loiNhuan + "đ"));
         card_SATK.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/serving-dish.png")), "Tổng Suất Ăn", strNumSA, ""));
         card_MATK.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/fish.png")), "Tổng Món Ăn", strNumMA, ""));
     }
@@ -347,17 +344,24 @@ public class ThongKeViewPanel extends javax.swing.JPanel {
     private void btt_SearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btt_SearchMouseClicked
         DefaultTableModel model = (DefaultTableModel) tbl_TK_SuatAn.getModel();
         DefaultTableModel model2 = (DefaultTableModel) tbl_TK_MonAn.getModel();
+        String startDay;
+        String endDay;
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         model.setRowCount(0);
         model2.setRowCount(0);
         Date startDate = txt_StartDay.getDate();
         Date endDate = txt_EndDay.getDate();
-        if (endDate.compareTo(startDate) < 0) {
+        if (startDate != null && endDate != null && endDate.compareTo(startDate) < 0) {
             JOptionPane.showMessageDialog(null, "Ngày Bắt Đầu và Kết Thúc Không Hợp Lệ", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String startDay = df.format(startDate);
-        String endDay = df.format(endDate);
+        if(startDate == null && endDate == null){
+            startDay = "";
+            endDay = "";
+        }else{
+            startDay = df.format(startDate);
+            endDay = df.format(endDate);
+        }
         model = new ThongKeDAO().loadData(model, startDay, endDay);
         model2 = new ThongKeDAO().top_MA(model2, startDay, endDay);
         getDataCard(startDay, endDay);

@@ -52,12 +52,13 @@ public class HomePagePanel extends javax.swing.JPanel {
         int numSA = new DataHomePageDAO().countSA();
         int profit = new DataHomePageDAO().countTT();
         int numMA = new DataHomePageDAO().countMA();
-
+        int loiNhuan = new DataHomePageDAO().countLoiNhuan();
+                
         String strNumSA = Integer.toString(numSA);
         String strProfit = Integer.toString(profit);
         String strNumMA = Integer.toString(numMA);
         
-        card_Pofit.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/profit.png")), "Tổng Doanh Thu", strProfit, ""));
+        card_Pofit.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/profit.png")), "Tổng Doanh Thu", strProfit, "Lợi Nhuận: " + loiNhuan + "đ"));
         card_SA.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/serving-dish.png")), "Tổng Suất Ăn", strNumSA, ""));
         card_MA.setData(new Model_Card(new ImageIcon(getClass().getResource("/ImageIcon/fish.png")), "Tổng Món Ăn", strNumMA, ""));
     }
