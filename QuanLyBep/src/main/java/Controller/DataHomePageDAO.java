@@ -10,6 +10,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -213,6 +215,38 @@ public class DataHomePageDAO {
         }
         return model;
     }
+    
+    public DefaultTableModel getModelReadySA(DefaultTableModel model) {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedCurrentDate = dateFormatter.format(currentDate);
+        
+        String sql = "SELECT [Mã Suất Ăn], [Sẵn Sàng] "
+                + "FROM tbl_SuatAn "
+                + "WHERE [Sẵn Sàng] = 1 AND CONVERT(date, [Thời Gian]) = ?";
+        
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, formattedCurrentDate);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int maSA = rs.getInt("Mã Suất Ăn");
+                boolean sanSang = rs.getBoolean("Sẵn Sàng");
+                
+                Object[] row = { maSA, sanSang };
+                model.addRow(row);
+                
+                // In thông tin từ mỗi dòng dữ liệu
+                System.out.println("Mã Suất Ăn: " + maSA + ", Sẵn Sàng: " + sanSang);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        return model;
+    }
+
     
     //Chuc Nang Cham Cong tren HomePagePanel
     public boolean ChamCong(String id, String timeIn, String timeOut) {
