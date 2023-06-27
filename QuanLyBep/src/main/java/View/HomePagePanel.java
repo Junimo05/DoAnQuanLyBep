@@ -499,20 +499,20 @@ public class HomePagePanel extends javax.swing.JPanel {
             // Nếu chưa chấm công vào, lưu giờ vào và cập nhật label
             dialogtxt_VaoLam.setText(timestampString);
             if(new DataHomePageDAO().ChamCong(id, timestampString, null)){
-                JOptionPane.showMessageDialog(this, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(this, "Chấm Công Không Thành Công", "Thành công!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Chấm Công Không Thành Công", "Thành công!", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             // Nếu đã chấm công vào, lưu giờ ra và cập nhật label
             dialogtxt_TanLam.setText(timestampString);
             if(new DataHomePageDAO().ChamCong(id, null, timestampString)){
-                JOptionPane.showMessageDialog(this, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Chấm Công Thành Công", "Thành công!", JOptionPane.INFORMATION_MESSAGE);
                 dialog_ChamCong.dispose();
                 //Them Phan Cap Nhat Vao Bang Cham Cong
                 new MainController().UpdateChamCong(id);
             }else{
-                JOptionPane.showMessageDialog(this, "Chấm Công Không Thành Công", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Chấm Công Không Thành Công", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             }
         }
         clearDialog();

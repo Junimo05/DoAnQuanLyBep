@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseUtility {
-    private static final String CONFIG_FILE_PATH = "src/main/resources/config.properties";
-
-
+    
     public static Connection getConnection() throws SQLException {
         try {
             Connection conn;
