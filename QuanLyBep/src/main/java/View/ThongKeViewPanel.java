@@ -5,7 +5,7 @@
 package View;
 
 import Controller.ThongKeDAO;
-import Model.ThongKeModel;
+import View.Palette.Model.ThongKeModel;
 import View.Palette.Model.Model_Card;
 import java.awt.Component;
 import java.io.InputStream;
