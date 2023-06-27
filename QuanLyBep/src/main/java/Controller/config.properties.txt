@@ -1,0 +1,5 @@
+servername=localhost
+port=1433
+databasename=QLBA_Final
+username=sa
+password=sa

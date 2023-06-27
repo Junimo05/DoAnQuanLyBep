@@ -21,18 +21,11 @@ import javax.swing.table.DefaultTableModel;
 public class DataHomePageDAO {
     private Connection conn;
 
-    public DataHomePageDAO() {
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("05052003");
-        ds.setServerName("NAT-Junimo\\NAT05");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("QLBA_Final");
-        ds.setEncrypt("false");
-        try{
-           conn = ds.getConnection();
-        }catch(Exception e){
-           e.printStackTrace();
+    public DataHomePageDAO(){
+        try {
+            conn = DatabaseUtility.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     

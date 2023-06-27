@@ -20,17 +20,10 @@ public class ThongKeDAO {
     private Connection conn;
     
     public ThongKeDAO(){
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("05052003");
-        ds.setServerName("NAT-Junimo\\NAT05");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("QLBA_Final");
-        ds.setEncrypt("false");
-        try{
-           conn = ds.getConnection();
-        }catch(Exception e){
-           e.printStackTrace();
+        try {
+            conn = DatabaseUtility.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     

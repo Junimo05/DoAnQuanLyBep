@@ -12,6 +12,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  *
@@ -22,17 +23,10 @@ public class NguyenLieuDAO {
     
     //Kết nối với SQLServer
     public NguyenLieuDAO(){
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setUser("sa");
-        ds.setPassword("05052003");
-        ds.setServerName("NAT-Junimo\\NAT05");
-        ds.setPortNumber(1433);
-        ds.setDatabaseName("QLBA_Final");
-        ds.setEncrypt("false");
-        try{
-           conn = ds.getConnection();
-        }catch(Exception e){
-           e.printStackTrace();
+        try {
+            conn = DatabaseUtility.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
