@@ -105,8 +105,7 @@ public class MonAnDAO {
             // Thiết lập giá trị cho các tham số của câu lệnh SQL
             ps.setString(1, monAn.getTenMon());
             ps.setDouble(2, monAn.getDongia());
-            ps.setInt(3, monAn.getSoLuong());
-            ps.setString(4, monAn.getMaMon());
+            ps.setString(3, monAn.getMaMon());
             // Thực hiện câu lệnh SQL
             int rows = ps.executeUpdate();
 

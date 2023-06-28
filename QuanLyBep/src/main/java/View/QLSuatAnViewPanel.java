@@ -171,23 +171,25 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         });
         dialogtbl_MonAnSA.setColumnSelectionAllowed(true);
         dialogtbl_MonAnSA.getTableHeader().setReorderingAllowed(false);
+        dialogtbl_MonAnSA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dialogtbl_MonAnSAMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(dialogtbl_MonAnSA);
-        //TableModelListener tableModelListener = new TableModelListener() {
-            //            @Override
-            //            public void tableChanged(TableModelEvent e) {
-                //                // setEnable button
-                //                dialogbtt_Reset.setEnabled(true);
-                //                //
-                //                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
-                    //                    int row = e.getFirstRow();
-                    //                    int quantity = Integer.parseInt(dialogtbl_MonAnSA.getValueAt(row, 2).toString());
-                    //                    if (quantity == 0) {
-                        //                        ((DefaultTableModel) dialogtbl_MonAnSA.getModel()).removeRow(row);
-                        //                    }
-                    //                }
-                //            }
-            //    };
-        //    dialogtbl_MonAnSA.getModel().addTableModelListener(tableModelListener);
+        ListSelectionModel selectionModel2 = dialogtbl_MonAnSA.getSelectionModel();
+
+        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel2.isSelectionEmpty()) {
+                    dialogbtt_Delete.setEnabled(true);
+                    dialogbtt_Reset.setEnabled(true);
+                }else {
+                    dialogbtt_Delete.setEnabled(false);
+                    dialogbtt_Reset.setEnabled(false);
+                }
+            }
+        });
 
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 51), 2, true));
 
@@ -628,13 +630,13 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
 
         boolean flag = new SuatAnDAO().updateOrInsertListMASA(dataList, MaSA);
         if (flag) {
-            JOptionPane.showMessageDialog(this, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cập Nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialogbtt_ResetClicked();
             new MainController().UpdateSA(MaSA);
             loadTableDSMA();
             loadTableSA();      
         } else {
-            JOptionPane.showMessageDialog(this, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Cập Nhật không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -644,7 +646,7 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
         int maSA = getMaSA();
         String maMAStr = model.getValueAt(rowIndex, 3).toString();
         if(new SuatAnDAO().deleteRow(maSA,maMAStr)) {
-            JOptionPane.showMessageDialog(this, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Xóa Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             
             //Update
             model = (DefaultTableModel) dialogtbl_MonAnSA.getModel();
@@ -654,7 +656,7 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
                 dialogbtt_ResetClicked();
             }
         } else {
-          JOptionPane.showMessageDialog(this, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(null, "Xóa Không Thành Công", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -815,6 +817,28 @@ public class QLSuatAnViewPanel extends javax.swing.JPanel implements ActionListe
     private void dialog_MonAnSuatAnWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_dialog_MonAnSuatAnWindowClosing
         enableButtMF();
     }//GEN-LAST:event_dialog_MonAnSuatAnWindowClosing
+    
+    private int selectedRow2 = -1;
+    private int selectedCol2 = -1;
+    private void dialogtbl_MonAnSAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dialogtbl_MonAnSAMouseClicked
+        int row = dialogtbl_MonAnSA.rowAtPoint(evt.getPoint());
+        int col = dialogtbl_MonAnSA.columnAtPoint(evt.getPoint());
+
+        if (row >= 0 && col >= 0 && SwingUtilities.isLeftMouseButton(evt)) {
+            // If cell is already selected and isSelected is true, then deselect it
+            if (row == selectedRow2 && col == selectedCol2) {
+                dialogtbl_MonAnSA.removeRowSelectionInterval(row, row);
+                dialogtbl_MonAnSA.removeColumnSelectionInterval(0, 2);
+                selectedRow2 = -1;
+                selectedCol2 = -1;
+            } else {
+                // Otherwise, select the cell
+                dialogtbl_MonAnSA.changeSelection(row,col, false , false);
+                selectedRow2 = row;
+                selectedCol2 = col;
+            }
+        }
+    }//GEN-LAST:event_dialogtbl_MonAnSAMouseClicked
 //
     
     //Tạo Panel Chứa Button + Events

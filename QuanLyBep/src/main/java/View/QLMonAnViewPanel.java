@@ -198,7 +198,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             }
         });
         dialog_ScrollPane.setViewportView(tbl_SuaNguyenLieu);
-        tbl_SuaNguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbl_SuaNguyenLieu.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tbl_SuaNguyenLieu.getColumnModel().getColumnCount() > 0) {
             tbl_SuaNguyenLieu.getColumnModel().getColumn(0).setResizable(false);
             tbl_SuaNguyenLieu.getColumnModel().getColumn(1).setResizable(false);
@@ -231,7 +231,6 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                 }else {
                     dialogbtt_Sua.setEnabled(false);
                     dialogbtt_Xoa.setEnabled(false);
-                    dialogtxt_MaMonAn.setEnabled(true);
                     dialogtxt_MaNguyenLieu.setEnabled(true);
                 }
             }
@@ -411,6 +410,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                     btt_Sua.setEnabled(false);
                     btt_Xoa.setEnabled(false);
                     txt_MaMonAn.setEnabled(true);
+                    btt_XoaNhapClick();
                 }
             }
         });
@@ -584,8 +584,8 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
         JOptionPane.showMessageDialog(null, message, "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
     
-    int selectedRow = -1;
-    int selectedCol = -1;
+    private int selectedRow = -1;
+    private int selectedCol = -1;
     private void tbl_QLMonAnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_QLMonAnMouseClicked
         int row = tbl_QLMonAn.rowAtPoint(evt.getPoint());
         int col = tbl_QLMonAn.columnAtPoint(evt.getPoint());
@@ -599,7 +599,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
             // If cell is already selected and isSelected is true, then deselect it
             if (row == selectedRow && col == selectedCol) {
                 tbl_QLMonAn.removeRowSelectionInterval(row, row);
-                tbl_QLMonAn.removeColumnSelectionInterval(0, 3);
+                tbl_QLMonAn.removeColumnSelectionInterval(0, 2);
                 selectedRow = -1;
                 selectedCol = -1;
                 btt_XoaNhapClick();
@@ -632,7 +632,7 @@ public class QLMonAnViewPanel extends javax.swing.JPanel implements ActionListen
                 tbl_SuaNguyenLieu.removeColumnSelectionInterval(0, 3);
                 selectedRow2 = -1;
                 selectedCol2 = -1;
-                btt_XoaNhapClick();
+                dialogbtt_XoaNhapClick();
             } else {
                 // Otherwise, select the cell
                 tbl_SuaNguyenLieu.changeSelection(row, col, false, false);
