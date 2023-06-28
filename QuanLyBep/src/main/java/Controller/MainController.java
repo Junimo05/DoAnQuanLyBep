@@ -63,9 +63,11 @@ public class MainController {
     public boolean UpdateChamCong(String id){
         String timeIn = new DataHomePageDAO().getTimeIn(id);
         String timeOut = new DataHomePageDAO().getTimeOut(id);
-        
+        String timeBackup = timeOut;
         //So Gio Lam
         // Parse chuỗi timeIn và timeOut thành đối tượng LocalTime
+        timeIn = timeIn.substring(11);
+        timeOut = timeOut.substring(11);
         LocalTime inTime = LocalTime.parse(timeIn);
         LocalTime outTime = LocalTime.parse(timeOut);
 
@@ -79,7 +81,9 @@ public class MainController {
         
         //Luong
         float luong = 0;
-        if(hoursAsInt <= 4){
+        if(hoursAsInt < 1){
+            luong = 0;
+        }else if(hoursAsInt <= 4){
             luong = 19000;
         }else if(hoursAsInt > 4 && hoursAsInt < 8){
             luong = 21000;
@@ -88,7 +92,7 @@ public class MainController {
         }
         
         //Date
-        LocalDate date = LocalDate.parse(timeIn.substring(0, 10));
+        LocalDate date = LocalDate.parse(timeBackup.substring(0, 10));
         java.sql.Date sqlDate = java.sql.Date.valueOf(date);
         
         ChamCong cc = new ChamCong(id, hoursAsInt, luong, sqlDate);

@@ -87,6 +87,8 @@ public class QLNhanVienViewPanel extends javax.swing.JPanel implements ActionLis
         txt_Search = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
 
+        dialog_ChamCong.setTitle("Thông Tin Chấm Công");
+
         dialoglbl_MaNhanVien.setText("Mã Nhân Viên");
 
         dialoglbl_SoGioLam.setText("Số Giờ Làm");
@@ -190,14 +192,44 @@ public class QLNhanVienViewPanel extends javax.swing.JPanel implements ActionLis
             }
         });
         jScrollPane2.setViewportView(tbl_ChamCong);
+        ListSelectionModel selectionModel2 = tbl_ChamCong.getSelectionModel();
 
-        dialogtxt_Search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        selectionModel2.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!selectionModel2.isSelectionEmpty()) {
+                    dialogbtt_Sua.setEnabled(true);
+                    dialogbtt_Xoa.setEnabled(true);
+                    if(e.getValueIsAdjusting()){
+                        dialogtxt_MaNhanVien.setEnabled(false);
+                        int selectedRow = tbl_ChamCong.getSelectedRow();
+                        if(selectedRow != -1){
+                            //lay du lieu
+                            Object ma = tbl_ChamCong.getValueAt(selectedRow, 1);
+                            Object gioLam = tbl_ChamCong.getValueAt(selectedRow, 2);
+                            Object luongTheoGio = tbl_ChamCong.getValueAt(selectedRow, 3);
+                            Object NgayCham = tbl_ChamCong.getValueAt(selectedRow, 4);
+                            //Gan du lieu
+                            dialogtxt_MaNhanVien.setText(ma.toString());
+                            dialogtxt_SoGioLam.setText(gioLam.toString());
+                            dialogtxt_Luong.setText(luongTheoGio.toString());
+                            dialogtxt_NgayCham.setDate((Date)NgayCham);          }
+                    }
+                }else {
+                    dialogbtt_Sua.setEnabled(false);
+                    dialogbtt_Xoa.setEnabled(false);
+                    dialogtxt_MaNhanVien.setEnabled(true);
+                }
+            }
+        });
+
+        dialogtxt_Search.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         dialogtxt_Search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 dialogtxt_SearchKeyReleased(evt);
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageIcon/search.png"))); // NOI18N
         jLabel3.setToolTipText("");
         jLabel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jLabel3.setEnabled(false);

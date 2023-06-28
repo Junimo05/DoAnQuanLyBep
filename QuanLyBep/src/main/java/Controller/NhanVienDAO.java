@@ -137,7 +137,7 @@ public class NhanVienDAO {
     }
     
     public boolean addChamCong(ChamCong cc){
-        String sql = "INSERT INTO tbl_ChamCong SET \"Số Giờ Làm\"=?, \"Ngày Làm\"=?, \"Lương Theo Giờ\"=?, \"Mã Nhân Viên\"=?";
+        String sql = "INSERT INTO tbl_ChamCong (\"Số Giờ Làm\", \"Ngày Làm\", \"Lương Theo Giờ\", \"Mã Nhân Viên\") VALUES (?, ?, ?, ?)"; 
         
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -147,7 +147,7 @@ public class NhanVienDAO {
             ps.setString(4, cc.getmaNV());
             ps.setDate(2, cc.getngayLam());
             
-             return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }

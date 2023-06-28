@@ -218,7 +218,7 @@ public class QLNLViewPanel extends javax.swing.JPanel implements ActionListener{
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        txt_Search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_Search.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         txt_Search.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_SearchKeyReleased(evt);
@@ -351,13 +351,13 @@ public class QLNLViewPanel extends javax.swing.JPanel implements ActionListener{
         }
 
         if (!isNumeric(soluongNLStr)) {
-          return "Số lượng phải là số";
+          return "Khối lượng phải là số";
         }
 
         Float soluongNL = Float.parseFloat(soluongNLStr);
 
         if (soluongNL <= 0) {
-          return "Số lượng phải lớn hơn 0";
+          return "Khối lượng phải lớn hơn 0";
         }
 
         if (ngayNhap == null) {

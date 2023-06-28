@@ -8,11 +8,9 @@ import java.sql.Connection;
 
 //User
 import Model.NguyenLieu;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  *
@@ -33,7 +31,7 @@ public class NguyenLieuDAO {
     
     public ArrayList<NguyenLieu> getListNL(){
         ArrayList<NguyenLieu> list = new ArrayList<>();
-        String sql = "SELECT * FROM tbl_NguyenLieu";
+        String sql = "SELECT * FROM tbl_NguyenLieu WHERE IsDeleted = 0";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -54,8 +52,8 @@ public class NguyenLieuDAO {
     }
     
     public boolean ThemNguyenLieu(NguyenLieu NL){
-        String sql = "INSERT INTO tbl_NguyenLieu(\"Mã Nguyên Liệu\", \"Tên Nguyên Liệu\", \"Đơn Giá\", \"Khối Lượng(kg)\", \"Ngày Nhập\") "
-                + "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO tbl_NguyenLieu(\"Mã Nguyên Liệu\", \"Tên Nguyên Liệu\", \"Đơn Giá\", \"Khối Lượng(kg)\", \"Ngày Nhập\", IsDeleted) "
+                + "VALUES(?,?,?,?,?,0)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1,  NL.getMaNL());
@@ -96,7 +94,9 @@ public class NguyenLieuDAO {
     }
     
     public boolean xoaNguyenLieu(int maNL) {
-        String sql = "DELETE FROM tbl_NguyenLieu WHERE \"Mã Nguyên Liệu\" = ?";
+        String sql = "UPDATE tbl_NguyenLieu "
+                + "SET IsDeleted = 1 "
+                + "WHERE [Mã Nguyên Liệu] = ?";
         try {
           
             PreparedStatement ps = conn.prepareStatement(sql);
